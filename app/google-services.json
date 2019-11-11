@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "430757960559",
+    "firebase_url": "https://care-driving-79daa.firebaseio.com",
+    "project_id": "care-driving-79daa",
+    "storage_bucket": "care-driving-79daa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430757960559:android:0a47ed5de915a36467e69a",
+        "android_client_info": {
+          "package_name": "com.example.caredriving"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430757960559-3ocrqducaf3ej0ieo38ahor26sv4adja.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.caredriving",
+            "certificate_hash": "a4cff2c6a907f34be710a1e11ed611e351db9f28"
+          }
+        },
+        {
+          "client_id": "430757960559-78rbrnda255hp6iana3clfnal87ksol0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ4rt5sKBi-dys5Of8VlU6h8QhIqPpOwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430757960559-78rbrnda255hp6iana3clfnal87ksol0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
