@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.caredriving.R;
 
-public class PersonalAreaFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
-    private PersonalAreaViewModel personalAreaViewModel;
+    private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        personalAreaViewModel =
-                ViewModelProviders.of(this).get(PersonalAreaViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_personal_area, container, false);
+        homeViewModel =
+                ViewModelProviders.of(this).get(HomeViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
-        personalAreaViewModel.getText().observe(this, new Observer<String>() {
+        homeViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

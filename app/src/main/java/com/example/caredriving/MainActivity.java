@@ -23,10 +23,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.ImageButton;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
+    public ImageButton imgButton;
+
+    public User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
 
         String ref = FirebaseDatabase.getInstance().getReference().toString();
         System.out.println("MY APPLICATION FIREBASE LINK: " + ref);
+
+
+        imgButton = (ImageButton) findViewById(R.id.imageButton);
+//        imgButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {}
+//        });
+
     }
 
     @Override
@@ -74,5 +86,11 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+//    @Override
+//    public void onClick(View view) {
+//        Intent intent = user.getIntent(MainActivity.this, PersonalArea.class);
+//        startActivity(intent);
+//    }
 }
 

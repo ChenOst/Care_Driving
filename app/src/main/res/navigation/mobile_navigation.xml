@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.caredriving.ui.home.PersonalAreaFragment"
+        android:name="com.example.caredriving.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_personal_area" />
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"

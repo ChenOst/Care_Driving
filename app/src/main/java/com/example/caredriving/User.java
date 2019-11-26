@@ -1,5 +1,8 @@
 package com.example.caredriving;
 
+import android.content.Context;
+import android.content.Intent;
+
 abstract class User extends Entity {
 
     private String firstName;
@@ -16,4 +19,13 @@ abstract class User extends Entity {
     public String getLastName() {return lastName;}
     public String getAge() {return age;}
     public String getCity() {return city;}
+
+    public Intent getIntent(Context from, Class<?> to){
+        Intent intent = new Intent(from, to);
+        intent.putExtra("firstname", getFirstName());
+        intent.putExtra("lastname", getLastName());
+        intent.putExtra("age", getAge());
+        intent.putExtra("city", getCity());
+        return intent;
+    }
 }
