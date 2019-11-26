@@ -19,6 +19,28 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="open_registratio_activity">Register Here</string>
+    <string name="car_brands_prompt">Choose car brand</string>
+    <string name="car_year_prompt">Choose car year</string>
+    <string name="transmission_prompt">Choose car year</string>
+    <string name="experience_prompt">Year of experience</string>
 
+    <string-array name="car_brands">
+        <item>Audi</item>
+        <item>BMW</item>
+        <item>Chevrolet</item>
+        <item>Mercedes</item>
+        <item>Nissan</item>
+        <item>Opel</item>
+        <item>Peugeot</item>
+        <item>Renault</item>
+        <item>Seat</item>
+        <item>Toyota</item>
+        <item>Volkswagen</item>
+    </string-array>
+
+    <string-array name="transmission_type">
+        <item>Auto</item>
+        <item>Hand</item>
+    </string-array>
 
 </resources>

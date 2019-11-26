@@ -81,6 +81,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+    private void openInformationActivity(){
+        Intent intent = new Intent(this, InformationActivity.class);
+        startActivity(intent);
+    }
+
     private void registerUser() {
         String email = etRegistrationEmail.getText().toString().trim();
         String password = etRegistrationPassword.getText().toString().trim();
@@ -107,6 +112,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             progressDialog.cancel();
                             Toast.makeText(RegistrationActivity.this,
                                     "Open information activity...", Toast.LENGTH_SHORT).show();
+                            openInformationActivity();
 
                         } else {
                             Toast.makeText(RegistrationActivity.this,

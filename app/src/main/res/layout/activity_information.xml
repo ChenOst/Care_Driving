@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorMainBackground"
     android:padding="15dp"
     tools:context=".InformationActivity">
 
@@ -13,133 +12,128 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:textSize="18dp"
         android:text="Please fill your info"
-        />
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        >
+        android:padding="5dp">
 
         <LinearLayout
             android:id="@+id/firstNameInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="15dp"
-            >
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/viewFillFirstName"
-                android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="First name"
-                />
+                android:padding="4dp"
+                android:text="First name" />
+
             <EditText
                 android:id="@+id/fillFirstName"
-                android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="John"
-                />
+                android:padding="4dp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/lastNameInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="15dp"
-            >
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/viewFillLastName"
-                android:paddingLeft="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Last name"
-                />
+                android:paddingLeft="4dp"
+                android:text="Last name" />
+
             <EditText
                 android:id="@+id/fillLastName"
-                android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Snow"
-                />
+                android:padding="4dp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ageInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="15dp"
-            >
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/viewFillAge"
-                android:paddingLeft="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Age"
-                />
+                android:paddingLeft="4dp"
+                android:text="Age" />
+
             <EditText
                 android:id="@+id/fillAge"
-                android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="25"
-                />
+                android:padding="4dp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/cityInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="15dp"
-            >
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/viewFillCity"
-                android:paddingLeft="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="City"
-                />
+                android:paddingLeft="4dp"
+                android:text="City" />
+
             <EditText
                 android:id="@+id/fillCity"
-                android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tel-Aviv"
-                />
+                android:padding="4dp" />
         </LinearLayout>
 
         <RadioGroup
             android:id="@+id/radioUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="15dp"
-            >
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radioStudent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Student"
                 android:checked="true"
-                android:textSize="20dp"/>
+                android:layout_marginRight="20dp"
+                android:text="Student"
+                android:textSize="20dp" />
 
             <RadioButton
                 android:id="@+id/radioTeacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Teacher"
-                android:textSize="20dp"
-                />
+                android:layout_marginLeft="20dp"
+                android:textSize="20dp" />
         </RadioGroup>
 
 
@@ -150,119 +144,94 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="invisible"
+        android:padding="15dp">
 
-        <LinearLayout
-            android:id="@+id/llInformationCarBrand"
+        <TextView
+            android:id="@+id/tvInformationCarBrands"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="15dp"
-            >
-            <TextView
-                android:id="@+id/tvInformationCarBrand"
-                android:paddingLeft="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Car Brand"
-                />
-            <EditText
-                android:id="@+id/etInformationCarBrand"
-                android:padding="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="BMW"
-                />
-        </LinearLayout>
+            android:paddingLeft="4dp"
+            android:text="Car brand"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"/>
 
-        <LinearLayout
-            android:id="@+id/llInformationCarYear"
+        <Spinner
+            android:id="@+id/spinnerInformationCarBrands"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:entries="@array/car_brands"
+            android:prompt="@string/car_brands_prompt"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            />
+
+        <TextView
+            android:id="@+id/tvInformationCarYear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="15dp"
-            >
+            android:paddingLeft="4dp"
+            android:text="Car year"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
+        <Spinner
+            android:id="@+id/spinnerInformationCarYears"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            />
 
-
-            <TextView
-                android:id="@+id/tvInformationCarYear"
-                android:paddingLeft="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Car year"
-                />
-            <EditText
-                android:id="@+id/etInformationCarYear"
-                android:padding="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="2010"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llInformationTransmission"
+        <TextView
+            android:id="@+id/tvInformationTransmission"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="15dp"
-            >
-            <TextView
-                android:id="@+id/tvInformationTransmission"
-                android:paddingLeft="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="City"
-                />
-            <EditText
-                android:id="@+id/etInformationTransmission"
-                android:padding="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Hands"
-                />
-        </LinearLayout>
+            android:paddingLeft="4dp"
+            android:text="Transmission"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"/>
 
-        <LinearLayout
-            android:id="@+id/llInformationExperience"
+        <Spinner
+            android:id="@+id/spinnerInformationTransmission"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:entries="@array/transmission_type"
+            android:prompt="@string/transmission_prompt"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            />
+
+        <TextView
+            android:id="@+id/tvInformationExperience"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="15dp"
-            >
-            <TextView
-                android:id="@+id/tvInformationExperience"
-                android:paddingLeft="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Experience"
-                />
-            <EditText
-                android:id="@+id/etInformationExperience"
-                android:padding="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="10 year"
-                />
-        </LinearLayout>
+            android:paddingLeft="4dp"
+            android:text="Experience"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerInformationExperience"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:prompt="@string/experience_prompt"
+            android:autofillHints="1"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/buttonSaveInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SAVE"
-            />
+            android:text="SAVE" />
     </LinearLayout>
 
 </LinearLayout>
