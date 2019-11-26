@@ -76,11 +76,3 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-// hi its test....
-// its test too....
-// max ve chen
-// hello habibi
-// HELLO AS
-// OK :)
-// nannananana
-// killlasta
