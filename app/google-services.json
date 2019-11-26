@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "430757960559-jb85udgdhlidtiptj6d3fei8tuikjh0g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.caredriving",
+            "certificate_hash": "ed06e028a89e731811bfdaa9e88ea7748612d6df"
+          }
+        },
+        {
           "client_id": "430757960559-tifv2udbuuhdpqbrlk2crj5k1oo157pt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
