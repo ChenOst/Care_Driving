@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorMainBackground"
+    android:padding="15dp"
+    tools:context=".InformationActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:text="Please fill your info"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:id="@+id/firstNameInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="15dp"
+            >
+            <TextView
+                android:id="@+id/viewFillFirstName"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="First name"
+                />
+            <EditText
+                android:id="@+id/fillFirstName"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="John"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lastNameInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="15dp"
+            >
+            <TextView
+                android:id="@+id/viewFillLastName"
+                android:paddingLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last name"
+                />
+            <EditText
+                android:id="@+id/fillLastName"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Snow"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ageInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="15dp"
+            >
+            <TextView
+                android:id="@+id/viewFillAge"
+                android:paddingLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Age"
+                />
+            <EditText
+                android:id="@+id/fillAge"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="25"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cityInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="15dp"
+            >
+            <TextView
+                android:id="@+id/viewFillCity"
+                android:paddingLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="City"
+                />
+            <EditText
+                android:id="@+id/fillCity"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tel-Aviv"
+                />
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/radioUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="15dp"
+            >
+
+            <RadioButton
+                android:id="@+id/radioStudent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student"
+                android:checked="true"
+                android:textSize="20dp"/>
+
+            <RadioButton
+                android:id="@+id/radioTeacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Teacher"
+                android:textSize="20dp"
+                />
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llTeacherInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/llInformationCarBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="15dp"
+            >
+            <TextView
+                android:id="@+id/tvInformationCarBrand"
+                android:paddingLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Car Brand"
+                />
+            <EditText
+                android:id="@+id/etInformationCarBrand"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="BMW"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llInformationCarYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="15dp"
+            >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+
+            <TextView
+                android:id="@+id/tvInformationCarYear"
+                android:paddingLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Car year"
+                />
+            <EditText
+                android:id="@+id/etInformationCarYear"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="2010"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llInformationTransmission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="15dp"
+            >
+            <TextView
+                android:id="@+id/tvInformationTransmission"
+                android:paddingLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="City"
+                />
+            <EditText
+                android:id="@+id/etInformationTransmission"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Hands"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llInformationExperience"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="15dp"
+            >
+            <TextView
+                android:id="@+id/tvInformationExperience"
+                android:paddingLeft="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Experience"
+                />
+            <EditText
+                android:id="@+id/etInformationExperience"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="10 year"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <Button
+            android:id="@+id/buttonSaveInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE"
+            />
+    </LinearLayout>
+
+</LinearLayout>
