@@ -23,6 +23,13 @@
     <string name="car_year_prompt">Choose car year</string>
     <string name="transmission_prompt">Choose car year</string>
     <string name="experience_prompt">Year of experience</string>
+    <string name="green_form_prompt">Do you have green form?</string>
+    <string name="theory_prompt">Did your passed theory exam?</string>
+
+    <string-array name="yes_no">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
 
     <string-array name="car_brands">
         <item>Audi</item>

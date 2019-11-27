@@ -65,8 +65,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         spnCarBrand = findViewById(R.id.spinnerInformationCarBrands);
         spnTransmission = findViewById(R.id.spinnerInformationTransmission);
 
-        linearLayout = findViewById(R.id.llTeacherInfo);
-
         addItemsToSpinnerTransmission();
         addItemsToSpinnerCarBrands();
         addItemsToSpinnerExperience();
@@ -76,7 +74,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         lastName = findViewById(R.id.fillLastName);
         age = findViewById(R.id.fillAge);
         city = findViewById(R.id.fillCity);
-        saveInfo = findViewById(R.id.buttonSaveInfo);
+        saveInfo = findViewById(R.id.btnSaveInfo);
 
         radioUserGroup = findViewById(R.id.radioUser);
 
@@ -92,11 +90,9 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
 
                 if(radioUserButton.getText().toString().toLowerCase().equals(chosenUser.substring(0, chosenUser.length() - 1))){
                     user = new Student();
-                    linearLayout.setVisibility(View.INVISIBLE);
                 } else {
                     user = new Teacher();
                     chosenUser = "teachers";
-                    linearLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
