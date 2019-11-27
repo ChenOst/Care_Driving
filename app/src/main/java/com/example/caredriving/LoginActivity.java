@@ -28,8 +28,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tvRegistration;
     private ProgressDialog progressDialog;
 
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +44,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // get the login status of the app - user loged in or not
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //SignOut user
-        FirebaseAuth.getInstance().signOut();
 
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null){ //User loged in
 
                     //////////////////////// its a test/////////////////////////////
