@@ -7,8 +7,10 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,7 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.widget.ImageButton;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     public ImageButton imgButton;
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity{
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
+                R.id.nav_tools, R.id.nav_share, R.id.nav_send, R.id.imageButton)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -65,11 +67,22 @@ public class MainActivity extends AppCompatActivity{
         System.out.println("MY APPLICATION FIREBASE LINK: " + ref);
 
 
-        imgButton = (ImageButton) findViewById(R.id.imageButton);
-//        imgButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {}
-//        });
+        //Take the user from login activity and put it in "user" variable
+        user = (User) getIntent().getSerializableExtra("User");
+
+
+        //What happen when click on image view in navigation bar
+        View header = navigationView.getHeaderView(0);
+        imgButton = (ImageButton) header.findViewById(R.id.imageButton);
+        imgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PersonalArea.class);
+                intent.putExtra("User", user);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
@@ -86,6 +99,8 @@ public class MainActivity extends AppCompatActivity{
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
 
 //    @Override
 //    public void onClick(View view) {

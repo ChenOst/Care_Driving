@@ -113,6 +113,28 @@
                 android:hint="Tel-Aviv"
                 android:padding="4dp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/emailInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/viewFillemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:text="e-mail" />
+
+            <EditText
+                android:id="@+id/fillemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint=""
+                android:padding="4dp" />
+        </LinearLayout>
     </LinearLayout>
 
     <Button

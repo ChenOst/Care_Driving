@@ -48,7 +48,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null){ //User loged in
+
+                    //////////////////////// its a test/////////////////////////////
+                    String email = user.getEmail();
+                    Student curruser = new Student("Chen", "Ostrovski", "22", "Tel-Aviv", email);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("User", curruser);
                     startActivity(intent);
                     finish();
                 }

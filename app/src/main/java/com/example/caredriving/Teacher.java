@@ -10,6 +10,10 @@ public class Teacher extends User {
     private String workExpirience;
     private String transmissionType; //גיר
 
+    public Teacher(){
+        super();
+    }
+
     @Override
     public void sideBarVisibility() {}
 
