@@ -31,14 +31,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvFillFirstName"
+                android:id="@+id/tvInformationFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:text="First name" />
 
             <EditText
-                android:id="@+id/etFillFirstName"
+                android:id="@+id/etInformationFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="John"
@@ -53,14 +53,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvFillLastName"
+                android:id="@+id/tvInformationLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="4dp"
                 android:text="Last name" />
 
             <EditText
-                android:id="@+id/edtFillLastName"
+                android:id="@+id/etInformationLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Snow"
@@ -75,14 +75,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvFillAge"
+                android:id="@+id/tvInformationAge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="4dp"
                 android:text="Age" />
 
             <EditText
-                android:id="@+id/edFillAge"
+                android:id="@+id/etInformationAge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="25"
@@ -97,14 +97,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvFillCity"
+                android:id="@+id/tvInformationCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="4dp"
                 android:text="City" />
 
             <EditText
-                android:id="@+id/edFillCity"
+                android:id="@+id/etInformationCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tel-Aviv"
@@ -149,13 +149,13 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btnNextInfo"
+                android:id="@+id/btnInformationNext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="NEXT" />
 
             <Button
-                android:id="@+id/btnCancelInfo"
+                android:id="@+id/btnInformationCancelInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="CANCEL" />

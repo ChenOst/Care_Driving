@@ -27,11 +27,12 @@
     <string name="theory_prompt">Did your passed theory exam?</string>
 
     <string-array name="yes_no">
-        <item>Yes</item>
         <item>No</item>
+        <item>Yes</item>
     </string-array>
 
     <string-array name="car_brands">
+        <item>None</item>
         <item>Audi</item>
         <item>BMW</item>
         <item>Chevrolet</item>

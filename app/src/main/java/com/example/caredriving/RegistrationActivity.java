@@ -26,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authListener;
+//    private FirebaseAuth.AuthStateListener authListener;
     private EditText etRegistrationPassword;
     private EditText etRegistrationEmail;
     private Button btnRegister;
@@ -46,33 +46,33 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         // get the login status of the app - user loged in or not
         firebaseAuth = FirebaseAuth.getInstance();
-        authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null){ //User loged in
-                    Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        };
+//        authListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                if (user != null){ //User loged in
+//                    Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//            }
+//        };
 
         btnRegister.setOnClickListener(this);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        firebaseAuth.addAuthStateListener(authListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        firebaseAuth.signOut();
-        firebaseAuth.removeAuthStateListener(authListener);
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        firebaseAuth.addAuthStateListener(authListener);
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        firebaseAuth.signOut();
+//        firebaseAuth.removeAuthStateListener(authListener);
+//    }
 
     @Override
     public void onClick(View view) {
@@ -82,7 +82,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void openInformationActivity(){
-        Intent intent = new Intent(this, InformationActivity.class);
+        Intent intent = new Intent(RegistrationActivity.this, InformationActivity.class);
         startActivity(intent);
     }
 
@@ -110,13 +110,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
                             progressDialog.cancel();
-                            Toast.makeText(RegistrationActivity.this,
-                                    "Open information activity...", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(RegistrationActivity.this,"Open information activity...", Toast.LENGTH_SHORT).show();
                             openInformationActivity();
 
                         } else {
-                            Toast.makeText(RegistrationActivity.this,
-                                    "Failed, please try again...", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(RegistrationActivity.this,"Failed, please try again...", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                             progressDialog.cancel();
                         }

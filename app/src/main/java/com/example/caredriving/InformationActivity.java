@@ -4,27 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.time.Year;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 public class InformationActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,19 +23,13 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     private EditText age;
     private EditText city;
 
-    private Spinner spnCarBrand;
-    private Spinner spnCarYear;
-    private Spinner spnExperience;
-    private Spinner spnTransmission;
-
-    private LinearLayout linearLayout;
-
-    private Button saveInfo;
+    private Button nextInfo;
+    private Button cancelInfo;
     private RadioGroup radioUserGroup;
     private RadioButton radioUserButton;
 
     private User user;
-    private String chosenUser; //when save the user
+    private String nextActivity = "student";
 
     private DatabaseReference myRef;
     private FirebaseAuth firebaseAuth;
@@ -57,123 +40,69 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
 
+
         firebaseAuth = FirebaseAuth.getInstance();
+//        myRef = FirebaseDatabase.getInstance().getReference();
+
         currentId = firebaseAuth.getCurrentUser().getUid();
 
-        spnCarYear = findViewById(R.id.spinnerInformationCarYears);
-        spnExperience = findViewById(R.id.spinnerInformationExperience);
-        spnCarBrand = findViewById(R.id.spinnerInformationCarBrands);
-        spnTransmission = findViewById(R.id.spinnerInformationTransmission);
+        firstName = findViewById(R.id.etInformationFirstName);
+        lastName = findViewById(R.id.etInformationLastName);
+        age = findViewById(R.id.etInformationAge);
+        city = findViewById(R.id.etInformationCity);
 
-        addItemsToSpinnerTransmission();
-        addItemsToSpinnerCarBrands();
-        addItemsToSpinnerExperience();
-        addItemsToSpinnerCarYear();
-
-        firstName = findViewById(R.id.fillFirstName);
-        lastName = findViewById(R.id.fillLastName);
-        age = findViewById(R.id.fillAge);
-        city = findViewById(R.id.fillCity);
-        saveInfo = findViewById(R.id.btnSaveInfo);
+        nextInfo = findViewById(R.id.btnInformationNext);
+        cancelInfo = findViewById(R.id.btnInformationCancelInfo);
 
         radioUserGroup = findViewById(R.id.radioUser);
 
-        myRef = FirebaseDatabase.getInstance().getReference();
-        saveInfo.setOnClickListener(this);
+        nextInfo.setOnClickListener(this);
+        cancelInfo.setOnClickListener(this);
+
         radioUserGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 int selectedId = radioUserGroup.getCheckedRadioButtonId();
                 radioUserButton = findViewById(selectedId);
 
-                chosenUser = "students";
-
-                if(radioUserButton.getText().toString().toLowerCase().equals(chosenUser.substring(0, chosenUser.length() - 1))){
-                    user = new Student();
+                if (radioUserButton.getText().toString().toLowerCase().equals(nextActivity)) {
+                    nextActivity = "student";
                 } else {
-                    user = new Teacher();
-                    chosenUser = "teachers";
+                    nextActivity = "teacher";
                 }
             }
         });
-    }
 
-    //fix on selected
-    private void addItemsToSpinnerCarBrands() {
-        spnCarBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }
-
-    //fix on selected
-    private void addItemsToSpinnerTransmission() {
-        spnTransmission.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }
-
-    private void addItemsToSpinnerCarYear() {
-        int startFrom = 2000;
-        List<String> list = new ArrayList<>();
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        for(;startFrom < year; startFrom++){
-            list.add(startFrom + "");
-        }
-
-        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
-        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnCarYear.setAdapter(yearAdapter);
-    }
-
-
-    private void addItemsToSpinnerExperience() {
-        List<String> list = new ArrayList<>();
-        for(int i = 0; i < 25; i++){
-            list.add(i + "");
-        }
-
-        list.add("25+");
-
-        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
-        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnExperience.setAdapter(yearAdapter);
     }
 
     @Override
     public void onClick(View view) {
-        if(view == saveInfo){
-            saveInfoInFirebase();
+        if (view == nextInfo) {
+            continueRegistration();
+        }
+        if(view == cancelInfo) {
+            //window "Cancel registration?" Yes -> go to first page / No -> stay in this page
         }
     }
 
-    private void saveInfoInFirebase() {
+    private void continueRegistration() {
+
+        Intent intent;
+        if(nextActivity.equals("student")){
+            user = new Student();
+            intent = new Intent(InformationActivity.this, InformationStudentActivity.class);
+        } else {
+            user = new Teacher();
+            intent = new Intent(InformationActivity.this, InformationTeacherActivity.class);
+        }
 
         user.setFirstName(firstName.getText().toString().trim());
         user.setLastName(lastName.getText().toString().trim());
         user.setAge(age.getText().toString().trim());
         user.setCity(city.getText().toString().trim());
 
-//        myRef.child(chosenUser).push().setValue(user);
-        myRef.child(chosenUser).child(currentId).setValue(user);
-
-        finish();
-        startActivity(new Intent(this, MainActivity.class));
-        Toast.makeText(this, "Save Info", Toast.LENGTH_SHORT).show();
+        intent.putExtra("User", user);
+        intent.putExtra("uid", currentId);
+        startActivity(intent);
     }
 }

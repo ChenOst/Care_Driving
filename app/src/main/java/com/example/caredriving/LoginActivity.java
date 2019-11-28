@@ -52,12 +52,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (user != null){ //User loged in
 
                     //////////////////////// its a test/////////////////////////////
-                    String email = user.getEmail();
-                    Student curruser = new Student("Chen", "Ostrovski", "22", "Tel-Aviv", email);
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("User", curruser);
-                    startActivity(intent);
-                    finish();
+//                    String email = user.getEmail();
+//                    Student curruser = new Student("Chen", "Ostrovski", "22", "Tel-Aviv", email);
+//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                    intent.putExtra("User", curruser);
+//                    startActivity(intent);
+//                    finish();
                 }
             }
         };
@@ -115,8 +115,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         progressDialog.dismiss();
                         if(task.isSuccessful()){
                             finish();
-//                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
                             Toast.makeText(LoginActivity.this,
                                     "Login failed", Toast.LENGTH_SHORT).show();

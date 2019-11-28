@@ -30,7 +30,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvInformationTransmission"
+                android:id="@+id/tvInformationStudentTransmission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -39,7 +39,7 @@
                 android:text="Transmission" />
 
             <Spinner
-                android:id="@+id/spinnerInformationTransmission"
+                android:id="@+id/spnInformationStudentTransmission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -56,7 +56,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvInformationGreenForm"
+                android:id="@+id/tvInformationStudentGreenForm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -65,7 +65,7 @@
                 android:text="Green form" />
 
             <Spinner
-                android:id="@+id/spinnerInformationGreenForm"
+                android:id="@+id/spnInformationStudentGreenForm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -83,7 +83,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvInformationTheory"
+                android:id="@+id/tvInformationStudentTheory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -92,7 +92,7 @@
                 android:text="Theory" />
 
             <Spinner
-                android:id="@+id/spinnerInformationTheory"
+                android:id="@+id/spnInformationStudentTheory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -117,13 +117,13 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btnSaveInfo"
+                android:id="@+id/btnInformationStudentSaveInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SAVE" />
 
             <Button
-                android:id="@+id/btnPreviousInfo"
+                android:id="@+id/btnInformationStudentPreviousInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="PREVIOUS" />

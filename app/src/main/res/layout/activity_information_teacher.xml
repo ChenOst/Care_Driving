@@ -31,7 +31,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvInformationCarBrands"
+                android:id="@+id/tvInformationTeacherCarBrands"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -40,7 +40,7 @@
                 android:text="Car brand" />
 
             <Spinner
-                android:id="@+id/spinnerInformationCarBrands"
+                android:id="@+id/spnInformationTeacherCarBrands"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -56,7 +56,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvInformationCarYear"
+                android:id="@+id/tvInformationTeacherCarYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -65,7 +65,7 @@
                 android:text="Car year" />
 
             <Spinner
-                android:id="@+id/spinnerInformationCarYears"
+                android:id="@+id/spnInformationTeacherCarYears"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -80,7 +80,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvInformationTransmission"
+                android:id="@+id/tvInformationTeacherTransmission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -89,7 +89,7 @@
                 android:text="Transmission" />
 
             <Spinner
-                android:id="@+id/spinnerInformationTransmission"
+                android:id="@+id/spnInformationTeacherTransmission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -106,7 +106,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvInformationExperience"
+                android:id="@+id/tvInformationTeacherExperience"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -115,7 +115,7 @@
                 android:text="Experience" />
 
             <Spinner
-                android:id="@+id/spinnerInformationExperience"
+                android:id="@+id/spnInformationTeacherExperience"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -132,7 +132,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvInformationPrice"
+                android:id="@+id/tvInformationTeacherPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -141,7 +141,7 @@
                 android:text="Lesson price" />
 
             <EditText
-                android:id="@+id/spinnerInformationPrice"
+                android:id="@+id/etInformationTeacherLessonPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -163,13 +163,13 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btnSaveInfo"
+                android:id="@+id/btnInformationTeacherSaveInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SAVE" />
 
             <Button
-                android:id="@+id/btnPreviousInfo"
+                android:id="@+id/btnInformationTeacherPreviousInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="PREVIOUS" />
