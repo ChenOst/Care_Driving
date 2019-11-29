@@ -20,11 +20,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<String> teacherNames = new ArrayList<>();
+    private ArrayList<String> teachersNames = new ArrayList<>();
     private Context context;
 
-    public RecyclerViewAdapter(ArrayList<String> teacherNames, Context context) {
-        this.teacherNames = teacherNames;
+    public RecyclerViewAdapter(ArrayList<String> teachersNames, Context context) {
+        this.teachersNames = teachersNames;
         this.context = context;
     }
 
@@ -37,18 +37,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return holder;
     }
 
-    // Called every single time a new item ia added to the list
+    // Called every single time when a new item is added to the list
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
-        holder.tvTeachersName.setText(teacherNames.get(position));
+        holder.tvTeachersName.setText(teachersNames.get(position));
 
         //OnClickListener to each item
         holder.layoutSearchTeachers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked." + teacherNames.get(position));
-                Toast.makeText(context, teacherNames.get(position), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onClick: clicked." + teachersNames.get(position));
+                Toast.makeText(context, teachersNames.get(position), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -56,7 +56,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // Tells how many items are on the list
     @Override
     public int getItemCount() {
-        return teacherNames.size();
+        return teachersNames.size();
     }
 
     // Holds the information in memory of each individual entry
