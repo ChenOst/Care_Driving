@@ -45,47 +45,48 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-        authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null){ //User loged in
 
-                    //////////////////////// its a test/////////////////////////////
+//        authListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                if (user != null ){ //User loged in
+//
+//                    //////////////////////// its a test/////////////////////////////
 //                    String email = user.getEmail();
 //                    Student curruser = new Student("Chen", "Ostrovski", "22", "Tel-Aviv", email);
 //                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 //                    intent.putExtra("User", curruser);
 //                    startActivity(intent);
-//                    finish();
-                }
-            }
-        };
+////                    finish();
+//                }
+//            }
+//        };
 
         btnLogin.setOnClickListener(this);
         tvRegistration.setOnClickListener(this);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        firebaseAuth.addAuthStateListener(authListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        firebaseAuth.signOut();
-        firebaseAuth.removeAuthStateListener(authListener);
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        firebaseAuth.addAuthStateListener(authListener);
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        firebaseAuth.signOut();
+//        firebaseAuth.removeAuthStateListener(authListener);
+//    }
 
     @Override
     public void onClick(View view) {
-        if (view == btnLogin){
+        if (view == btnLogin) {
             loginUser();
 
         }
-        if (view == tvRegistration){
+        if (view == tvRegistration) {
             Intent intent = new Intent(this, RegistrationActivity.class);
             startActivity(intent);
         }
@@ -95,12 +96,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = etLoginEmail.getText().toString().trim();
         String password = etLoginPassword.getText().toString().trim();
 
-        if(email.length() == 0){
+        if (email.length() == 0) {
             Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(password.length() == 0){
+        if (password.length() == 0) {
             Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -113,9 +114,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
-                        if(task.isSuccessful()){
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        if (task.isSuccessful()) {
+
+                            //////////////////////// its a test/////////////////////////////
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            String email = user.getEmail();
+                            Student curruser = new Student("Chen", "Ostrovski", "22", "Tel-Aviv", email);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra("User", curruser);
+                            startActivity(intent);
+//                            finish();
                         } else {
                             Toast.makeText(LoginActivity.this,
                                     "Login failed", Toast.LENGTH_SHORT).show();

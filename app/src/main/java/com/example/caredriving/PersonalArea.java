@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class PersonalArea extends AppCompatActivity implements View.OnClickListener{
+public class PersonalArea extends AppCompatActivity{
 
     User user;
 
@@ -17,7 +17,6 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
     TextView cityTextView;
     TextView emailTextView;
 
-    ProgressDialog progressDialog;
 
 
     @Override
@@ -26,7 +25,7 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_personal_area);
 
 
-//        //take the user from login activity and put it in "user" variable
+        //take the user from login activity and put it in "user" variable
         user = (User) getIntent().getSerializableExtra("User");
 
 
@@ -36,7 +35,6 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
         cityTextView = (TextView) findViewById(R.id.fillCity);
         emailTextView = (TextView) findViewById(R.id.fillemail);
 
-        progressDialog = new ProgressDialog(this);
 
         //change details in all fields according the "user" from intent
         fnameTextView.setHint(user.getFirstName());
@@ -44,11 +42,6 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
         ageTextView.setHint(user.getAge());
         cityTextView.setHint(user.getCity());
         emailTextView.setHint(user.getEmail());
-
-    }
-
-    @Override
-    public void onClick(View view) {
 
     }
 }

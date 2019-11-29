@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, PersonalArea.class);
                 intent.putExtra("User", user);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
 

@@ -16,7 +16,10 @@ public class Student extends User {
 
     public Student(){
         super();
-//        lessons = new ArrayList<>();
+    }
+
+    public Student(String firstName, String lastName, String age, String city, String email) {
+        super(firstName, lastName, age, city, email);
     }
 
     @Override
