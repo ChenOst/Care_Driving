@@ -8,12 +8,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.caredriving.R;
-
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
@@ -23,7 +20,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<String> teachersNames = new ArrayList<>();
     private Context context;
 
-    public RecyclerViewAdapter(ArrayList<String> teachersNames, Context context) {
+    public RecyclerViewAdapter(Context context, ArrayList<String> teachersNames) {
         this.teachersNames = teachersNames;
         this.context = context;
     }
@@ -68,7 +65,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTeachersName = itemView.findViewById(R.id.tvTeachersName);
-            layoutSearchTeachers = itemView.findViewById(R.id.layoutSeachTeachers);
+            layoutSearchTeachers = itemView.findViewById(R.id.layoutSearchTeachers);
         }
     }
+
 }
