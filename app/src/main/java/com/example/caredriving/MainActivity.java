@@ -3,7 +3,7 @@ package com.example.caredriving;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.caredriving.ui.gallery.SearchTeachersFragment;
+import com.example.caredriving.ui.searchTeachers.SearchTeachersFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 

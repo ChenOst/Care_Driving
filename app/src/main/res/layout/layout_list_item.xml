@@ -10,15 +10,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvTeachersName"
-        android:text="Teacher name"
+        android:text="@string/teachers_name"
         android:textSize="18sp"
+        android:textStyle="bold"
         android:textColor="@color/colorBlack"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvLocation"
-        android:text="Location"
+        android:text="@string/teachers_location"
         android:layout_below="@+id/tvTeachersName"
         android:textSize="14sp"
         android:textColor="@color/colorBlack"/>
@@ -27,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvPhoneNumber"
-        android:text="Telephone"
+        android:text="@string/teachers_phone"
         android:layout_below="@+id/tvLocation"
         android:textSize="14sp"
         android:textColor="@color/colorBlack"/>
@@ -35,13 +36,24 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvGearType"
-        android:text="Gear"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:id="@+id/tvComma"
+        android:text="@string/comma"
         android:layout_below="@+id/tvTeachersName"
         android:layout_toEndOf="@+id/tvLocation"
         android:layout_toRightOf="@+id/tvLocation"
+        android:textSize="14sp"
+        android:textColor="@color/colorBlack"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvGearType"
+        android:text="@string/teachers_gear"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_below="@+id/tvTeachersName"
+        android:layout_toEndOf="@+id/tvComma"
+        android:layout_toRightOf="@+id/tvComma"
         android:textSize="14sp"
         android:textColor="@color/colorBlack"/>
 

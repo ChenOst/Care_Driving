@@ -26,6 +26,13 @@
     <string name="green_form_prompt">Do you have green form?</string>
     <string name="theory_prompt">Did your passed theory exam?</string>
 
+    <string name="teachers_name">Name</string>
+    <string name="teachers_location">Location</string>
+    <string name="teachers_gear">Gear</string>
+    <string name="teachers_car">Car</string>
+    <string name="teachers_phone">Phone</string>
+    <string name="comma">,</string>
+
     <string-array name="yes_no">
         <item>No</item>
         <item>Yes</item>

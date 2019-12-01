@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.searchTeachers.ContactTeacherActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="100dp">
+            <TextView
+                android:id="@+id/tvDetailsTeachersName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/teachers_name"
+                android:textColor="@color/colorBlack"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:id="@+id/tvDetailsTeachersLoction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/teachers_location"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:id="@+id/tvDetailsTeachersGear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/teachers_gear"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:id="@+id/tvDetailsTeachersCar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/teachers_car"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:id="@+id/tvDetailsTeachersPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/teachers_phone"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                android:layout_margin="16dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
