@@ -58,7 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Log.d(TAG, "onClick: clicked." + teachersNames.get(position));
                 Toast.makeText(context, teachersNames.get(position), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, ContactTeacherActivity.class);
-                intent.putExtra("TeachesName", teachersNames.get(position));
+                intent.putExtra("TeachersName", teachersNames.get(position));
                 context.startActivity(intent);
             }
         });
