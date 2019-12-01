@@ -1,10 +1,9 @@
 package com.example.caredriving;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.caredriving.ui.gallery.GalleryFragment;
+import com.example.caredriving.ui.gallery.SearchTeachersFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -12,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
+                R.id.nav_home, R.id.nav_search_teachers, R.id.nav_slideshow,
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send, R.id.imageButton)
                 .setDrawerLayout(drawer)
                 .build();
@@ -86,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(MainActivity.this, PersonalArea.class);
                 intent.putExtra("User", user);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
 
@@ -110,20 +108,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(id== R.id.nav_gallery){
-            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.containerId, GalleryFragment.newInstance()).commit();
+        if(id== R.id.nav_search_teachers){
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.containerId, SearchTeachersFragment.newInstance()).commit();
         }
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-
-//    @Override
-//    public void onClick(View view) {
-//        Intent intent = user.getIntent(MainActivity.this, PersonalArea.class);
-//        startActivity(intent);
-//    }
 }
 

@@ -45,41 +45,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         firebaseAuth = FirebaseAuth.getInstance();
 
 
+/*
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null ){ //User loged in
 
-//        authListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//                if (user != null ){ //User loged in
-//
-//                    //////////////////////// its a test/////////////////////////////
-//                    String email = user.getEmail();
-//                    Student curruser = new Student("Chen", "Ostrovski", "22", "Tel-Aviv", email);
-//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                    intent.putExtra("User", curruser);
-//                    startActivity(intent);
+                    //////////////////////// its a test/////////////////////////////
+                    String email = user.getEmail();
+                    Student curruser = new Student("Chen", "Ostrovski", "22", "Tel-Aviv", email);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("User", curruser);
+                    startActivity(intent);
 ////                    finish();
-//                }
-//            }
-//        };
-
+                }
+            }
+        };
+*/
         btnLogin.setOnClickListener(this);
         tvRegistration.setOnClickListener(this);
     }
+/*
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(authListener);
+    }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        firebaseAuth.addAuthStateListener(authListener);
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        firebaseAuth.signOut();
-//        firebaseAuth.removeAuthStateListener(authListener);
-//    }
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseAuth.signOut();
+        firebaseAuth.removeAuthStateListener(authListener);
+    }
+*/
     @Override
     public void onClick(View view) {
         if (view == btnLogin) {

@@ -41,7 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.tvTeachersName.setText(teachersNames.get(position));
 
         //OnClickListener to each item
-        holder.layoutSearchTeachers.setOnClickListener(new View.OnClickListener() {
+        holder.layoutTeachersDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked." + teachersNames.get(position));
@@ -60,12 +60,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvTeachersName;
-        RelativeLayout layoutSearchTeachers;
+        RelativeLayout layoutTeachersDetails;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTeachersName = itemView.findViewById(R.id.tvTeachersName);
-            layoutSearchTeachers = itemView.findViewById(R.id.layoutSearchTeachers);
+            layoutTeachersDetails = itemView.findViewById(R.id.layoutTeachersDetails);
         }
     }
 
