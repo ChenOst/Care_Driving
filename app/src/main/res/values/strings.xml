@@ -18,10 +18,12 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
-    <string name="open_registratio_activity">Register Here</string>
+    <string name="open_registration_activity">Register Here</string>
+    <string name="open_login_activity">Login Here</string>
     <string name="car_brands_prompt">Choose car brand</string>
     <string name="car_year_prompt">Choose car year</string>
     <string name="transmission_prompt">Choose car year</string>
+    <string name="city_prompt">Choose your city</string>
     <string name="experience_prompt">Year of experience</string>
     <string name="green_form_prompt">Do you have green form?</string>
     <string name="theory_prompt">Did your passed theory exam?</string>
@@ -51,6 +53,21 @@
         <item>Seat</item>
         <item>Toyota</item>
         <item>Volkswagen</item>
+    </string-array>
+
+    <string-array name="cities">
+        <item>Tel-Aviv</item>
+        <item>Jerusalem</item>
+        <item>Haifa</item>
+        <item>Ariel</item>
+        <item>Petah-Tikva</item>
+        <item>Beer-Sheva</item>
+        <item>Ramat-Gan</item>
+        <item>Herzeliya</item>
+        <item>Netanya</item>
+        <item>Rosh-HaAin</item>
+        <item>Bat-Yam</item>
+        <item>Holon</item>
     </string-array>
 
     <string-array name="transmission_type">

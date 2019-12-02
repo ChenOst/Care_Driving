@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCanceledListener;
@@ -26,10 +27,12 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth firebaseAuth;
-//    private FirebaseAuth.AuthStateListener authListener;
+    //    private FirebaseAuth.AuthStateListener authListener;
     private EditText etRegistrationPassword;
     private EditText etRegistrationEmail;
     private Button btnRegister;
+
+    private TextView tvLogin;
 
     private ProgressDialog progressDialog;
 
@@ -41,6 +44,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         etRegistrationPassword = findViewById(R.id.etRegistrationPassword);
         etRegistrationEmail = findViewById(R.id.etRegistrationEmail);
         btnRegister = findViewById(R.id.btnRegister);
+        tvLogin = findViewById(R.id.tvLogin);
 
         progressDialog = new ProgressDialog(this);
 
@@ -59,6 +63,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 //        };
 
         btnRegister.setOnClickListener(this);
+        tvLogin.setOnClickListener(this);
     }
 
 //    @Override
@@ -76,12 +81,17 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        if(view == btnRegister){
+        if (view == btnRegister) {
             registerUser();
+        }
+
+        if (view == tvLogin) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
-    private void openInformationActivity(){
+    private void openInformationActivity() {
         Intent intent = new Intent(RegistrationActivity.this, InformationActivity.class);
         startActivity(intent);
     }
@@ -122,7 +132,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 });
     }
 
-    private void hideKeyboard(){
+    private void hideKeyboard() {
         etRegistrationEmail.onEditorAction(EditorInfo.IME_ACTION_DONE);
         etRegistrationPassword.onEditorAction(EditorInfo.IME_ACTION_DONE);
     }

@@ -1,14 +1,19 @@
 package com.example.caredriving;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -17,11 +22,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class InformationActivity extends AppCompatActivity implements View.OnClickListener {
 
-
     private EditText firstName;
     private EditText lastName;
     private EditText age;
-    private EditText city;
+    private Spinner city;
 
     private Button nextInfo;
     private Button cancelInfo;
@@ -34,6 +38,8 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     private DatabaseReference myRef;
     private FirebaseAuth firebaseAuth;
     private String currentId;
+    private String cityFromSpinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +49,20 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
 
         firebaseAuth = FirebaseAuth.getInstance();
 //        myRef = FirebaseDatabase.getInstance().getReference();
-
         currentId = firebaseAuth.getCurrentUser().getUid();
 
         firstName = findViewById(R.id.etInformationFirstName);
         lastName = findViewById(R.id.etInformationLastName);
         age = findViewById(R.id.etInformationAge);
-        city = findViewById(R.id.etInformationCity);
+        city = findViewById(R.id.spnInformationCity);
 
         nextInfo = findViewById(R.id.btnInformationNext);
         cancelInfo = findViewById(R.id.btnInformationCancelInfo);
 
         radioUserGroup = findViewById(R.id.radioUser);
 
+
+        spinnerCityListener();
         nextInfo.setOnClickListener(this);
         cancelInfo.setOnClickListener(this);
 
@@ -80,15 +87,55 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         if (view == nextInfo) {
             continueRegistration();
         }
-        if(view == cancelInfo) {
-            //window "Cancel registration?" Yes -> go to first page / No -> stay in this page
+        if (view == cancelInfo) {
+            submitCancelRegistration();
         }
     }
+
+    private void submitCancelRegistration() {
+        AlertDialog.Builder cancelRegistration = new AlertDialog.Builder(this);
+        cancelRegistration.setTitle("Registration");
+
+        cancelRegistration.setMessage("Do you want to cancel this registration?");
+        cancelRegistration.setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        firebaseAuth.getCurrentUser().delete();
+                        Intent intent = new Intent(InformationActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.cancel();
+                        Toast.makeText(InformationActivity.this, "Continue", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        cancelRegistration.create().show();
+    }
+
+    private void spinnerCityListener() {
+        city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                cityFromSpinner = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                cityFromSpinner = adapterView.getItemAtPosition(0).toString();
+            }
+        });
+    }
+
+    ;
 
     private void continueRegistration() {
 
         Intent intent;
-        if(nextActivity.equals("student")){
+        if (nextActivity.equals("student")) {
             user = new Student();
             intent = new Intent(InformationActivity.this, InformationStudentActivity.class);
         } else {
@@ -99,7 +146,8 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         user.setFirstName(firstName.getText().toString().trim());
         user.setLastName(lastName.getText().toString().trim());
         user.setAge(age.getText().toString().trim());
-        user.setCity(city.getText().toString().trim());
+        user.setCity(cityFromSpinner);
+//        user.setCity(city.getText().toString().trim());
 
         intent.putExtra("User", user);
         intent.putExtra("uid", currentId);

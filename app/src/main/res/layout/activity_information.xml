@@ -20,7 +20,7 @@
             android:layout_margin="10dp"
             android:text="Please fill your information"
             android:textAlignment="center"
-            android:textSize="18dp"
+            android:textSize="24dp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -103,12 +103,15 @@
                 android:paddingLeft="4dp"
                 android:text="City" />
 
-            <EditText
-                android:id="@+id/etInformationCity"
+
+
+            <Spinner
+                android:id="@+id/spnInformationCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tel-Aviv"
-                android:padding="4dp" />
+                android:autofillHints="1"
+                android:prompt="@string/city_prompt"
+                android:entries="@array/cities"/>
         </LinearLayout>
 
         <RadioGroup
