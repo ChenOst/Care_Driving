@@ -28,11 +28,18 @@
     <string name="green_form_prompt">Do you have green form?</string>
     <string name="theory_prompt">Did your passed theory exam?</string>
 
-    <string name="teachers_name">Name</string>
+    <string name="teachers_first_name">First name</string>
+    <string name="teachers_last_name">Last name</string>
+    <string name="teachers_experience">Experience</string>
     <string name="teachers_location">Location</string>
     <string name="teachers_gear">Gear</string>
-    <string name="teachers_car">Car</string>
+    <string name="teachers_car">Car Type</string>
+    <string name="teachers_car_year">Year</string>
     <string name="teachers_phone">Phone</string>
+    <string name="teachers_connect">Send conection request</string>
+
+    <string name="price">Price</string>
+    <string name="new_shekel">₪</string>
     <string name="comma">,</string>
 
     <string-array name="yes_no">

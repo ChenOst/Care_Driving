@@ -5,6 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
 import android.content.Intent;
@@ -12,21 +18,25 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.caredriving.MainActivity;
 import com.example.caredriving.R;
+import com.google.android.material.navigation.NavigationView;
 
 public class ContactTeacherActivity extends AppCompatActivity {
 
     private static final String TAG = "ContactTeacherActivity";
-    private static TextView name; //change later
-    private TextView phone; //change later
+    private TextView teachersFirstName;
+    private TextView teachersLastName;
+    private TextView teachersPhoneNumber;
     private ImageView imgPhone;
-    private String number = "+972528559958";
+    private static String number = "052-8559958"; // Checks if the number is valid
     private static final int REQUEST_CALL = 1;
 
 
@@ -34,11 +44,12 @@ public class ContactTeacherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_teacher);
+        getSupportActionBar().setTitle("Contact Teacher");
         Log.d(TAG, "ContactTeacherActivity: started.");
 
-        name = findViewById(R.id.tvDetailsTeachersName);
-        phone = findViewById(R.id.tvDetailsTeachersPhone);
-        phone.setText(number);
+
+        teachersFirstName = findViewById(R.id.tvDetailsTeachersFirstName);
+        teachersPhoneNumber = findViewById(R.id.tvDetailsTeachersPhone);
         imgPhone = findViewById(R.id.imgPhone);
         getIncomingIntent();
 
@@ -55,16 +66,16 @@ public class ContactTeacherActivity extends AppCompatActivity {
     private void getIncomingIntent(){
         Log.d(TAG, "getIncomingIntent: checking for incoming intents.");
         // Checks if the intent have any extras before trying to get the extras
-        if(getIntent().hasExtra("TeachersName")){
+        if(getIntent().hasExtra("TeachersFirstName")){
             Log.d(TAG, "getIncomingIntent: get and set incoming intents.");
-            String TeachersName = getIntent().getStringExtra("TeachersName");
-            name.setText(TeachersName);
+            String firstName = getIntent().getStringExtra("TeachersFirstName");
+            teachersFirstName.setText(firstName);
         }
     }
 
     // Call to the teacher
     private void makePhoneCall(){
-        Log.d(TAG, "makePhoneCall: call the teacher " + name);
+        Log.d(TAG, "makePhoneCall: call the teacher " + teachersFirstName + " " + teachersLastName);
         // Checks if the app have permission to make a phone call
         if(ContextCompat.checkSelfPermission(ContactTeacherActivity.this,
                 Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
@@ -72,6 +83,10 @@ public class ContactTeacherActivity extends AppCompatActivity {
                     new String[] {Manifest.permission.CALL_PHONE}, REQUEST_CALL);
         }
         else{
+            if(number.contains("-")) {
+                number.replace("-", "");
+            }
+
             String dial = "tel:" + number;
             Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(dial));
             startActivity(intent);
@@ -91,4 +106,5 @@ public class ContactTeacherActivity extends AppCompatActivity {
             }
         }
     }
+
 }
