@@ -56,4 +56,8 @@ public class Student extends User {
     public void setTeacherId(String teacherId) {
         this.teacherId = teacherId;
     }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
 }

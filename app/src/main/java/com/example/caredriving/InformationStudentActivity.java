@@ -20,8 +20,8 @@ public class InformationStudentActivity extends AppCompatActivity implements Vie
     private Spinner greenForm;
     private Spinner theory;
 
-    private Button save;
-    private Button previous;
+    private Button btnSave;
+    private Button btnPrevious;
 
     private Student student;
     private final String STUDENT = "student";
@@ -44,30 +44,31 @@ public class InformationStudentActivity extends AppCompatActivity implements Vie
         student = (Student) intent.getSerializableExtra("User");
         userId = (String) intent.getSerializableExtra("uid");
 
-        save = findViewById(R.id.btnInformationStudentSaveInfo);
-        previous = findViewById(R.id.btnInformationStudentPreviousInfo);
+        btnSave = findViewById(R.id.btnInformationStudentSaveInfo);
+        btnPrevious = findViewById(R.id.btnInformationStudentPreviousInfo);
 
         spinnerGreenFormListener();
         spinnerTheoryListener();
         spinnerTransmissionListener();
 
-        save.setOnClickListener(this);
-        previous.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
+        btnPrevious.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view == save) {
+        if (view == btnSave) {
             saveUserInformation();
         }
-        if (view == previous) {
+        if (view == btnPrevious) {
             openPreviousPage();
         }
     }
 
     private void saveUserInformation() {
-        //create user on database by currentId
-        //create teacher in database by currentId
+
+        student.setTeacherId("null");
+
         myRef.child("users").child(userId).child("info").setValue(student);
         myRef.child("users").child(userId).child("type").setValue(STUDENT);
         Intent intent = new Intent(InformationStudentActivity.this, MainActivity.class);
