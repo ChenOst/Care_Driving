@@ -32,14 +32,16 @@ import com.google.android.material.navigation.NavigationView;
 public class ContactTeacherActivity extends AppCompatActivity {
 
     private static final String TAG = "ContactTeacherActivity";
-    private TextView teachersFirstName;
-    private TextView teachersLastName;
-    private TextView teacherslocations;
-    private TextView teachersPhoneNumber;
-    private TextView lessonPrice;
-    private TextView gearType;
+    private TextView tvTeachersFirstName;
+    private TextView tvTeachersLastName;
+    private TextView tvTeachersExperience;
+    private TextView tvTeacherslocations;
+    private TextView tvCarType;
+    private TextView tvCarYear;
+    private TextView tvGearType;
+    private TextView tvLessonPrice;
+    private TextView tvTeachersPhoneNumber;
     private ImageView imgPhone;
-    private static String number = "052-8559958"; // Checks if the number is valid
     private static final int REQUEST_CALL = 1;
 
 
@@ -50,38 +52,66 @@ public class ContactTeacherActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Contact Teacher");
         Log.d(TAG, "ContactTeacherActivity: started.");
 
-        teachersFirstName = findViewById(R.id.tvDetailsTeachersFirstName);
-        teachersLastName = findViewById(R.id.tvDetailsTeachersLastName);
-        teacherslocations = findViewById(R.id.tvDetailsTeachersLoction);
-        gearType = findViewById(R.id.tvDetailsTeachersGear);
-        lessonPrice = findViewById(R.id.tvDetailsLessonPrice);
-        teachersPhoneNumber = findViewById(R.id.tvDetailsTeachersPhone);
+        tvTeachersFirstName = findViewById(R.id.tvDetailsTeachersFirstName);
+        tvTeachersLastName = findViewById(R.id.tvDetailsTeachersLastName);
+        tvTeachersExperience = findViewById(R.id.tvDetailsTeachersExperience);
+        tvTeacherslocations = findViewById(R.id.tvDetailsTeachersLoction);
+        tvCarType = findViewById(R.id.tvDetailsTeachersCar);
+        tvCarYear = findViewById(R.id.tvDetailsTeachersCarYear);
+        tvGearType = findViewById(R.id.tvDetailsTeachersGear);
+        tvLessonPrice = findViewById(R.id.tvDetailsLessonPrice);
+        tvTeachersPhoneNumber = findViewById(R.id.tvDetailsTeachersPhone);
+
         imgPhone = findViewById(R.id.imgPhone);
-        getIncomingIntent();
+        //getIncomingIntent();
 
         // Call to the teacher by clicking the phone image
+        /*
         imgPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 makePhoneCall();
             }
         });
+        */
     }
 
+    /*
     // Get the incoming intents
     private void getIncomingIntent(){
         Log.d(TAG, "getIncomingIntent: checking for incoming intents.");
         // Checks if the intent have any extras before trying to get the extras
-        if(getIntent().hasExtra("TeachersFirstName")){
+        if(getIntent().hasExtra("TeachersFirstName") && getIntent().hasExtra("TeachersLastName") && getIntent().hasExtra("TeachersExperience")
+                && getIntent().hasExtra("TeachersLocation") && getIntent().hasExtra("TeachersCarType") && getIntent().hasExtra("TeachersCarYear")
+                && getIntent().hasExtra("TeachersGearType") && getIntent().hasExtra("TeachersLessonPrice") && getIntent().hasExtra("TeachersPhoneNumber")){
             Log.d(TAG, "getIncomingIntent: get and set incoming intents.");
+
             String firstName = getIntent().getStringExtra("TeachersFirstName");
-            teachersFirstName.setText(firstName);
+            String lastName = getIntent().getStringExtra("TeachersLastName");
+            String experience = getIntent().getStringExtra("TeachersExperience");
+            String location = getIntent().getStringExtra("TeachersLocation");
+            String carType = getIntent().getStringExtra("TeachersCarType");
+            String carYear = getIntent().getStringExtra("TeachersCarYear");
+            String gearType = getIntent().getStringExtra("TeachersGearType");
+            String lessonPrice = getIntent().getStringExtra("TeachersLessonPrice");
+            String phoneNumber = getIntent().getStringExtra("TeachersPhoneNumber");
+
+            tvTeachersFirstName.setText(firstName);
+            tvTeachersLastName.setText(lastName);
+            tvTeachersExperience.setText(experience);
+            tvTeacherslocations.setText(location);
+            tvCarType.setText(carType);
+            tvCarYear.setText(carYear);
+            tvGearType.setText(gearType);
+            tvLessonPrice.setText(lessonPrice);
+            tvTeachersPhoneNumber.setText(phoneNumber);
+
         }
     }
 
     // Call to the teacher
     private void makePhoneCall(){
-        Log.d(TAG, "makePhoneCall: call the teacher " + teachersFirstName + " " + teachersLastName);
+        Log.d(TAG, "makePhoneCall: call the teacher " + tvTeachersFirstName + " " + tvTeachersLastName);
         // Checks if the app have permission to make a phone call
         if(ContextCompat.checkSelfPermission(ContactTeacherActivity.this,
                 Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
@@ -89,11 +119,11 @@ public class ContactTeacherActivity extends AppCompatActivity {
                     new String[] {Manifest.permission.CALL_PHONE}, REQUEST_CALL);
         }
         else{
-            if(number.contains("-")) {
-                number.replace("-", "");
+            if(tvTeachersPhoneNumber.getText().toString().contains("-")) {
+                tvTeachersPhoneNumber.getText().toString().replace("-", "");
             }
 
-            String dial = "tel:" + number;
+            String dial = "tel:" + tvTeachersPhoneNumber.getText().toString();
             Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(dial));
             startActivity(intent);
         }
@@ -113,4 +143,5 @@ public class ContactTeacherActivity extends AppCompatActivity {
         }
     }
 
+     */
 }

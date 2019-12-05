@@ -3,8 +3,6 @@ package com.example.caredriving;
 import android.content.Context;
 import android.content.Intent;
 
-import java.util.ArrayList;
-
 public class Teacher extends User {
 
     private String carType;
@@ -19,6 +17,7 @@ public class Teacher extends User {
         super();
 //        students = new ArrayList<>();
     }
+
     public Teacher(String firstName, String lastName,  String age, String city, String email, String phoneNumber,
                    String carType, String carYear, String experience, String transmission, String lessonPrice){
         super(firstName, lastName, age, city, email, phoneNumber);
@@ -63,5 +62,10 @@ public class Teacher extends User {
 
     public String getLessonPrice() {
         return lessonPrice;
+    }
+
+    @Override
+    public String toString(){
+        return getFirstName() + " " + getLastName();
     }
 }

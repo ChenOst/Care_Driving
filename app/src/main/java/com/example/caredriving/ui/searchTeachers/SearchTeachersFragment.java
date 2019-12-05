@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,12 +27,11 @@ import java.util.ArrayList;
 
 public class SearchTeachersFragment extends Fragment {
 
-    private Context context;
-
     private static ArrayList<Teacher> teachers = new ArrayList<>();
 
     private static String item = "";
     private DatabaseReference reference;
+
 
     // Location Filters
     private Button btnLocationsFilter;
@@ -274,26 +274,40 @@ public class SearchTeachersFragment extends Fragment {
             }
         });
 
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerviewTeachers);
-        final RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), teachers);
-        recyclerView.setAdapter(adapter);
+        final RecyclerView recyclerView = root.findViewById(R.id.recyclerviewTeachers);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         reference = FirebaseDatabase.getInstance().getReference().child("users");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
+                            if (dataSnapshotl.child("type").getValue().equals("teacher")) {
+                                String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
+                                String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
+                                String age = dataSnapshotl.child("info").child("age").getValue().toString();
+                                String city = dataSnapshotl.child("info").child("city").getValue().toString();
+                                String email = "check@gmail.com";
+                                String phone = "052-8559958";
+                                String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
+                                String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
+                                String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
+                                String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
+                                String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
 
-            }
+                                Teacher t = new Teacher(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
+                                teachers.add(t);
+                                RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), teachers);
+                                recyclerView.setAdapter(adapter);
+                            }
+                    }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(root.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            });
 
         return root;
     }

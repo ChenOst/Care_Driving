@@ -11,6 +11,7 @@ public class Student extends User {
     private String transmission;
     private String theory;
     private String teacherId;
+    private String phoneNumber;
 
 //    private ArrayList<Lesson> lessons;
 
@@ -18,8 +19,8 @@ public class Student extends User {
         super();
     }
 
-    public Student(String firstName, String lastName, String age, String city, String email) {
-        super(firstName, lastName, age, city, email);
+    public Student(String firstName, String lastName, String age, String city, String email,  String phoneNumber) {
+        super(firstName, lastName, age, city, email, phoneNumber);
     }
 
     @Override
@@ -59,5 +60,9 @@ public class Student extends User {
 
     public String getTeacherId() {
         return teacherId;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }

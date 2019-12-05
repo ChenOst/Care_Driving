@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.caredriving.R;
 import com.example.caredriving.Teacher;
+import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 
@@ -20,11 +21,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "RecyclerViewAdapter";
 
+
     private ArrayList<Teacher> teachers = new ArrayList<>();
     private Context context;
 
     public RecyclerViewAdapter(Context context, ArrayList<Teacher> teachers) {
+        this.context = context;
         this.teachers = teachers;
+
     }
 
     // Recycling the ViewHolder - put things into position
@@ -48,17 +52,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.tvPrice.setText(teachers.get(position).getLessonPrice());
         holder.tvTeachersFirstName.setText(teachers.get(position).getFirstName());
 
+        /*
         //OnClickListener to each item
         holder.layoutTeachersDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked." + teachers.get(position).getFirstName() + " " + teachers.get(position).getLastName());
-                Toast.makeText(context, teachers.get(position).getFirstName() + " " + teachers.get(position).getLastName(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, ContactTeacherActivity.class);
-                intent.putExtra("Teachers", teachers.get(position));
-                context.startActivity(intent);
+                Toast.makeText(context, "Check", Toast.LENGTH_SHORT).show();
+                //Intent intent = new Intent(context, ContactTeacherActivity.class);
+                //intent.putExtra("TeachersFirstName", teachers.get(position).getFirstName());
+                //intent.putExtra("TeachersLastName", teachers.get(position).getLastName());
+                //intent.putExtra("TeachersExperience", teachers.get(position).getExperience());
+                //intent.putExtra("TeachersLocation", teachers.get(position).getCity());
+                //intent.putExtra("TeachersCarType", teachers.get(position).getCarType());
+                //intent.putExtra("TeachersCarYear", teachers.get(position).getCarYear());
+                //intent.putExtra("TeachersGearType", teachers.get(position).getTransmission());
+                //intent.putExtra("TeachersLessonPrice", teachers.get(position).getTransmission());
+                //intent.putExtra("TeachersPhoneNumber", teachers.get(position).getPhoneNumber());
+
+                //context.startActivity(intent);
             }
         });
+
+         */
+
     }
 
     // Tells how many items are on the list
@@ -78,7 +95,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView tvPrice;
         RelativeLayout layoutTeachersDetails;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             tvTeachersFirstName = itemView.findViewById(R.id.tvTeachersFirstName);
             tvTeachersLastName = itemView.findViewById(R.id.tvTeachersLastName);
@@ -87,7 +104,33 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tvPhoneNumber = itemView.findViewById(R.id.tvPhoneNumber);
             tvGearType = itemView.findViewById(R.id.tvGearType);
             layoutTeachersDetails = itemView.findViewById(R.id.layoutTeachersDetails);
+
+            layoutTeachersDetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(itemView.getContext(), "C", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, ContactTeacherActivity.class);
+                    int position = getAdapterPosition();
+
+                    intent.putExtra("TeachersFirstName", teachers.get(position).getFirstName());
+                    intent.putExtra("TeachersLastName", teachers.get(position).getLastName());
+                    intent.putExtra("TeachersExperience", teachers.get(position).getExperience());
+                    intent.putExtra("TeachersLocation", teachers.get(position).getCity());
+                    intent.putExtra("TeachersCarType", teachers.get(position).getCarType());
+                    intent.putExtra("TeachersCarYear", teachers.get(position).getCarYear());
+                    intent.putExtra("TeachersGearType", teachers.get(position).getTransmission());
+                    intent.putExtra("TeachersLessonPrice", teachers.get(position).getTransmission());
+                    intent.putExtra("TeachersPhoneNumber", teachers.get(position).getPhoneNumber());
+
+
+
+                    context.startActivity(intent);
+                }
+            });
         }
+
     }
+
+
 
 }
