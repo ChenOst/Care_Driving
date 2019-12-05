@@ -12,30 +12,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.caredriving.R;
+import com.example.caredriving.Teacher;
+
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<String> teachersFirstNames = new ArrayList<>();
-    private ArrayList<String> teachersLastNames = new ArrayList<>();
-    private ArrayList<String> locations = new ArrayList<>();
-    private ArrayList<String> lessonPrices = new ArrayList<>();
-    private ArrayList<String> gearTypes = new ArrayList<>();
-    private ArrayList<String> phoneNumbers = new ArrayList<>();
-
+    private ArrayList<Teacher> teachers = new ArrayList<>();
     private Context context;
 
-    public RecyclerViewAdapter(Context context, ArrayList<String> teachersFirstNames, ArrayList<String> teachersLastNames, ArrayList<String> locations,
-            ArrayList<String> lessonPrices, ArrayList<String> gearTypes, ArrayList<String> phoneNumbers) {
-        this.teachersFirstNames = teachersFirstNames;
-        this.teachersLastNames = teachersLastNames;
-        this.locations = locations;
-        this.lessonPrices = lessonPrices;
-        this.gearTypes = gearTypes;
-        this.phoneNumbers = phoneNumbers;
-        this.context = context;
+    public RecyclerViewAdapter(Context context, ArrayList<Teacher> teachers) {
+        this.teachers = teachers;
     }
 
     // Recycling the ViewHolder - put things into position
@@ -51,21 +40,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
-        holder.tvTeachersFirstName.setText(teachersFirstNames.get(position));
-        holder.tvTeachersLastName.setText(teachersLastNames.get(position));
-        holder.tvLocation.setText(locations.get(position));
-        holder.tvPrice.setText(lessonPrices.get(position));
-        holder.tvGearType.setText(gearTypes.get(position));
-        holder.tvPhoneNumber.setText(phoneNumbers.get(position));
+        holder.tvTeachersFirstName.setText(teachers.get(position).getFirstName());
+        holder.tvTeachersLastName.setText(teachers.get(position).getLastName());
+        holder.tvLocation.setText(teachers.get(position).getCity());
+        holder.tvGearType.setText(teachers.get(position).getTransmission());
+        holder.tvPhoneNumber.setText(teachers.get(position).getPhoneNumber());
+        holder.tvPrice.setText(teachers.get(position).getLessonPrice());
+        holder.tvTeachersFirstName.setText(teachers.get(position).getFirstName());
 
         //OnClickListener to each item
         holder.layoutTeachersDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked." + teachersFirstNames.get(position) + " " + teachersLastNames.get(position));
-                Toast.makeText(context, teachersFirstNames.get(position) + " " + teachersLastNames.get(position), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onClick: clicked." + teachers.get(position).getFirstName() + " " + teachers.get(position).getLastName());
+                Toast.makeText(context, teachers.get(position).getFirstName() + " " + teachers.get(position).getLastName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, ContactTeacherActivity.class);
-                intent.putExtra("TeachersFirstName", teachersFirstNames.get(position));
+                intent.putExtra("Teachers", teachers.get(position));
                 context.startActivity(intent);
             }
         });
@@ -74,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // Tells how many items are on the list
     @Override
     public int getItemCount() {
-        return teachersFirstNames.size();
+        return teachers.size();
     }
 
     // Holds the information in memory of each individual entry

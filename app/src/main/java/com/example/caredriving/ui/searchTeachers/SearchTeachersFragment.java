@@ -14,8 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.caredriving.R;
+import com.example.caredriving.Teacher;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -24,12 +28,8 @@ public class SearchTeachersFragment extends Fragment {
 
     private Context context;
 
-    private static ArrayList<String> teachersFirstNames = new ArrayList<>();
-    private static ArrayList<String> teachersLastNames = new ArrayList<>();
-    private static ArrayList<String> locations = new ArrayList<>();
-    private static ArrayList<String> lessonPrice = new ArrayList<>();
-    private static ArrayList<String> gearTypes = new ArrayList<>();
-    private static ArrayList<String> phoneNumbers = new ArrayList<>();
+    private static ArrayList<Teacher> teachers = new ArrayList<>();
+
     private static String item = "";
     private DatabaseReference reference;
 
@@ -274,32 +274,26 @@ public class SearchTeachersFragment extends Fragment {
             }
         });
 
-        reference = FirebaseDatabase.getInstance().getReference().child("users");
-
-
-
-        if(!added) {
-
-            teachersFirstNames.add("Israel");
-            teachersLastNames.add("Israeli");
-            locations.add("Tel-Aviv");
-            lessonPrice.add("150");
-            gearTypes.add("Automatic");
-            phoneNumbers.add("054-1234567");
-
-            teachersFirstNames.add("Moshe");
-            teachersLastNames.add("Moshe");
-            locations.add("Haifa");
-            lessonPrice.add("135");
-            gearTypes.add("Manual");
-            phoneNumbers.add("058-1234567");
-            added = true;
-        }
-
         RecyclerView recyclerView = root.findViewById(R.id.recyclerviewTeachers);
-        final RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), teachersFirstNames, teachersLastNames, locations, lessonPrice, gearTypes, phoneNumbers);
+        final RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), teachers);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        reference = FirebaseDatabase.getInstance().getReference().child("users");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
 
         return root;
     }

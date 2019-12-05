@@ -19,9 +19,9 @@ public class Teacher extends User {
         super();
 //        students = new ArrayList<>();
     }
-    public Teacher(String carType, String carYear, String experience,
-                   String transmission, String lessonPrice){
-        super();
+    public Teacher(String firstName, String lastName,  String age, String city, String email, String phoneNumber,
+                   String carType, String carYear, String experience, String transmission, String lessonPrice){
+        super(firstName, lastName, age, city, email, phoneNumber);
         this.carType = carType;
         this.carYear = carYear;
         this.experience = experience;

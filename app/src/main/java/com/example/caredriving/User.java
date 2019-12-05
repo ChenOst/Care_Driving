@@ -12,15 +12,17 @@ abstract class User extends Entity implements Serializable {
     private String age;
     private String city;
     private String email;
+    private String phoneNumber;
 
     public User(){}
 
-    public User(String firstName, String lastName, String age, String city, String email){
+    public User(String firstName, String lastName, String age, String city, String email, String phoneNumber){
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.city = city;
         this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
     public void setFirstName(String firstName) {this.firstName = firstName;}
@@ -33,6 +35,7 @@ abstract class User extends Entity implements Serializable {
     public String getAge() {return age;}
     public String getCity() {return city;}
     public String getEmail() {return email;}
+    public String getPhoneNumber() {return phoneNumber;}
 
     public Intent getIntent(Context from, Class<?> to){
         Intent intent = new Intent(from, to);
