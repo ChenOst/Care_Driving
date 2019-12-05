@@ -34,7 +34,10 @@ public class ContactTeacherActivity extends AppCompatActivity {
     private static final String TAG = "ContactTeacherActivity";
     private TextView teachersFirstName;
     private TextView teachersLastName;
+    private TextView teacherslocations;
     private TextView teachersPhoneNumber;
+    private TextView lessonPrice;
+    private TextView gearType;
     private ImageView imgPhone;
     private static String number = "052-8559958"; // Checks if the number is valid
     private static final int REQUEST_CALL = 1;
@@ -47,8 +50,11 @@ public class ContactTeacherActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Contact Teacher");
         Log.d(TAG, "ContactTeacherActivity: started.");
 
-
         teachersFirstName = findViewById(R.id.tvDetailsTeachersFirstName);
+        teachersLastName = findViewById(R.id.tvDetailsTeachersLastName);
+        teacherslocations = findViewById(R.id.tvDetailsTeachersLoction);
+        gearType = findViewById(R.id.tvDetailsTeachersGear);
+        lessonPrice = findViewById(R.id.tvDetailsLessonPrice);
         teachersPhoneNumber = findViewById(R.id.tvDetailsTeachersPhone);
         imgPhone = findViewById(R.id.imgPhone);
         getIncomingIntent();

@@ -19,6 +19,15 @@ public class Teacher extends User {
         super();
 //        students = new ArrayList<>();
     }
+    public Teacher(String carType, String carYear, String experience,
+                   String transmission, String lessonPrice){
+        super();
+        this.carType = carType;
+        this.carYear = carYear;
+        this.experience = experience;
+        this.transmission = transmission;
+        this.lessonPrice = lessonPrice;
+    }
 
     @Override
     public void sideBarVisibility() {}

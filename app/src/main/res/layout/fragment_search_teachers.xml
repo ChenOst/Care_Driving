@@ -5,9 +5,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/layoutFilterBtn"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnLocationsFilter"
+            android:background="@color/colorBackgroundBlue"
+            android:hint="@string/teachers_location"
+            android:layout_margin="2dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnCarBrandsFilter"
+            android:background="@color/colorBackgroundBlue"
+            android:layout_toEndOf="@+id/btnLocationsFilter"
+            android:layout_toRightOf="@+id/btnLocationsFilter"
+            android:hint="@string/car_brand"
+            android:layout_margin="2dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnGearTypesFilter"
+            android:background="@color/colorBackgroundBlue"
+            android:layout_toEndOf="@+id/btnCarBrandsFilter"
+            android:layout_toRightOf="@+id/btnCarBrandsFilter"
+            android:hint="@string/car_gear"
+            android:layout_margin="2dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnPriceFilter"
+            android:background="@color/colorBackgroundBlue"
+            android:layout_toEndOf="@+id/btnGearTypesFilter"
+            android:layout_toRightOf="@+id/btnGearTypesFilter"
+            android:hint="@string/price"
+            android:layout_margin="2dp"/>
+
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerviewTeachers"/>
+        android:id="@+id/recyclerviewTeachers"
+        android:layout_below="@id/layoutFilterBtn"/>
 
 </RelativeLayout>

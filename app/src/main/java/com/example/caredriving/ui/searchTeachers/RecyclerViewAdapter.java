@@ -21,18 +21,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<String> teachersFirstNames = new ArrayList<>();
     private ArrayList<String> teachersLastNames = new ArrayList<>();
     private ArrayList<String> locations = new ArrayList<>();
-    private ArrayList<String> lessonPrice = new ArrayList<>();
+    private ArrayList<String> lessonPrices = new ArrayList<>();
     private ArrayList<String> gearTypes = new ArrayList<>();
     private ArrayList<String> phoneNumbers = new ArrayList<>();
 
     private Context context;
 
     public RecyclerViewAdapter(Context context, ArrayList<String> teachersFirstNames, ArrayList<String> teachersLastNames, ArrayList<String> locations,
-            ArrayList<String> lessonPrice, ArrayList<String> gearTypes, ArrayList<String> phoneNumbers) {
+            ArrayList<String> lessonPrices, ArrayList<String> gearTypes, ArrayList<String> phoneNumbers) {
         this.teachersFirstNames = teachersFirstNames;
         this.teachersLastNames = teachersLastNames;
         this.locations = locations;
-        this.lessonPrice = lessonPrice;
+        this.lessonPrices = lessonPrices;
         this.gearTypes = gearTypes;
         this.phoneNumbers = phoneNumbers;
         this.context = context;
@@ -54,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.tvTeachersFirstName.setText(teachersFirstNames.get(position));
         holder.tvTeachersLastName.setText(teachersLastNames.get(position));
         holder.tvLocation.setText(locations.get(position));
-        holder.tvPrice.setText(lessonPrice.get(position));
+        holder.tvPrice.setText(lessonPrices.get(position));
         holder.tvGearType.setText(gearTypes.get(position));
         holder.tvPhoneNumber.setText(phoneNumbers.get(position));
 
@@ -62,8 +62,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.layoutTeachersDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked." + teachersFirstNames.get(position));
-                Toast.makeText(context, teachersFirstNames.get(position), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onClick: clicked." + teachersFirstNames.get(position) + " " + teachersLastNames.get(position));
+                Toast.makeText(context, teachersFirstNames.get(position) + " " + teachersLastNames.get(position), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, ContactTeacherActivity.class);
                 intent.putExtra("TeachersFirstName", teachersFirstNames.get(position));
                 context.startActivity(intent);
