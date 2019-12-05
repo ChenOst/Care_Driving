@@ -108,19 +108,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             layoutTeachersDetails.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(itemView.getContext(), "C", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(context, ContactTeacherActivity.class);
                     int position = getAdapterPosition();
+                    String p = Integer.toString(position);
+                    Toast.makeText(itemView.getContext(), p, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, ContactTeacherActivity.class);
+
 
                     intent.putExtra("TeachersFirstName", teachers.get(position).getFirstName());
-                    intent.putExtra("TeachersLastName", teachers.get(position).getLastName());
-                    intent.putExtra("TeachersExperience", teachers.get(position).getExperience());
-                    intent.putExtra("TeachersLocation", teachers.get(position).getCity());
-                    intent.putExtra("TeachersCarType", teachers.get(position).getCarType());
-                    intent.putExtra("TeachersCarYear", teachers.get(position).getCarYear());
-                    intent.putExtra("TeachersGearType", teachers.get(position).getTransmission());
-                    intent.putExtra("TeachersLessonPrice", teachers.get(position).getTransmission());
-                    intent.putExtra("TeachersPhoneNumber", teachers.get(position).getPhoneNumber());
+                    //intent.putExtra("TeachersLastName", teachers.get(position).getLastName());
+                    //intent.putExtra("TeachersExperience", teachers.get(position).getExperience());
+                    //intent.putExtra("TeachersLocation", teachers.get(position).getCity());
+                    //intent.putExtra("TeachersCarType", teachers.get(position).getCarType());
+                    //intent.putExtra("TeachersCarYear", teachers.get(position).getCarYear());
+                    //intent.putExtra("TeachersGearType", teachers.get(position).getTransmission());
+                    //intent.putExtra("TeachersLessonPrice", teachers.get(position).getTransmission());
+                    //intent.putExtra("TeachersPhoneNumber", teachers.get(position).getPhoneNumber());
 
 
 

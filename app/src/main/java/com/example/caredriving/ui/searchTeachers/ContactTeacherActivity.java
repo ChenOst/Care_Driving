@@ -66,27 +66,28 @@ public class ContactTeacherActivity extends AppCompatActivity {
         //getIncomingIntent();
 
         // Call to the teacher by clicking the phone image
-        /*
+
         imgPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 makePhoneCall();
             }
         });
-        */
     }
 
-    /*
+
     // Get the incoming intents
     private void getIncomingIntent(){
         Log.d(TAG, "getIncomingIntent: checking for incoming intents.");
         // Checks if the intent have any extras before trying to get the extras
+        /*
         if(getIntent().hasExtra("TeachersFirstName") && getIntent().hasExtra("TeachersLastName") && getIntent().hasExtra("TeachersExperience")
                 && getIntent().hasExtra("TeachersLocation") && getIntent().hasExtra("TeachersCarType") && getIntent().hasExtra("TeachersCarYear")
                 && getIntent().hasExtra("TeachersGearType") && getIntent().hasExtra("TeachersLessonPrice") && getIntent().hasExtra("TeachersPhoneNumber")){
             Log.d(TAG, "getIncomingIntent: get and set incoming intents.");
-
+*/
             String firstName = getIntent().getStringExtra("TeachersFirstName");
+            /*
             String lastName = getIntent().getStringExtra("TeachersLastName");
             String experience = getIntent().getStringExtra("TeachersExperience");
             String location = getIntent().getStringExtra("TeachersLocation");
@@ -96,7 +97,10 @@ public class ContactTeacherActivity extends AppCompatActivity {
             String lessonPrice = getIntent().getStringExtra("TeachersLessonPrice");
             String phoneNumber = getIntent().getStringExtra("TeachersPhoneNumber");
 
+
+             */
             tvTeachersFirstName.setText(firstName);
+            /*
             tvTeachersLastName.setText(lastName);
             tvTeachersExperience.setText(experience);
             tvTeacherslocations.setText(location);
@@ -106,7 +110,9 @@ public class ContactTeacherActivity extends AppCompatActivity {
             tvLessonPrice.setText(lessonPrice);
             tvTeachersPhoneNumber.setText(phoneNumber);
 
-        }
+
+             */
+        //}
     }
 
     // Call to the teacher
@@ -143,5 +149,5 @@ public class ContactTeacherActivity extends AppCompatActivity {
         }
     }
 
-     */
+
 }
