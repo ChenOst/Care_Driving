@@ -27,12 +27,13 @@ public class InformationTeacherActivity extends AppCompatActivity implements Vie
     private Spinner transmission;
     private EditText lessonPrice;
 
-    private Button save;
-    private Button previous;
+    private Button btnSave;
+    private Button btnPrevious;
 
     private Teacher teacher;
     private final String TEACHER = "teacher";
     private String userId;
+    private Intent startIntent;
 
     private DatabaseReference myRef;
 
@@ -49,39 +50,49 @@ public class InformationTeacherActivity extends AppCompatActivity implements Vie
         transmission = findViewById(R.id.spnInformationTeacherTransmission);
         lessonPrice = findViewById(R.id.etInformationTeacherLessonPrice);
 
-        Intent intent = getIntent();
-        teacher = (Teacher) intent.getSerializableExtra("User");
-        userId = (String) intent.getSerializableExtra("uid");
+        startIntent = getIntent();
+        teacher = (Teacher) startIntent.getSerializableExtra("User");
+        userId = (String) startIntent.getSerializableExtra("uid");
 
-        save = findViewById(R.id.btnInformationTeacherSaveInfo);
-        previous = findViewById(R.id.btnInformationTeacherPreviousInfo);
+        btnSave = findViewById(R.id.btnInformationTeacherSaveInfo);
+        btnPrevious = findViewById(R.id.btnInformationTeacherPreviousInfo);
 
         spinnerTransmissionListener();
         spinnerCarBrandsListener();
         spinnerExperienceListener();
         spinnerCarYearListener();
 
-        save.setOnClickListener(this);
-        previous.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
+        btnPrevious.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View view) {
-        if (view == save) {
+        if (view == btnSave) {
             saveUserInformation();
         }
-        if (view == previous) {
+        if (view == btnPrevious) {
             openPreviousPage();
         }
     }
 
     private void saveUserInformation() {
         String price = lessonPrice.getText().toString();
+
+        Validation validation = new Validation();
+        validation.checkPrice(price);
+
+        if(validation.hasErrors()){
+            for(String error : validation.getErrors()){
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+
         teacher.setLessonPrice(price);
 //        myRef.child(TEACHER).push().setValue(user);
 //        myRef.child("users").child(userId).setValue(teacher);
-
 //        Toast.makeText(this, teacher.getCarType(), Toast.LENGTH_SHORT).show();
 
         myRef.child("users").child(userId).child("info").setValue(teacher);
@@ -95,9 +106,9 @@ public class InformationTeacherActivity extends AppCompatActivity implements Vie
     }
 
     private void openPreviousPage() {
-        //add chosen data to intent
-        //go to information activity
         Intent intent = new Intent(InformationTeacherActivity.this, InformationActivity.class);
+        intent.putExtra("User", startIntent.getSerializableExtra("User"));
+        intent.putExtra("Type", "Teacher");
         startActivity(intent);
     }
 

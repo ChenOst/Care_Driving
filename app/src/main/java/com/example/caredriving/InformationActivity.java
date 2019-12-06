@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -30,10 +31,12 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     private Button nextInfo;
     private Button cancelInfo;
     private RadioGroup radioUserGroup;
-    private RadioButton radioUserButton;
+    private RadioButton radioStudentButton;
+    private RadioButton radioTeacherButton;
 
     private User user;
     private String nextActivity = "student";
+    private Intent startIntent;
 
     private DatabaseReference myRef;
     private FirebaseAuth firebaseAuth;
@@ -46,7 +49,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
 
-
         firebaseAuth = FirebaseAuth.getInstance();
 //        myRef = FirebaseDatabase.getInstance().getReference();
         currentId = firebaseAuth.getCurrentUser().getUid();
@@ -55,6 +57,26 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         lastName = findViewById(R.id.etInformationLastName);
         age = findViewById(R.id.etInformationAge);
         city = findViewById(R.id.spnInformationCity);
+
+        startIntent = getIntent();
+
+        if (startIntent.hasExtra("User")) {
+
+            String type = startIntent.getStringExtra("Type");
+            startIntent.removeExtra("Type");
+
+            if (type.equals("Student")) {
+                user = (Student) startIntent.getSerializableExtra("User");
+                setCreatedFields();
+            } else {
+                nextActivity = "teacher";
+                user = (Teacher) startIntent.getSerializableExtra("User");
+                setCreatedFields();
+
+                radioTeacherButton = findViewById(R.id.radioTeacher);
+                radioTeacherButton.setChecked(true);
+            }
+        }
 
         nextInfo = findViewById(R.id.btnInformationNext);
         cancelInfo = findViewById(R.id.btnInformationCancelInfo);
@@ -70,17 +92,34 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 int selectedId = radioUserGroup.getCheckedRadioButtonId();
-                radioUserButton = findViewById(selectedId);
+                radioStudentButton = findViewById(selectedId);
+                nextActivity = "student";
 
-                if (radioUserButton.getText().toString().toLowerCase().equals(nextActivity)) {
+                if (radioStudentButton.getText().toString().toLowerCase().equals(nextActivity)) {
                     nextActivity = "student";
                 } else {
                     nextActivity = "teacher";
                 }
             }
         });
-
     }
+
+    private void setCreatedFields(){
+        firstName.setText(user.getFirstName());
+        lastName.setText(user.getLastName());
+        age.setText(user.getAge());
+        city.setSelection(getIndex(city, user.getCity()));
+    }
+
+    private int getIndex(Spinner spinner, String myString) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -130,9 +169,19 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
-    ;
-
     private void continueRegistration() {
+
+        Validation validation = new Validation();
+        validation.checkFirstName(firstName.getText().toString().trim());
+        validation.checkLastName(lastName.getText().toString().trim());
+        validation.checkAge(age.getText().toString().trim());
+
+        if (validation.hasErrors()) {
+            for (String error : validation.getErrors()) {
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
 
         Intent intent;
         if (nextActivity.equals("student")) {
@@ -147,7 +196,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         user.setLastName(lastName.getText().toString().trim());
         user.setAge(age.getText().toString().trim());
         user.setCity(cityFromSpinner);
-//        user.setCity(city.getText().toString().trim());
 
         intent.putExtra("User", user);
         intent.putExtra("uid", currentId);

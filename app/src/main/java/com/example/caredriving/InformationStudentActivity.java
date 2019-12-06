@@ -26,6 +26,7 @@ public class InformationStudentActivity extends AppCompatActivity implements Vie
     private Student student;
     private final String STUDENT = "student";
     private String userId;
+    private Intent startIntent;
 
     private DatabaseReference myRef;
 
@@ -40,9 +41,9 @@ public class InformationStudentActivity extends AppCompatActivity implements Vie
         greenForm = findViewById(R.id.spnInformationStudentGreenForm);
         theory = findViewById(R.id.spnInformationStudentTheory);
 
-        Intent intent = getIntent();
-        student = (Student) intent.getSerializableExtra("User");
-        userId = (String) intent.getSerializableExtra("uid");
+        startIntent = getIntent();
+        student = (Student) startIntent.getSerializableExtra("User");
+        userId = (String) startIntent.getSerializableExtra("uid");
 
         btnSave = findViewById(R.id.btnInformationStudentSaveInfo);
         btnPrevious = findViewById(R.id.btnInformationStudentPreviousInfo);
@@ -76,9 +77,9 @@ public class InformationStudentActivity extends AppCompatActivity implements Vie
     }
 
     private void openPreviousPage() {
-        //add chosen data to intent
-        //go to information activity
         Intent intent = new Intent(InformationStudentActivity.this, InformationActivity.class);
+        intent.putExtra("User", startIntent.getSerializableExtra("User"));
+        intent.putExtra("Type", "Student");
         startActivity(intent);
     }
 
