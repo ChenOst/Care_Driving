@@ -34,6 +34,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
@@ -45,8 +46,11 @@ public class MainActivity extends AppCompatActivity implements
 
     private AppBarConfiguration mAppBarConfiguration;
     public ImageButton imgButton;
+    private TextView nameHeader;
+    private TextView emailHeader;
 
     public User user;
+    public String userType;
 
     private int day, month, year, hour, minute;
     private int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
@@ -99,12 +103,20 @@ public class MainActivity extends AppCompatActivity implements
 
         //Take the user from login activity and put it in "user" variable
         user = (User) getIntent().getSerializableExtra("User");
-        final String userType = getIntent().getStringExtra("type");
+        userType = getIntent().getStringExtra("type");
         final String uid = getIntent().getStringExtra("Uid");
 
 
-        //What happen when click on image view in navigation bar
+
+        ///////////////////////////////////// Header part ////////////////////////////////////////////
         View header = navigationView.getHeaderView(0);
+        nameHeader = header.findViewById(R.id.nameHeader);
+        emailHeader = header.findViewById(R.id.emailHeader);
+
+        //Display name, email in header of navigation bar
+        displayHeaderDetailsToUser();
+
+        //What happen when click on image view in navigation bar
         imgButton = (ImageButton) header.findViewById(R.id.imageButton);
         imgButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +177,21 @@ public class MainActivity extends AppCompatActivity implements
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         hourFinal = i;
         minuteFinal = i1;
+    }
+
+    private void displayHeaderDetailsToUser(){
+        if(userType.equals("teacher")){
+            Teacher teacher = (Teacher) user;
+            String hello = "Welcome, "+teacher.getFirstName()+"!";
+            nameHeader.setText(hello);
+            emailHeader.setText(teacher.getEmail());
+        }
+        if(userType.equals("student")){
+            Student student = (Student) user;
+            String hello = "Hello "+student.getFirstName()+" !";
+            nameHeader.setText(hello);
+            emailHeader.setText(student.getEmail());
+        }
     }
 }
 

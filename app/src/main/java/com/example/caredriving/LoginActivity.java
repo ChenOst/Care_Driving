@@ -170,8 +170,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String lastName = dataSnapshot.child("info").child("lastName").getValue().toString();
         String age = dataSnapshot.child("info").child("age").getValue().toString();
         String city = dataSnapshot.child("info").child("city").getValue().toString();
-//        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        String email = "not-working@gmail.com";
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+//        String email = "not-working@gmail.com";
 //        String phoneNumber = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
         String phoneNumber = "052-******";
         String lessonPrice = dataSnapshot.child("info").child("lessonPrice").getValue().toString();

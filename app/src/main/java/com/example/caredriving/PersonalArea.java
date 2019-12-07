@@ -2,6 +2,7 @@ package com.example.caredriving;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,8 +24,6 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
     User user;
     String userType;
     String userUid;
-
-    private ProgressDialog progressDialog;
 
     EditText fnameEditText;
     EditText lnameEditText;
@@ -62,6 +61,8 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
 
     Button editBtn;
     Button saveBtn;
+
+    boolean savePressed = false;
 
 
     @Override
@@ -136,7 +137,6 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
         editBtn = findViewById(R.id.editButton);
         saveBtn = findViewById(R.id.saveButton);
 
-        progressDialog = new ProgressDialog(this);
 
         //Fill hint details in all fields according the "user" and "type" from intent
         fillHintDetails();
@@ -147,8 +147,10 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if(view == editBtn)
+        if(view == editBtn) {
             editButtonClicked();
+            saveBtn.setEnabled(true);
+        }
         if(view == saveBtn)
             saveButtonClicked();
     }
@@ -279,6 +281,7 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
     private void saveButtonClicked(){
         DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUid).child("info");
         if(userType.equals("teacher")){
+            Teacher teacher = (Teacher) user;
             userReference.child("firstName").setValue(fnameEditText.getText().toString());
             userReference.child("lastName").setValue(lnameEditText.getText().toString());
             userReference.child("age").setValue(ageEditText.getText().toString());
@@ -288,12 +291,61 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
             userReference.child("experience").setValue(experienceEditText.getText().toString());
             userReference.child("lessonPrice").setValue(lessonPriceEditText.getText().toString());
             userReference.child("transmission").setValue(teacher_transmissionEditText.getText().toString());
-            ///////////////////////////////////////////////
-            ////////חסר שינוי של הUSER המקומי
+            teacher.setFirstName(fnameEditText.getText().toString());
+            teacher.setLastName(lnameEditText.getText().toString());
+            teacher.setAge(ageEditText.getText().toString());
+            teacher.setCity(cityEditText.getText().toString());
+            teacher.setCarBrand(carTypeEditText.getText().toString());
+            teacher.setCarYear(carYearEditText.getText().toString());
+            teacher.setExperience(experienceEditText.getText().toString());
+            teacher.setLessonPrice(lessonPriceEditText.getText().toString());
+            teacher.setTransmission(teacher_transmissionEditText.getText().toString());
+            user = teacher;
         }
         if(userType.equals("student")){
-
+            Student student = (Student) user;
+            userReference.child("firstName").setValue(fnameEditText.getText().toString());
+            userReference.child("lastName").setValue(lnameEditText.getText().toString());
+            userReference.child("age").setValue(ageEditText.getText().toString());
+            userReference.child("city").setValue(cityEditText.getText().toString());
+            userReference.child("greenForm").setValue(greenFormEditText.getText().toString());
+            userReference.child("transmission").setValue(student_transmissionEditText.getText().toString());
+            userReference.child("theory").setValue(theoryEditText.getText().toString());
+            userReference.child("teacherId").setValue(teacherIdEditText.getText().toString());
+            student.setFirstName(fnameEditText.getText().toString());
+            student.setLastName(lnameEditText.getText().toString());
+            student.setAge(ageEditText.getText().toString());
+            student.setCity(cityEditText.getText().toString());
+            student.setGreenForm(greenFormEditText.getText().toString());
+            student.setTransmission(student_transmissionEditText.getText().toString());
+            student.setTheory(theoryEditText.getText().toString());
+            student.setTeacherId(teacherIdEditText.getText().toString());
+            user = student;
         }
         setTextViewsNotEditable();
+        savePressed = true;
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        if(savePressed){
+            Intent intent = new Intent(PersonalArea.this, MainActivity.class);
+            intent.putExtra("User", user);
+            intent.putExtra("type", userType);
+            intent.putExtra("Uid", userUid);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent();
+            Bundle data = new Bundle();
+            data.putSerializable("User", user);
+            data.putString("type", userType);
+            data.putString("Uid", userUid);
+            intent.putExtras(data);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 }
