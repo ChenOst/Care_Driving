@@ -19,8 +19,13 @@ public class Student extends User {
         super();
     }
 
-    public Student(String firstName, String lastName, String age, String city, String email,  String phoneNumber) {
+    public Student(String firstName, String lastName, String age, String city, String email, String phoneNumber,
+                   String greenForm, String transmission, String theory, String teacherId) {
         super(firstName, lastName, age, city, email, phoneNumber);
+        this.greenForm = greenForm;
+        this.transmission = transmission;
+        this.theory = theory;
+        this.teacherId = teacherId;
     }
 
     @Override

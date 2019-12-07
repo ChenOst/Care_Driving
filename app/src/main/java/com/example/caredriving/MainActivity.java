@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements
 
         //Take the user from login activity and put it in "user" variable
         user = (User) getIntent().getSerializableExtra("User");
+        final String userType = getIntent().getStringExtra("type");
+        final String uid = getIntent().getStringExtra("Uid");
 
 
         //What happen when click on image view in navigation bar
@@ -109,8 +111,9 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, PersonalArea.class);
                 intent.putExtra("User", user);
+                intent.putExtra("type", userType);
+                intent.putExtra("Uid", uid);
                 startActivity(intent);
-                //finish();
             }
         });
 

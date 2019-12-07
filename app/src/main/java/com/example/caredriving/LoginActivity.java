@@ -17,6 +17,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Iterator;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,6 +34,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button btnLogin;
     private TextView tvRegistration;
     private ProgressDialog progressDialog;
+
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,8 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if(task.isSuccessful()){
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            findUser();
                         } else {
                             Toast.makeText(LoginActivity.this,
                                     "Login failed", Toast.LENGTH_SHORT).show();
@@ -123,6 +131,71 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     }
                 });
+    }
 
+    private void findUser(){
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String firebaseUserUid = firebaseUser.getUid();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+        DatabaseReference userDatabaseRefernce = databaseReference.child(firebaseUserUid);
+        userDatabaseRefernce.addListenerForSingleValueEvent(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Find type of FirebaseUser(Teacher/Student)
+                String usertype = dataSnapshot.child("type").getValue().toString();
+                // Create local instance of User(Teacher/Student)
+                if(usertype.equals("teacher")){
+                    user = fillDataForTeacherUser(dataSnapshot);
+                }
+                if(usertype.equals("student")){
+                    user = fillDataForStudentUser(dataSnapshot);
+                }
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("User", user);
+                intent.putExtra("type", usertype);
+                intent.putExtra("Uid", firebaseUserUid);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private Teacher fillDataForTeacherUser(DataSnapshot dataSnapshot){
+        String firstName = dataSnapshot.child("info").child("firstName").getValue().toString();
+        String lastName = dataSnapshot.child("info").child("lastName").getValue().toString();
+        String age = dataSnapshot.child("info").child("age").getValue().toString();
+        String city = dataSnapshot.child("info").child("city").getValue().toString();
+//        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String email = "not-working@gmail.com";
+//        String phoneNumber = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+        String phoneNumber = "052-******";
+        String lessonPrice = dataSnapshot.child("info").child("lessonPrice").getValue().toString();
+        String experience = dataSnapshot.child("info").child("experience").getValue().toString();
+        String carType = dataSnapshot.child("info").child("carType").getValue().toString();
+        String carYear = dataSnapshot.child("info").child("carYear").getValue().toString();
+        String transmission = dataSnapshot.child("info").child("transmission").getValue().toString();
+        return new Teacher(firstName, lastName, age, city, email, phoneNumber,
+                carType, carYear, experience, transmission, lessonPrice);
+    }
+
+    private Student fillDataForStudentUser(DataSnapshot dataSnapshot){
+        String firstName = dataSnapshot.child("info").child("firstName").getValue().toString();
+        String lastName = dataSnapshot.child("info").child("lastName").getValue().toString();
+        String age = dataSnapshot.child("info").child("age").getValue().toString();
+        String city = dataSnapshot.child("info").child("city").getValue().toString();
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+//        String phoneNumber = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+        String phoneNumber = "052-******";
+        String greenForm = dataSnapshot.child("info").child("greenForm").getValue().toString();
+        String transmission = dataSnapshot.child("info").child("transmission").getValue().toString();
+        String theory = dataSnapshot.child("info").child("theory").getValue().toString();
+        String teacherId = dataSnapshot.child("info").child("teacherId").getValue().toString();
+        return new Student(firstName, lastName, age, city, email, phoneNumber, greenForm,
+                transmission, theory, teacherId);
     }
 }
