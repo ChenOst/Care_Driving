@@ -171,9 +171,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String age = dataSnapshot.child("info").child("age").getValue().toString();
         String city = dataSnapshot.child("info").child("city").getValue().toString();
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-//        String email = "not-working@gmail.com";
-//        String phoneNumber = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
-        String phoneNumber = "052-******";
+        String phoneNumber = dataSnapshot.child("info").child("phoneNumber").getValue().toString();
+//        String phoneNumber = "052-******";
         String lessonPrice = dataSnapshot.child("info").child("lessonPrice").getValue().toString();
         String experience = dataSnapshot.child("info").child("experience").getValue().toString();
         String carType = dataSnapshot.child("info").child("carType").getValue().toString();
@@ -189,8 +188,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String age = dataSnapshot.child("info").child("age").getValue().toString();
         String city = dataSnapshot.child("info").child("city").getValue().toString();
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-//        String phoneNumber = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
-        String phoneNumber = "052-******";
+        String phoneNumber = dataSnapshot.child("info").child("phoneNumber").getValue().toString();
+//        String phoneNumber = "052-******";
         String greenForm = dataSnapshot.child("info").child("greenForm").getValue().toString();
         String transmission = dataSnapshot.child("info").child("transmission").getValue().toString();
         String theory = dataSnapshot.child("info").child("theory").getValue().toString();

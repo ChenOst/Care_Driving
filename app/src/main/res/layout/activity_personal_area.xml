@@ -172,6 +172,29 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/phoneNumberInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/viewFillphoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="Phone Number" />
+
+                <EditText
+                    android:id="@+id/fillphoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="05*-*******"
+                    android:enabled="false"
+                    android:padding="4dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/carType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

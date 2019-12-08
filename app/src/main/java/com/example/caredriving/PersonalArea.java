@@ -30,6 +30,7 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
     EditText ageEditText;
     EditText cityEditText;
     EditText emailEditText;
+    EditText phoneNumberEditText;
 
     // Teacher info
     EditText carTypeEditText;
@@ -89,6 +90,7 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
         ageEditText = findViewById(R.id.fillAge);
         cityEditText = findViewById(R.id.fillCity);
         emailEditText = findViewById(R.id.fillemail);
+        phoneNumberEditText = findViewById(R.id.fillphoneNumber);
         carTypeEditText = findViewById(R.id.fillcarType);
         carYearEditText = findViewById(R.id.fillcarYear);
         experienceEditText = findViewById(R.id.fillexperience);
@@ -103,6 +105,7 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
         userViews.add(ageEditText);
         userViews.add(cityEditText);
         userViews.add(emailEditText);
+        userViews.add(phoneNumberEditText);
         teacherViews.add(carTypeEditText);
         teacherViews.add(carYearEditText);
         teacherViews.add(experienceEditText);
@@ -151,8 +154,10 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
             editButtonClicked();
             saveBtn.setEnabled(true);
         }
-        if(view == saveBtn)
+        if(view == saveBtn) {
             saveButtonClicked();
+            saveBtn.setEnabled(false);
+        }
     }
 
     private void setTextViewsNotEditable(){
@@ -196,6 +201,7 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
         ageEditText.setHint(user.getAge());
         cityEditText.setHint(user.getCity());
         emailEditText.setHint(user.getEmail());
+        phoneNumberEditText.setHint(user.getPhoneNumber());
 
         // Teacher hint details
         if(userType.equals("teacher")){
@@ -245,6 +251,8 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
         ageEditText.setText(user.getAge());
         cityEditText.setText(user.getCity());
         emailEditText.setText(user.getEmail());
+        phoneNumberEditText.setText(user.getPhoneNumber());
+
 
         // Teacher text details
         if(userType.equals("teacher")){
@@ -286,6 +294,7 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
             userReference.child("lastName").setValue(lnameEditText.getText().toString());
             userReference.child("age").setValue(ageEditText.getText().toString());
             userReference.child("city").setValue(cityEditText.getText().toString());
+            userReference.child("phoneNumber").setValue(phoneNumberEditText.getText().toString());
             userReference.child("carType").setValue(carTypeEditText.getText().toString());
             userReference.child("carYear").setValue(carYearEditText.getText().toString());
             userReference.child("experience").setValue(experienceEditText.getText().toString());
@@ -295,6 +304,7 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
             teacher.setLastName(lnameEditText.getText().toString());
             teacher.setAge(ageEditText.getText().toString());
             teacher.setCity(cityEditText.getText().toString());
+            teacher.setPhoneNumber(phoneNumberEditText.getText().toString());
             teacher.setCarBrand(carTypeEditText.getText().toString());
             teacher.setCarYear(carYearEditText.getText().toString());
             teacher.setExperience(experienceEditText.getText().toString());
@@ -308,6 +318,7 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
             userReference.child("lastName").setValue(lnameEditText.getText().toString());
             userReference.child("age").setValue(ageEditText.getText().toString());
             userReference.child("city").setValue(cityEditText.getText().toString());
+            userReference.child("phoneNumber").setValue(phoneNumberEditText.getText().toString());
             userReference.child("greenForm").setValue(greenFormEditText.getText().toString());
             userReference.child("transmission").setValue(student_transmissionEditText.getText().toString());
             userReference.child("theory").setValue(theoryEditText.getText().toString());
@@ -316,6 +327,7 @@ public class PersonalArea extends AppCompatActivity implements View.OnClickListe
             student.setLastName(lnameEditText.getText().toString());
             student.setAge(ageEditText.getText().toString());
             student.setCity(cityEditText.getText().toString());
+            student.setPhoneNumber(phoneNumberEditText.getText().toString());
             student.setGreenForm(greenFormEditText.getText().toString());
             student.setTransmission(student_transmissionEditText.getText().toString());
             student.setTheory(theoryEditText.getText().toString());
