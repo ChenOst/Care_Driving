@@ -26,10 +26,12 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     private EditText firstName;
     private EditText lastName;
     private EditText age;
-    private Spinner city;
+    private EditText number;
+    private Spinner spnCity;
+    private Spinner spnNumber;
 
-    private Button nextInfo;
-    private Button cancelInfo;
+    private Button btnNextInfo;
+    private Button btnCancelInfo;
     private RadioGroup radioUserGroup;
     private RadioButton radioStudentButton;
     private RadioButton radioTeacherButton;
@@ -43,6 +45,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     private FirebaseAuth firebaseAuth;
     private String currentId;
     private String cityFromSpinner;
+    private String fullNumber;
 
 
     @Override
@@ -57,16 +60,17 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         firstName = findViewById(R.id.etInformationFirstName);
         lastName = findViewById(R.id.etInformationLastName);
         age = findViewById(R.id.etInformationAge);
-        city = findViewById(R.id.spnInformationCity);
+        number = findViewById(R.id.etInformationNumber);
+
+        spnCity = findViewById(R.id.spnInformationCity);
+        spnNumber = findViewById(R.id.spnInformationNumber);
 
         startIntent = getIntent();
         email = getIntent().getStringExtra("Email");
 
         if (startIntent.hasExtra("User")) {
-
             String type = startIntent.getStringExtra("Type");
             startIntent.removeExtra("Type");
-
             if (type.equals("Student")) {
                 user = (Student) startIntent.getSerializableExtra("User");
                 setCreatedFields();
@@ -74,21 +78,19 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
                 nextActivity = "teacher";
                 user = (Teacher) startIntent.getSerializableExtra("User");
                 setCreatedFields();
-
                 radioTeacherButton = findViewById(R.id.radioTeacher);
                 radioTeacherButton.setChecked(true);
             }
         }
 
-        nextInfo = findViewById(R.id.btnInformationNext);
-        cancelInfo = findViewById(R.id.btnInformationCancelInfo);
-
+        btnNextInfo = findViewById(R.id.btnInformationNext);
+        btnCancelInfo = findViewById(R.id.btnInformationCancelInfo);
         radioUserGroup = findViewById(R.id.radioUser);
 
-
         spinnerCityListener();
-        nextInfo.setOnClickListener(this);
-        cancelInfo.setOnClickListener(this);
+        spinnerNumberListener();
+        btnNextInfo.setOnClickListener(this);
+        btnCancelInfo.setOnClickListener(this);
 
         radioUserGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -96,7 +98,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
                 int selectedId = radioUserGroup.getCheckedRadioButtonId();
                 radioStudentButton = findViewById(selectedId);
                 nextActivity = "student";
-
                 if (radioStudentButton.getText().toString().toLowerCase().equals(nextActivity)) {
                     nextActivity = "student";
                 } else {
@@ -106,31 +107,66 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
+    @Override
+    public void onClick(View view) {
+        if (view == btnNextInfo) {
+            continueRegistration();
+        }
+        if (view == btnCancelInfo) {
+            submitCancelRegistration();
+        }
+    }
+
+    //if we back to previous activity we already have the information
     private void setCreatedFields(){
         firstName.setText(user.getFirstName());
         lastName.setText(user.getLastName());
         age.setText(user.getAge());
-        city.setSelection(getIndex(city, user.getCity()));
+
+        String fullNum = user.getPhoneNumber();
+        String spnNum = fullNum.substring(0, 3);
+        String etNum = fullNum.substring(4, fullNum.length());
+
+        number.setText(etNum);
+        spnNumber.setSelection(getIndex(spnNumber, spnNum));
+        spnCity.setSelection(getIndex(spnCity, user.getCity()));
     }
 
-    private int getIndex(Spinner spinner, String myString) {
-        for (int i = 0; i < spinner.getCount(); i++) {
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)) {
-                return i;
+    private void continueRegistration() {
+        Validation validation = new Validation();
+        validation.checkFirstName(firstName.getText().toString().trim());
+        validation.checkLastName(lastName.getText().toString().trim());
+        validation.checkAge(age.getText().toString().trim());
+        validation.checkNumber(number.getText().toString().trim());
+
+        if (validation.hasErrors()) {
+            for (String error : validation.getErrors()) {
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
             }
+            return;
         }
-        return 0;
-    }
 
+        Intent intent;
+        if (nextActivity.equals("student")) {
+            user = new Student();
+            intent = new Intent(InformationActivity.this, InformationStudentActivity.class);
+        } else {
+            user = new Teacher();
+            intent = new Intent(InformationActivity.this, InformationTeacherActivity.class);
+        }
 
-    @Override
-    public void onClick(View view) {
-        if (view == nextInfo) {
-            continueRegistration();
-        }
-        if (view == cancelInfo) {
-            submitCancelRegistration();
-        }
+        fullNumber = fullNumber + "-" + number.getText().toString().trim();
+
+        user.setFirstName(firstName.getText().toString().trim());
+        user.setLastName(lastName.getText().toString().trim());
+        user.setAge(age.getText().toString().trim());
+        user.setCity(cityFromSpinner);
+        user.setEmail(email);
+        user.setPhoneNumber(fullNumber);
+
+        intent.putExtra("User", user);
+        intent.putExtra("uid", currentId);
+        startActivity(intent);
     }
 
     private void submitCancelRegistration() {
@@ -158,7 +194,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void spinnerCityListener() {
-        city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spnCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 cityFromSpinner = adapterView.getItemAtPosition(i).toString();
@@ -171,37 +207,27 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
-    private void continueRegistration() {
-
-        Validation validation = new Validation();
-        validation.checkFirstName(firstName.getText().toString().trim());
-        validation.checkLastName(lastName.getText().toString().trim());
-        validation.checkAge(age.getText().toString().trim());
-
-        if (validation.hasErrors()) {
-            for (String error : validation.getErrors()) {
-                Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    private void spinnerNumberListener() {
+        spnNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                fullNumber = adapterView.getItemAtPosition(i).toString();
             }
-            return;
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                fullNumber = adapterView.getItemAtPosition(0).toString();
+            }
+        });
+    }
+
+    private int getIndex(Spinner spinner, String myString) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)) {
+                return i;
+            }
         }
-
-        Intent intent;
-        if (nextActivity.equals("student")) {
-            user = new Student();
-            intent = new Intent(InformationActivity.this, InformationStudentActivity.class);
-        } else {
-            user = new Teacher();
-            intent = new Intent(InformationActivity.this, InformationTeacherActivity.class);
-        }
-
-        user.setFirstName(firstName.getText().toString().trim());
-        user.setLastName(lastName.getText().toString().trim());
-        user.setAge(age.getText().toString().trim());
-        user.setCity(cityFromSpinner);
-        user.setEmail(email);
-
-        intent.putExtra("User", user);
-        intent.putExtra("uid", currentId);
-        startActivity(intent);
+        return 0;
     }
 }
+

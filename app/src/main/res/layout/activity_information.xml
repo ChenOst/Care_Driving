@@ -112,9 +112,48 @@
                 android:id="@+id/spnInformationCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="1"
                 android:prompt="@string/city_prompt"
                 android:entries="@array/cities"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/numberInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvInformationNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:text="Phone number" />
+
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spnInformationNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="1"
+                    android:prompt="@string/phone_numbers_prompt"
+                    android:entries="@array/phone_numbers"/>
+
+                <EditText
+                    android:id="@+id/etInformationNumber"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:inputType="number"
+                    android:hint="1234567"
+                    />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <RadioGroup

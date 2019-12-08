@@ -72,4 +72,10 @@ public class Validation {
     public boolean hasErrors() {
         return errors.size() != 0;
     }
+
+    public void checkNumber(String number){
+        if(number.length() != 7){
+            errors.add("Number is incorrect");
+        }
+    }
 }

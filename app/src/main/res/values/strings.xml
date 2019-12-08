@@ -27,6 +27,7 @@
     <string name="experience_prompt">Year of experience</string>
     <string name="green_form_prompt">Do you have green form?</string>
     <string name="theory_prompt">Did your passed theory exam?</string>
+    <string name="phone_numbers_prompt">Choose number code</string>
 
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
@@ -79,6 +80,15 @@
         <item>Rosh-HaAin</item>
         <item>Bat-Yam</item>
         <item>Holon</item>
+    </string-array>
+
+    <string-array name="phone_numbers">
+        <item>050</item>
+        <item>052</item>
+        <item>053</item>
+        <item>054</item>
+        <item>055</item>
+        <item>057</item>
     </string-array>
 
     <string-array name="transmission_type">
