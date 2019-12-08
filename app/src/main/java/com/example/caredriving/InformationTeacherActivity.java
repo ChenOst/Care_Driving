@@ -102,6 +102,9 @@ public class InformationTeacherActivity extends AppCompatActivity implements Vie
 //        myRef.child("users").child(userId).child("teacher").setValue(teacherId);
 
         Intent intent = new Intent(InformationTeacherActivity.this, MainActivity.class);
+        intent.putExtra("User", teacher);
+        intent.putExtra("Uid", userId);
+        intent.putExtra("type", TEACHER);
         startActivity(intent);
     }
 

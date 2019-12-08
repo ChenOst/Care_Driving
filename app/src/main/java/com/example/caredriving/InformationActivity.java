@@ -37,6 +37,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     private User user;
     private String nextActivity = "student";
     private Intent startIntent;
+    private String email;
 
     private DatabaseReference myRef;
     private FirebaseAuth firebaseAuth;
@@ -59,6 +60,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         city = findViewById(R.id.spnInformationCity);
 
         startIntent = getIntent();
+        email = getIntent().getStringExtra("Email");
 
         if (startIntent.hasExtra("User")) {
 
@@ -196,6 +198,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         user.setLastName(lastName.getText().toString().trim());
         user.setAge(age.getText().toString().trim());
         user.setCity(cityFromSpinner);
+        user.setEmail(email);
 
         intent.putExtra("User", user);
         intent.putExtra("uid", currentId);

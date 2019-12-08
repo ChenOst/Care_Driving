@@ -29,6 +29,7 @@ abstract class User extends Entity implements Serializable {
     public void setLastName(String lastName) {this.lastName = lastName;}
     public void setAge(String age) {this.age = age;}
     public void setCity(String city) {this.city = city;}
+    public void setEmail(String email){this.email = email;}
     public void setPhoneNumber(String phoneNumber){this.phoneNumber = phoneNumber;}
 
     public String getFirstName() {return firstName;}

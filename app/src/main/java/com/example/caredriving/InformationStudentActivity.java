@@ -73,6 +73,9 @@ public class InformationStudentActivity extends AppCompatActivity implements Vie
         myRef.child("users").child(userId).child("info").setValue(student);
         myRef.child("users").child(userId).child("type").setValue(STUDENT);
         Intent intent = new Intent(InformationStudentActivity.this, MainActivity.class);
+        intent.putExtra("User", student);
+        intent.putExtra("Uid", userId);
+        intent.putExtra("type", STUDENT);
         startActivity(intent);
     }
 

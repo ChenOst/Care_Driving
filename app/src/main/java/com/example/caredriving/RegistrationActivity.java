@@ -36,6 +36,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     private ProgressDialog progressDialog;
 
+    private String email;
+    private String password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,12 +96,13 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     private void openInformationActivity() {
         Intent intent = new Intent(RegistrationActivity.this, InformationActivity.class);
+        intent.putExtra("Email", email);
         startActivity(intent);
     }
 
     private void registerUser() {
-        String email = etRegistrationEmail.getText().toString().trim();
-        String password = etRegistrationPassword.getText().toString().trim();
+        email = etRegistrationEmail.getText().toString().trim();
+        password = etRegistrationPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
