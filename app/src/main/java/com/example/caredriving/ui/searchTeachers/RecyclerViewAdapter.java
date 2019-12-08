@@ -20,15 +20,12 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     private static final String TAG = "RecyclerViewAdapter";
-
-
     private ArrayList<Teacher> teachers = new ArrayList<>();
     private Context context;
 
     public RecyclerViewAdapter(Context context, ArrayList<Teacher> teachers) {
         this.context = context;
         this.teachers = teachers;
-
     }
 
     // Recycling the ViewHolder - put things into position
@@ -80,9 +77,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tvGearType = itemView.findViewById(R.id.tvGearType);
             layoutTeachersDetails = itemView.findViewById(R.id.layoutTeachersDetails);
 
+            // Send to the next activity the relevant information
             layoutTeachersDetails.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.d(TAG, "onClickListener: called.");
                     int position = getAdapterPosition();
                     Intent intent = new Intent(itemView.getContext(), ContactTeacherActivity.class);
                     intent.putExtra("TeachersFirstName", teachers.get(position).getFirstName());
@@ -98,9 +97,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             });
         }
-
     }
-
-
-
 }

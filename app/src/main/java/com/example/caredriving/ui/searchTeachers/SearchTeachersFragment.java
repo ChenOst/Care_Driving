@@ -1,7 +1,6 @@
 package com.example.caredriving.ui.searchTeachers;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,13 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.caredriving.R;
 import com.example.caredriving.Teacher;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,10 +28,8 @@ import java.util.ArrayList;
 public class SearchTeachersFragment extends Fragment {
 
     private static ArrayList<Teacher> teachers = new ArrayList<>();
-
-    private static String item = "";
+    private static ArrayList<String> items = new ArrayList<>();
     private DatabaseReference reference;
-
 
     // Location Filters
     private Button btnLocationsFilter;
@@ -57,9 +55,6 @@ public class SearchTeachersFragment extends Fragment {
     private boolean[] checkedPrice; // Contains all the locations that the user checked
     private ArrayList<Integer> selectedPrice = new ArrayList<>(); // The locations the user selected - helps to avoid duplicated data
 
-
-    private static boolean added = false;
-
     public static SearchTeachersFragment newInstance(){
         SearchTeachersFragment searchTeachersFragment = new SearchTeachersFragment();
         return searchTeachersFragment;
@@ -71,6 +66,7 @@ public class SearchTeachersFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_search_teachers, container, false);
         teachers.clear();
 
+        // Location Filters
         btnLocationsFilter = root.findViewById(R.id.btnLocationsFilter);
         listLocations = getResources().getStringArray(R.array.cities);
         checkedLocations = new boolean[listLocations.length];
@@ -98,7 +94,7 @@ public class SearchTeachersFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         for (int i=0 ; i<selectedLocations.size(); i++){
-                            item = item + listLocations[selectedLocations.get(i)];
+                            items.add(listLocations[selectedLocations.get(i)]);
                         }
                     }
                 });
@@ -122,6 +118,7 @@ public class SearchTeachersFragment extends Fragment {
             }
         });
 
+        // Car brands Filters
         btnCarBrandsFilter = root.findViewById(R.id.btnCarBrandsFilter);
         listCarBrands = getResources().getStringArray(R.array.car_brands);
         checkedCarBrands = new boolean[listCarBrands.length];
@@ -149,7 +146,7 @@ public class SearchTeachersFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         for (int i=0 ; i<selectedCarBrands.size(); i++){
-                            item = item + listCarBrands[selectedCarBrands.get(i)];
+                            items.add(listCarBrands[selectedCarBrands.get(i)]);
                         }
                     }
                 });
@@ -173,6 +170,7 @@ public class SearchTeachersFragment extends Fragment {
             }
         });
 
+        // Gear Types Filters
         btnGearTypesFilter = root.findViewById(R.id.btnGearTypesFilter);
         listGearTypes = getResources().getStringArray(R.array.transmission_type);
         checkedGearTypes = new boolean[listGearTypes.length];
@@ -200,7 +198,7 @@ public class SearchTeachersFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         for (int i=0 ; i<selectedGearTypes.size(); i++){
-                            item = item + listGearTypes[selectedGearTypes.get(i)];
+                            items.add(listGearTypes[selectedGearTypes.get(i)]);
                         }
                     }
                 });
@@ -224,6 +222,7 @@ public class SearchTeachersFragment extends Fragment {
             }
         });
 
+        // Price Filters
         btnPriceFilter = root.findViewById(R.id.btnPriceFilter);
         listPrice = getResources().getStringArray(R.array.price_range);
         checkedPrice = new boolean[listPrice.length];
@@ -251,7 +250,7 @@ public class SearchTeachersFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         for (int i=0 ; i<selectedPrice.size(); i++){
-                            item = item + listPrice[selectedPrice.get(i)];
+                            items.add(listPrice[selectedPrice.get(i)]);
                         }
                     }
                 });
@@ -278,18 +277,19 @@ public class SearchTeachersFragment extends Fragment {
         final RecyclerView recyclerView = root.findViewById(R.id.recyclerviewTeachers);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        reference = FirebaseDatabase.getInstance().getReference().child("users");
+        // Get all teachers information from the Firebase
+            reference = FirebaseDatabase.getInstance().getReference().child("users");
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                            if (dataSnapshotl.child("type").getValue().equals("teacher")) {
+                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
                                 String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
                                 String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
                                 String age = dataSnapshotl.child("info").child("age").getValue().toString();
                                 String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                String email = "check@gmail.com";
-                                String phone = "052-8559958";
+                                String email = dataSnapshotl.child("info").child("email").getValue().toString();
+                                String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
                                 String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
                                 String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
                                 String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
@@ -301,15 +301,14 @@ public class SearchTeachersFragment extends Fragment {
                                 RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), teachers);
                                 recyclerView.setAdapter(adapter);
                             }
+
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     Toast.makeText(root.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
             });
-
         return root;
     }
 }

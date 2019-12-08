@@ -2,32 +2,19 @@ package com.example.caredriving.ui.searchTeachers;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.caredriving.MainActivity;
 import com.example.caredriving.R;
-import com.google.android.material.navigation.NavigationView;
 
 public class ContactTeacherActivity extends AppCompatActivity {
 
@@ -44,13 +31,12 @@ public class ContactTeacherActivity extends AppCompatActivity {
     private ImageView imgPhone;
     private static final int REQUEST_CALL = 1;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "ContactTeacherActivity: started.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_teacher);
         getSupportActionBar().setTitle("Contact Teacher");
-        Log.d(TAG, "ContactTeacherActivity: started.");
 
         tvTeachersFirstName = findViewById(R.id.tvDetailsTeachersFirstName);
         tvTeachersLastName = findViewById(R.id.tvDetailsTeachersLastName);
@@ -61,8 +47,9 @@ public class ContactTeacherActivity extends AppCompatActivity {
         tvGearType = findViewById(R.id.tvDetailsTeachersGear);
         tvLessonPrice = findViewById(R.id.tvDetailsLessonPrice);
         tvTeachersPhoneNumber = findViewById(R.id.tvDetailsTeachersPhone);
-
         imgPhone = findViewById(R.id.imgPhone);
+
+        // Get the incoming intents
         getIncomingIntent();
 
         // Call to the teacher by clicking the phone image
@@ -79,9 +66,9 @@ public class ContactTeacherActivity extends AppCompatActivity {
     private void getIncomingIntent(){
         Log.d(TAG, "getIncomingIntent: checking for incoming intents.");
         // Checks if the intent have any extras before trying to get the extras
-
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
+            // Get the extras
             String firstName = getIntent().getStringExtra("TeachersFirstName");
             String lastName = getIntent().getStringExtra("TeachersLastName");
             String experience = getIntent().getStringExtra("TeachersExperience");
@@ -91,7 +78,7 @@ public class ContactTeacherActivity extends AppCompatActivity {
             String gearType = getIntent().getStringExtra("TeachersGearType");
             String lessonPrice = getIntent().getStringExtra("TeachersLessonPrice");
             String phoneNumber = getIntent().getStringExtra("TeachersPhoneNumber");
-
+            // Set the extras
             tvTeachersFirstName.setText(firstName);
             tvTeachersLastName.setText(lastName);
             tvTeachersExperience.setText(experience);
@@ -122,7 +109,6 @@ public class ContactTeacherActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(dial));
             startActivity(intent);
         }
-
     }
 
     // Ask for permission to make the phone call
@@ -137,6 +123,4 @@ public class ContactTeacherActivity extends AppCompatActivity {
             }
         }
     }
-
-
 }
