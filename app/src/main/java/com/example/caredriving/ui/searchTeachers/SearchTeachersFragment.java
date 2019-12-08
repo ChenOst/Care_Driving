@@ -289,7 +289,7 @@ public class SearchTeachersFragment extends Fragment {
                         String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
                         String age = dataSnapshotl.child("info").child("age").getValue().toString();
                         String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                        String email = "Check";
+                        String email = dataSnapshotl.child("info").child("email").getValue().toString();
                         String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
                         String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
                         String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
@@ -297,12 +297,11 @@ public class SearchTeachersFragment extends Fragment {
                         String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
                         String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
 
-                        Teacher t = new Teacher(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                        teachers.add(t);
+                        Teacher teacher = new Teacher(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
+                        teachers.add(teacher);
                         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), teachers);
                         recyclerView.setAdapter(adapter);
                     }
-
                 }
             }
             @Override
