@@ -1,3 +1,4 @@
+
 package com.example.caredriving.ui.searchTeachers;
 
 import android.app.AlertDialog;
@@ -278,37 +279,37 @@ public class SearchTeachersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         // Get all teachers information from the Firebase
-            reference = FirebaseDatabase.getInstance().getReference().child("users");
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                                String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
+        reference = FirebaseDatabase.getInstance().getReference().child("users");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
+                    if (dataSnapshotl.child("type").getValue().equals("teacher")) {
+                        String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
+                        String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
+                        String age = dataSnapshotl.child("info").child("age").getValue().toString();
+                        String city = dataSnapshotl.child("info").child("city").getValue().toString();
+                        String email = "Check";
+                        String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
+                        String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
+                        String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
+                        String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
+                        String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
+                        String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
 
-                                Teacher t = new Teacher(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                teachers.add(t);
-                                RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), teachers);
-                                recyclerView.setAdapter(adapter);
-                            }
-
+                        Teacher t = new Teacher(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
+                        teachers.add(t);
+                        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), teachers);
+                        recyclerView.setAdapter(adapter);
                     }
+
                 }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(root.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                }
-            });
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(root.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
         return root;
     }
 }
