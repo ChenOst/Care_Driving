@@ -182,13 +182,13 @@ public class MainActivity extends AppCompatActivity implements
     private void displayHeaderDetailsToUser(){
         if(userType.equals("teacher")){
             Teacher teacher = (Teacher) user;
-            String hello = "Welcome, "+teacher.getFirstName()+"!";
+            String hello = "Welcome, "+teacher.getFirstName()+" !";
             nameHeader.setText(hello);
             emailHeader.setText(teacher.getEmail());
         }
         if(userType.equals("student")){
             Student student = (Student) user;
-            String hello = "Hello "+student.getFirstName()+" !";
+            String hello = "Welcome, "+student.getFirstName()+" !";
             nameHeader.setText(hello);
             emailHeader.setText(student.getEmail());
         }

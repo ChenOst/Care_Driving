@@ -11,7 +11,6 @@ public class Student extends User {
     private String transmission;
     private String theory;
     private String teacherId;
-    private String phoneNumber;
 
 //    private ArrayList<Lesson> lessons;
 
@@ -67,7 +66,4 @@ public class Student extends User {
         return teacherId;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
 }
