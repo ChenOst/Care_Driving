@@ -69,6 +69,7 @@ public class SearchTeachersFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         final View root = inflater.inflate(R.layout.fragment_search_teachers, container, false);
+        teachers.clear();
 
         btnLocationsFilter = root.findViewById(R.id.btnLocationsFilter);
         listLocations = getResources().getStringArray(R.array.cities);

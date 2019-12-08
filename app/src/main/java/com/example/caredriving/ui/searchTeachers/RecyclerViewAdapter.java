@@ -51,31 +51,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.tvPhoneNumber.setText(teachers.get(position).getPhoneNumber());
         holder.tvPrice.setText(teachers.get(position).getLessonPrice());
         holder.tvTeachersFirstName.setText(teachers.get(position).getFirstName());
-
-        /*
-        //OnClickListener to each item
-        holder.layoutTeachersDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked." + teachers.get(position).getFirstName() + " " + teachers.get(position).getLastName());
-                Toast.makeText(context, "Check", Toast.LENGTH_SHORT).show();
-                //Intent intent = new Intent(context, ContactTeacherActivity.class);
-                //intent.putExtra("TeachersFirstName", teachers.get(position).getFirstName());
-                //intent.putExtra("TeachersLastName", teachers.get(position).getLastName());
-                //intent.putExtra("TeachersExperience", teachers.get(position).getExperience());
-                //intent.putExtra("TeachersLocation", teachers.get(position).getCity());
-                //intent.putExtra("TeachersCarType", teachers.get(position).getCarType());
-                //intent.putExtra("TeachersCarYear", teachers.get(position).getCarYear());
-                //intent.putExtra("TeachersGearType", teachers.get(position).getTransmission());
-                //intent.putExtra("TeachersLessonPrice", teachers.get(position).getTransmission());
-                //intent.putExtra("TeachersPhoneNumber", teachers.get(position).getPhoneNumber());
-
-                //context.startActivity(intent);
-            }
-        });
-
-         */
-
     }
 
     // Tells how many items are on the list
@@ -109,24 +84,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    String p = Integer.toString(position);
-                    Toast.makeText(itemView.getContext(), p, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(context, ContactTeacherActivity.class);
-
-
+                    Intent intent = new Intent(itemView.getContext(), ContactTeacherActivity.class);
                     intent.putExtra("TeachersFirstName", teachers.get(position).getFirstName());
-                    //intent.putExtra("TeachersLastName", teachers.get(position).getLastName());
-                    //intent.putExtra("TeachersExperience", teachers.get(position).getExperience());
-                    //intent.putExtra("TeachersLocation", teachers.get(position).getCity());
-                    //intent.putExtra("TeachersCarType", teachers.get(position).getCarType());
-                    //intent.putExtra("TeachersCarYear", teachers.get(position).getCarYear());
-                    //intent.putExtra("TeachersGearType", teachers.get(position).getTransmission());
-                    //intent.putExtra("TeachersLessonPrice", teachers.get(position).getTransmission());
-                    //intent.putExtra("TeachersPhoneNumber", teachers.get(position).getPhoneNumber());
-
-
-
-                    context.startActivity(intent);
+                    intent.putExtra("TeachersLastName", teachers.get(position).getLastName());
+                    intent.putExtra("TeachersExperience", teachers.get(position).getExperience());
+                    intent.putExtra("TeachersLocation", teachers.get(position).getCity());
+                    intent.putExtra("TeachersCarType", teachers.get(position).getCarType());
+                    intent.putExtra("TeachersCarYear", teachers.get(position).getCarYear());
+                    intent.putExtra("TeachersGearType", teachers.get(position).getTransmission());
+                    intent.putExtra("TeachersLessonPrice", teachers.get(position).getTransmission());
+                    intent.putExtra("TeachersPhoneNumber", teachers.get(position).getPhoneNumber());
+                    itemView.getContext().startActivity(intent);
                 }
             });
         }
