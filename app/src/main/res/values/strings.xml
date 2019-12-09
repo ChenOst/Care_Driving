@@ -38,7 +38,7 @@
     <string name="teachers_gear">Gear</string>
     <string name="teachers_car">Car Type</string>
     <string name="teachers_car_year">Year</string>
-    <string name="teachers_connect">Send conection request</string>
+    <string name="teachers_connect">Send connection request</string>
 
     <string name="price">Price</string>
     <string name="new_shekel">₪</string>
@@ -46,6 +46,11 @@
 
     <string name="car_brand">Car Brands</string>
     <string name="car_gear">Gear Types</string>
+
+    <string name="title_location_filter">Choose Location/s:</string>
+    <string name="title_car_brand_filter">Choose Car Brand/s:</string>
+    <string name="title_gear_filter">Choose Gear/s:</string>
+    <string name="title_price_filter">Choose Price Range:</string>
 
     <string-array name="yes_no">
         <item>No</item>
@@ -97,10 +102,14 @@
     </string-array>
 
     <string-array name="price_range">
-        <item>75-100</item>
-        <item>100-125</item>
-        <item>125-150</item>
-        <item>150+</item>
+        <item>75–100</item>
+        <item>100–125</item>
+        <item>125–150</item>
+        <item>150–175</item>
+        <item>175–200</item>
+        <item>225–250</item>
     </string-array>
+
+    <string name="regex_prices">\\–</string>
 
 </resources>
