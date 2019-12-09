@@ -320,7 +320,7 @@ public class SearchTeachersFragment extends Fragment {
                     for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
                         if (dataSnapshotl.child("type").getValue().equals("teacher")) {
                             for( String price : newPrices){
-                                String[] parts = price.split("–");
+                                String[] parts = price.split("\\–");
                                 int lower = Integer.parseInt(parts[0]);
                                 int upper = Integer.parseInt(parts[1]);
                                 if(lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
@@ -384,7 +384,7 @@ public class SearchTeachersFragment extends Fragment {
                         if (dataSnapshotl.child("type").getValue().equals("teacher")) {
                             if(newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())){
                                 for( String price : newPrices) {
-                                    String[] parts = price.split("–");
+                                    String[] parts = price.split("\\–");
                                     int lower = Integer.parseInt(parts[0]);
                                     int upper = Integer.parseInt(parts[1]);
                                     if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
@@ -448,7 +448,7 @@ public class SearchTeachersFragment extends Fragment {
                         if (dataSnapshotl.child("type").getValue().equals("teacher")) {
                             if(newCarBrands.contains(dataSnapshotl.child("info").child("carType").getValue().toString())){
                                 for( String price : newPrices) {
-                                    String[] parts = price.split("-");
+                                    String[] parts = price.split("\\–");
                                     int lower = Integer.parseInt(parts[0]);
                                     int upper = Integer.parseInt(parts[1]);
                                     if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
@@ -515,7 +515,7 @@ public class SearchTeachersFragment extends Fragment {
                                     && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())){
 
                                 for( String price : newPrices) {
-                                    String[] parts = price.split("–");
+                                    String[] parts = price.split("\\–");
                                     int lower = Integer.parseInt(parts[0]);
                                     int upper = Integer.parseInt(parts[1]);
                                     if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
@@ -580,7 +580,7 @@ public class SearchTeachersFragment extends Fragment {
                             if(newLocations.contains(dataSnapshotl.child("info").child("city").getValue().toString())){
 
                                 for( String price : newPrices) {
-                                    String[] parts = price.split("–");
+                                    String[] parts = price.split("\\–");
                                     int lower = Integer.parseInt(parts[0]);
                                     int upper = Integer.parseInt(parts[1]);
                                     if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
@@ -647,7 +647,7 @@ public class SearchTeachersFragment extends Fragment {
                                     && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())){
 
                                 for( String price : newPrices) {
-                                    String[] parts = price.split("–");
+                                    String[] parts = price.split("\\–");
                                     int lower = Integer.parseInt(parts[0]);
                                     int upper = Integer.parseInt(parts[1]);
                                     if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
@@ -714,7 +714,7 @@ public class SearchTeachersFragment extends Fragment {
                                     && newCarBrands.contains(dataSnapshotl.child("info").child("carType").getValue().toString())) {
 
                                 for (String price : newPrices) {
-                                    String[] parts = price.split("–");
+                                    String[] parts = price.split("\\–");
                                     int lower = Integer.parseInt(parts[0]);
                                     int upper = Integer.parseInt(parts[1]);
                                     if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
@@ -781,7 +781,7 @@ public class SearchTeachersFragment extends Fragment {
                                     && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())) {
 
                                 for (String price : newPrices) {
-                                    String[] parts = price.split("–");
+                                    String[] parts = price.split("\\–");
                                     int lower = Integer.parseInt(parts[0]);
                                     int upper = Integer.parseInt(parts[1]);
                                     if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
