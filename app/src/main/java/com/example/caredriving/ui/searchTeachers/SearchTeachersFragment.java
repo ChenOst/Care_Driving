@@ -115,7 +115,7 @@ public class SearchTeachersFragment extends Fragment {
 
         // Car Brands Filters
         Button btnCarBrandsFilter = root.findViewById(R.id.btnCarBrandsFilter);
-        listCarBrands = getResources().getStringArray(R.array.cities);
+        listCarBrands = getResources().getStringArray(R.array.car_brands);
         checkedCarBrands = new boolean[listCarBrands.length];
         btnCarBrandsFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -324,7 +324,7 @@ public class SearchTeachersFragment extends Fragment {
                                 int lower = Integer.parseInt(parts[0]);
                                 int upper = Integer.parseInt(parts[1]);
                                 if(lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
-                                    && upper>=Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())) {
+                                        && upper>=Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())) {
 
                                     String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
                                     String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
@@ -383,29 +383,29 @@ public class SearchTeachersFragment extends Fragment {
                     for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
                         if (dataSnapshotl.child("type").getValue().equals("teacher")) {
                             if(newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())){
-                            for( String price : newPrices) {
-                                String[] parts = price.split("–");
-                                int lower = Integer.parseInt(parts[0]);
-                                int upper = Integer.parseInt(parts[1]);
-                                if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
-                                        && upper >= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())) {
+                                for( String price : newPrices) {
+                                    String[] parts = price.split("–");
+                                    int lower = Integer.parseInt(parts[0]);
+                                    int upper = Integer.parseInt(parts[1]);
+                                    if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
+                                            && upper >= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())) {
 
-                                    String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                    String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                    String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                    String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                    String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                    String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                    String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                    String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                    String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                    String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                    String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
+                                        String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
+                                        String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
+                                        String age = dataSnapshotl.child("info").child("age").getValue().toString();
+                                        String city = dataSnapshotl.child("info").child("city").getValue().toString();
+                                        String email = dataSnapshotl.child("info").child("email").getValue().toString();
+                                        String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
+                                        String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
+                                        String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
+                                        String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
+                                        String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
+                                        String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
 
-                                    Teacher teacher = new Teacher(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                    newTeachers.add(teacher);
+                                        Teacher teacher = new Teacher(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
+                                        newTeachers.add(teacher);
+                                    }
                                 }
-                            }
                             }
                         }
                     }
@@ -483,7 +483,7 @@ public class SearchTeachersFragment extends Fragment {
                     for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
                         if (dataSnapshotl.child("type").getValue().equals("teacher")) {
                             if(newCarBrands.contains(dataSnapshotl.child("info").child("carType").getValue().toString())
-                                && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())) {
+                                    && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())) {
 
                                 String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
                                 String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
@@ -615,7 +615,7 @@ public class SearchTeachersFragment extends Fragment {
                     for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
                         if (dataSnapshotl.child("type").getValue().equals("teacher")) {
                             if(newLocations.contains(dataSnapshotl.child("info").child("city").getValue().toString())
-                                && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())) {
+                                    && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())) {
 
                                 String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
                                 String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
@@ -644,7 +644,7 @@ public class SearchTeachersFragment extends Fragment {
                     for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
                         if (dataSnapshotl.child("type").getValue().equals("teacher")) {
                             if(newLocations.contains(dataSnapshotl.child("info").child("city").getValue().toString())
-                                && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())){
+                                    && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())){
 
                                 for( String price : newPrices) {
                                     String[] parts = price.split("–");

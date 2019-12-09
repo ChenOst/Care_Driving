@@ -110,6 +110,6 @@
         <item>225–250</item>
     </string-array>
 
-    <string name="regex_prices">\\–</string>
+    <string name="regex_prices">–</string>
 
 </resources>
