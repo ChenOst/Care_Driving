@@ -2,9 +2,11 @@ package com.example.caredriving;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Entity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.caredriving.firebase.model.FirebaseDBEntity;
 import com.example.caredriving.firebase.model.FirebaseDBUser;
 import com.example.caredriving.firebase.model.dataObject.StudentObj;
 import com.example.caredriving.firebase.model.dataObject.TeacherObj;
@@ -23,7 +25,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -41,10 +46,13 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         DatePickerDialog.OnDateSetListener,
-        TimePickerDialog.OnTimeSetListener {
+        TimePickerDialog.OnTimeSetListener,
+        View.OnClickListener {
 
     private AppBarConfiguration mAppBarConfiguration;
-    public ImageButton imgButton;
+    private NavigationView navigationView;
+    private ImageButton imgButton;
+    private View header;
     private TextView nameHeader;
     private TextView emailHeader;
 
@@ -82,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -96,35 +104,35 @@ public class MainActivity extends AppCompatActivity implements
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
-//        //Take the user from login activity and put it in "user" variable
-//        user = (UserObj) getIntent().getSerializableExtra("UserObj");
-//        userType = getIntent().getStringExtra("type");
-//        final String uid = getIntent().getStringExtra("Uid");
+        header = navigationView.getHeaderView(0);
+        nameHeader = header.findViewById(R.id.nameHeader);
+        emailHeader = header.findViewById(R.id.emailHeader);
+        imgButton = header.findViewById(R.id.imageButton);
 
-        FirebaseDBUser fb_user = new FirebaseDBUser();
 
+        fb_user = new FirebaseDBUser();
+        findUser();
+
+        navigationView.setOnClickListener(this);
+        imgButton.setOnClickListener(this);
 
 
         ///////////////////////////////////// Header part ////////////////////////////////////////////
-        View header = navigationView.getHeaderView(0);
-        nameHeader = header.findViewById(R.id.nameHeader);
-        emailHeader = header.findViewById(R.id.emailHeader);
 
-        //Display name, email in header of navigation bar
-        displayHeaderDetailsToUser();
 
-        //What happen when click on image view in navigation bar
-        imgButton = (ImageButton) header.findViewById(R.id.imageButton);
-        imgButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, PersonalAreaActivity.class);
-                intent.putExtra("UserObj", user);
-                intent.putExtra("type", userType);
-                intent.putExtra("Uid", uid);
-                startActivity(intent);
-            }
-        });
+//        //Display name, email in header of navigation bar
+//        displayHeaderDetailsToUser();
+//
+//        //What happen when click on image view in navigation bar
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, PersonalAreaActivity.class);
+//                intent.putExtra("UserObj", user);
+////                intent.putExtra("type", userType);
+////                intent.putExtra("Uid", uid);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
@@ -155,6 +163,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onClick(View view) {
+        if(view == imgButton)
+            headerImageButtonPressed();
+    }
+
+    @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         yearFinal = i;
         monthFinal = i1 + 1;
@@ -176,19 +190,32 @@ public class MainActivity extends AppCompatActivity implements
         minuteFinal = i1;
     }
 
+    private void findUser(){
+        fb_user.getUserRefFromDB().addListenerForSingleValueEvent(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Create local instance of UserObj(TeacherObj/StudentObj) from Entity object(HashMap, String)
+                FirebaseDBEntity entity = dataSnapshot.getValue(FirebaseDBEntity.class);
+                user = entity.getUserObj();
+                displayHeaderDetailsToUser();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void headerImageButtonPressed(){
+
+    }
+
     private void displayHeaderDetailsToUser(){
-        if(userType.equals("teacher")){
-            TeacherObj teacher = (TeacherObj) user;
-            String hello = "Welcome, "+teacher.getFirstName()+" !";
+            String hello = "Welcome, "+user.getFirstName()+" !";
             nameHeader.setText(hello);
-            emailHeader.setText(teacher.getEmail());
-        }
-        if(userType.equals("student")){
-            StudentObj student = (StudentObj) user;
-            String hello = "Welcome, "+student.getFirstName()+" !";
-            nameHeader.setText(hello);
-            emailHeader.setText(student.getEmail());
-        }
+            emailHeader.setText(user.getEmail());
     }
 }
 

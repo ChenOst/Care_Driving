@@ -16,7 +16,7 @@ public class FirebaseDBUser extends FirebaseBaseModel{
         myUid = myAuto.getUid();
     }
 
-    public DatabaseReference getUserFromDB(){
+    public DatabaseReference getUserRefFromDB(){
         return myref.child("users").child(myUid);
     }
 

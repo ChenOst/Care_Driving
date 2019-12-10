@@ -93,9 +93,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if(task.isSuccessful()){
-//                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                            startActivity(intent);
-                            findUser();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+//                            findUser();
                         } else {
                             Toast.makeText(LoginActivity.this,
                                     "Login failed", Toast.LENGTH_SHORT).show();
@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void findUser(){
         final FirebaseDBUser fb_user = new FirebaseDBUser();
-        fb_user.getUserFromDB().addListenerForSingleValueEvent(new ValueEventListener(){
+        fb_user.getUserRefFromDB().addListenerForSingleValueEvent(new ValueEventListener(){
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
