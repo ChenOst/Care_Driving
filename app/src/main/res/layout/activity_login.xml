@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".LoginActivity">
+    tools:context=".ui.activities.LoginActivity">
 
     <LinearLayout
         android:layout_height="wrap_content"
