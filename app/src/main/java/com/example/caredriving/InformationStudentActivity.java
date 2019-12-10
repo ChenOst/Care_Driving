@@ -1,4 +1,4 @@
-package com.example.caredriving.ui.activities;
+package com.example.caredriving;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.example.caredriving.R;
 import com.example.caredriving.firebase.model.dataObject.StudentObj;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
