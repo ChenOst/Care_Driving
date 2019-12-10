@@ -116,13 +116,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String usertype = dataSnapshot.child("type").getValue().toString();
                 // Create local instance of UserObj(TeacherObj/StudentObj)
                 user = dataSnapshot.getValue(FirebaseDBEntity.class).getUserObj();
-//                if(usertype.equals("teacher")){
-//                    user = dataSnapshot.child("info").getValue(TeacherObj.class);
-//                    System.out.println("FirstName = " +user.getFirstName());
-//                }
-//                if(usertype.equals("student")){
-//                    user = dataSnapshot.child("info").getValue(StudentObj.class);
-//                }
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("UserObj", user);
                 intent.putExtra("type", usertype);

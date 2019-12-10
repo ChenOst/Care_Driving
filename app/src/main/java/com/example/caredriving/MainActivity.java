@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.caredriving.firebase.model.FirebaseDBUser;
 import com.example.caredriving.firebase.model.dataObject.StudentObj;
 import com.example.caredriving.firebase.model.dataObject.TeacherObj;
 import com.example.caredriving.firebase.model.dataObject.UserObj;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements
     private TextView emailHeader;
 
     public UserObj user;
-    public String userType;
+    public FirebaseDBUser fb_user;
 
     private int day, month, year, hour, minute;
     private int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
@@ -95,14 +96,12 @@ public class MainActivity extends AppCompatActivity implements
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
-        String ref = FirebaseDatabase.getInstance().getReference().toString();
-        System.out.println("MY APPLICATION FIREBASE LINK: " + ref);
+//        //Take the user from login activity and put it in "user" variable
+//        user = (UserObj) getIntent().getSerializableExtra("UserObj");
+//        userType = getIntent().getStringExtra("type");
+//        final String uid = getIntent().getStringExtra("Uid");
 
-
-        //Take the user from login activity and put it in "user" variable
-        user = (UserObj) getIntent().getSerializableExtra("UserObj");
-        userType = getIntent().getStringExtra("type");
-        final String uid = getIntent().getStringExtra("Uid");
+        FirebaseDBUser fb_user = new FirebaseDBUser();
 
 
 
