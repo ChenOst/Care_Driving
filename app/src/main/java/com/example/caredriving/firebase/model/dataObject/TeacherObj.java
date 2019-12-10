@@ -3,6 +3,8 @@ package com.example.caredriving.firebase.model.dataObject;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.HashMap;
+
 public class TeacherObj extends UserObj {
 
     private String carType;
@@ -28,6 +30,14 @@ public class TeacherObj extends UserObj {
         this.lessonPrice = lessonPrice;
     }
 
+    public TeacherObj(HashMap<String, String> hashMapTeacher){
+        super(hashMapTeacher);
+        this.carType = hashMapTeacher.get("carType");
+        this.carYear = hashMapTeacher.get("carYear");
+        this.experience = hashMapTeacher.get("experience");
+        this.transmission = hashMapTeacher.get("transmission");
+        this.lessonPrice = hashMapTeacher.get("lessonPrice");
+    }
 
     public void setCarBrand(String carBrand) {this.carType = carBrand;}
     public void setCarYear(String carYear) {this.carYear = carYear;}

@@ -5,6 +5,7 @@ import android.content.Intent;
 
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 public class UserObj implements Serializable {
 
@@ -24,6 +25,15 @@ public class UserObj implements Serializable {
         this.city = city;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+
+    public UserObj(HashMap<String, String> hashMapUser){
+        this.firstName = hashMapUser.get("firstName");
+        this.lastName  = hashMapUser.get("lastName");
+        this.age       = hashMapUser.get("age");
+        this.city      = hashMapUser.get("city");
+        this.email     = hashMapUser.get("email");
+        this.phoneNumber = hashMapUser.get("phoneNumber");
     }
 
     public void setFirstName(String firstName) {this.firstName = firstName;}

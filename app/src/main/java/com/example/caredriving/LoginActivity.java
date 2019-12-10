@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.caredriving.firebase.model.FirebaseDBEntity;
+import com.example.caredriving.firebase.model.FirebaseDBUser;
 import com.example.caredriving.firebase.model.dataObject.StudentObj;
 import com.example.caredriving.firebase.model.dataObject.TeacherObj;
 import com.example.caredriving.firebase.model.dataObject.UserObj;
@@ -19,17 +21,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authListener;
     private EditText etLoginEmail;
     private EditText etLoginPassword;
     private Button btnLogin;
@@ -54,38 +52,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // get the login status of the app - user loged in or not
         firebaseAuth = FirebaseAuth.getInstance();
 
-        authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null){ //UserObj loged in
-
-                    //////////////////////// its a test/////////////////////////////
-//                    String email = user.getEmail();
-//                    StudentObj curruser = new StudentObj("Chen", "Ostrovski", "22", "Tel-Aviv", email);
-//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                    intent.putExtra("UserObj", curruser);
-//                    startActivity(intent);
-//                    finish();
-                }
-            }
-        };
 
         btnLogin.setOnClickListener(this);
         tvRegistration.setOnClickListener(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        firebaseAuth.addAuthStateListener(authListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        firebaseAuth.signOut();
-        firebaseAuth.removeAuthStateListener(authListener);
     }
 
     @Override
@@ -95,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
         if (view == tvRegistration){
+            // Go to registration activity
             Intent intent = new Intent(this, RegistrationActivity.class);
             startActivity(intent);
         }
@@ -123,6 +93,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if(task.isSuccessful()){
+//                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                            startActivity(intent);
                             findUser();
                         } else {
                             Toast.makeText(LoginActivity.this,
@@ -135,27 +107,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void findUser(){
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String firebaseUserUid = firebaseUser.getUid();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
-        DatabaseReference userDatabaseRefernce = databaseReference.child(firebaseUserUid);
-        userDatabaseRefernce.addListenerForSingleValueEvent(new ValueEventListener(){
+        final FirebaseDBUser fb_user = new FirebaseDBUser();
+        fb_user.getUserFromDB().addListenerForSingleValueEvent(new ValueEventListener(){
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Find type of FirebaseUser(TeacherObj/StudentObj)
                 String usertype = dataSnapshot.child("type").getValue().toString();
                 // Create local instance of UserObj(TeacherObj/StudentObj)
-                if(usertype.equals("teacher")){
-                    user = fillDataForTeacherUser(dataSnapshot);
-                }
-                if(usertype.equals("student")){
-                    user = fillDataForStudentUser(dataSnapshot);
-                }
+                user = dataSnapshot.getValue(FirebaseDBEntity.class).getUserObj();
+//                if(usertype.equals("teacher")){
+//                    user = dataSnapshot.child("info").getValue(TeacherObj.class);
+//                    System.out.println("FirstName = " +user.getFirstName());
+//                }
+//                if(usertype.equals("student")){
+//                    user = dataSnapshot.child("info").getValue(StudentObj.class);
+//                }
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("UserObj", user);
                 intent.putExtra("type", usertype);
-                intent.putExtra("Uid", firebaseUserUid);
+                intent.putExtra("Uid", fb_user.getMyUid());
                 startActivity(intent);
             }
 

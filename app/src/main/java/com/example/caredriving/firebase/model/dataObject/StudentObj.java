@@ -3,6 +3,8 @@ package com.example.caredriving.firebase.model.dataObject;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.HashMap;
+
 public class StudentObj extends UserObj {
 
     private String greenForm;
@@ -25,6 +27,13 @@ public class StudentObj extends UserObj {
         this.teacherId = teacherId;
     }
 
+    public StudentObj(HashMap<String, String> hashMapStudent){
+        super(hashMapStudent);
+        this.greenForm = hashMapStudent.get("greenForm");
+        this.transmission = hashMapStudent.get("transmission");
+        this.theory = hashMapStudent.get("theory");
+        this.teacherId = hashMapStudent.get("teacherId");
+    }
 
     public Intent getIntent(Context from, Class<?> to){
         return super.getIntent(from, to);
