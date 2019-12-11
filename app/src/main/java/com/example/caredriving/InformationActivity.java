@@ -45,7 +45,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
 
     private DatabaseReference myRef;
     private FirebaseAuth firebaseAuth;
-    private String currentId;
+//    private String currentId;
     private String cityFromSpinner;
     private String fullNumber;
 
@@ -56,8 +56,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_information);
 
         firebaseAuth = FirebaseAuth.getInstance();
-//        myRef = FirebaseDatabase.getInstance().getReference();
-        currentId = firebaseAuth.getCurrentUser().getUid();
 
         firstName = findViewById(R.id.etInformationFirstName);
         lastName = findViewById(R.id.etInformationLastName);
@@ -73,7 +71,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         if (startIntent.hasExtra("UserObj")) {
             String type = startIntent.getStringExtra("Type");
             startIntent.removeExtra("Type");
-            if (type.equals("StudentObj")) {
+            if (type.equals("student")) {
                 user = (StudentObj) startIntent.getSerializableExtra("UserObj");
                 setCreatedFields();
             } else {
@@ -167,7 +165,6 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         user.setPhoneNumber(fullNumber);
 
         intent.putExtra("UserObj", user);
-        intent.putExtra("uid", currentId);
         startActivity(intent);
     }
 

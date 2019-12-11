@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.caredriving.firebase.model.FirebaseDBUser;
 import com.example.caredriving.firebase.model.dataObject.TeacherObj;
 import com.example.caredriving.firebase.model.dataObject.validation.Validation;
 import com.google.firebase.database.DatabaseReference;
@@ -33,18 +34,16 @@ public class InformationTeacherActivity extends AppCompatActivity implements Vie
     private Button btnPrevious;
 
     private TeacherObj teacher;
-    private final String TEACHER = "teacher";
-    private String userId;
     private Intent startIntent;
 
-    private DatabaseReference myRef;
+    private FirebaseDBUser fb_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information_teacher);
 
-        myRef = FirebaseDatabase.getInstance().getReference();
+        fb_user = new FirebaseDBUser();
 
         carYear = findViewById(R.id.spnInformationTeacherCarYears);
         experience = findViewById(R.id.spnInformationTeacherExperience);
@@ -54,7 +53,6 @@ public class InformationTeacherActivity extends AppCompatActivity implements Vie
 
         startIntent = getIntent();
         teacher = (TeacherObj) startIntent.getSerializableExtra("UserObj");
-        userId = (String) startIntent.getSerializableExtra("uid");
 
         btnSave = findViewById(R.id.btnInformationTeacherSaveInfo);
         btnPrevious = findViewById(R.id.btnInformationTeacherPreviousInfo);
@@ -93,27 +91,18 @@ public class InformationTeacherActivity extends AppCompatActivity implements Vie
         }
 
         teacher.setLessonPrice(price);
-//        myRef.child(TEACHER).push().setValue(user);
-//        myRef.child("users").child(userId).setValue(teacher);
-//        Toast.makeText(this, teacher.getCarType(), Toast.LENGTH_SHORT).show();
 
-        myRef.child("users").child(userId).child("info").setValue(teacher);
-        myRef.child("users").child(userId).child("type").setValue(TEACHER);
-
-//        myRef.child("users").child(userId).child("lessons").setValue(lessons);
-//        myRef.child("users").child(userId).child("teacher").setValue(teacherId);
+        fb_user.writeUserToDB(teacher);
 
         Intent intent = new Intent(InformationTeacherActivity.this, MainActivity.class);
         intent.putExtra("UserObj", teacher);
-        intent.putExtra("Uid", userId);
-        intent.putExtra("type", TEACHER);
         startActivity(intent);
     }
 
     private void openPreviousPage() {
         Intent intent = new Intent(InformationTeacherActivity.this, InformationActivity.class);
         intent.putExtra("UserObj", startIntent.getSerializableExtra("UserObj"));
-        intent.putExtra("Type", "TeacherObj");
+        intent.putExtra("Type", "teacher");
         startActivity(intent);
     }
 
