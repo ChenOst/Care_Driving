@@ -2,6 +2,7 @@ package com.example.caredriving.ui.navigationBar.searchTeachers;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SearchTeachersFragment extends Fragment {
 
@@ -66,23 +69,24 @@ public class SearchTeachersFragment extends Fragment {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
         reference.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 teachers.clear();
                 if (teachers.isEmpty()) {
                     for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
                         if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                            String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                            String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                            String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                            String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                            String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                            String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                            String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                            String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                            String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                            String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
+                            String firstName = Objects.requireNonNull(dataSnapshotl.child("info").child("firstName").getValue()).toString();
+                            String lastName = Objects.requireNonNull(dataSnapshotl.child("info").child("lastName").getValue()).toString();
+                            String age = Objects.requireNonNull(dataSnapshotl.child("info").child("age").getValue()).toString();
+                            String city = Objects.requireNonNull(dataSnapshotl.child("info").child("city").getValue()).toString();
+                            String email = Objects.requireNonNull(dataSnapshotl.child("info").child("email").getValue()).toString();
+                            String phone = Objects.requireNonNull(dataSnapshotl.child("info").child("phoneNumber").getValue()).toString();
+                            String carType = Objects.requireNonNull(dataSnapshotl.child("info").child("carType").getValue()).toString();
+                            String carYear = Objects.requireNonNull(dataSnapshotl.child("info").child("carYear").getValue()).toString();
+                            String experience = Objects.requireNonNull(dataSnapshotl.child("info").child("experience").getValue()).toString();
+                            String transmission = Objects.requireNonNull(dataSnapshotl.child("info").child("transmission").getValue()).toString();
+                            String lessonPrice = Objects.requireNonNull(dataSnapshotl.child("info").child("lessonPrice").getValue()).toString();
 
                             TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
                             teachers.add(teacher);
