@@ -29,10 +29,6 @@ public class SearchTeachersFragment extends Fragment {
 
     private static ArrayList<TeacherObj> teachers = new ArrayList<>();
     private static ArrayList<TeacherObj> allTeachers = new ArrayList<>();
-    private static ArrayList<String> newLocations = new ArrayList<>();
-    private static ArrayList<String> newCarBrands = new ArrayList<>();
-    private static ArrayList<String> newGears = new ArrayList<>();
-    private static ArrayList<String> newPrices = new ArrayList<>();
     private RecyclerViewAdapter adapter;
     private static RecyclerView recyclerView;
 
@@ -40,21 +36,25 @@ public class SearchTeachersFragment extends Fragment {
     private String[] listLocations;
     private boolean[] checkedLocations;
     private ArrayList<Integer> usersLocations = new ArrayList<>();
+    private static ArrayList<String> newLocations = new ArrayList<>();
 
     // Car Brands Filters
     private String[] listCarBrands;
     private boolean[] checkedCarBrands;
     private ArrayList<Integer> usersCarBrands = new ArrayList<>();
+    private static ArrayList<String> newCarBrands = new ArrayList<>();
 
     // Gear Types Filters
     private String[] listGears;
     private boolean[] checkedGears;
     private ArrayList<Integer> usersGears = new ArrayList<>();
+    private static ArrayList<String> newGears = new ArrayList<>();
 
     // Price Filters
     private String[] listPriceRange;
     private boolean[] checkedPriceRange;
     private ArrayList<Integer> usersPriceRange = new ArrayList<>();
+    private static ArrayList<String> newPrices = new ArrayList<>();
 
     public static SearchTeachersFragment newInstance() {
         return new SearchTeachersFragment();
@@ -66,7 +66,21 @@ public class SearchTeachersFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_search_teachers, container, false);
         recyclerView = root.findViewById(R.id.recyclerviewTeachers);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        downloadInfoFromDatabase(root);
 
+        // Cities Filters
+        locationFilterDialog(root);
+        // Car Brands Filters
+        carTypeFilterDialog(root);
+        // Gear Types Filters
+        carGearFilterDialog(root);
+        // Prices Filters
+        priceFilterDialog(root);
+        return root;
+    }
+
+    // Download the teacher's information from the Database
+    private void downloadInfoFromDatabase(final View root){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
         reference.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -90,24 +104,21 @@ public class SearchTeachersFragment extends Fragment {
 
                             TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
                             teachers.add(teacher);
-
                         }
                     }
                     allTeachers.addAll(teachers);
                     adapter = new RecyclerViewAdapter(getActivity(), teachers);
                     recyclerView.setAdapter(adapter);
                 }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(root.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-        // Locations Filters
+    }
+    // Set the Dialog with the Cities checkbox's
+    private void locationFilterDialog(final View root){
         Button btnLocationsFilter = root.findViewById(R.id.btnLocationsFilter);
         listLocations = getResources().getStringArray(R.array.cities);
         checkedLocations = new boolean[listLocations.length];
@@ -139,7 +150,8 @@ public class SearchTeachersFragment extends Fragment {
                             items.add(listLocations[usersLocations.get(i)]);
                         }
                         newLocations.addAll(items);
-                        setNotificationInList(root);
+                        FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
+                                newCarBrands,  newGears,  newPrices,  adapter);
                     }
                 });
                 mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -152,8 +164,9 @@ public class SearchTeachersFragment extends Fragment {
                 dialog.show();
             }
         });
-
-        // Car Brands Filters
+    }
+    // Set the Dialog with the Car brand's checkbox's
+    private void carTypeFilterDialog(final View root){
         Button btnCarBrandsFilter = root.findViewById(R.id.btnCarBrandsFilter);
         listCarBrands = getResources().getStringArray(R.array.car_brands);
         checkedCarBrands = new boolean[listCarBrands.length];
@@ -185,7 +198,8 @@ public class SearchTeachersFragment extends Fragment {
                             items.add(listCarBrands[usersCarBrands.get(i)]);
                         }
                         newCarBrands.addAll(items);
-                        setNotificationInList(root);
+                        FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
+                                newCarBrands,  newGears,  newPrices,  adapter);
                     }
                 });
                 mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -198,8 +212,9 @@ public class SearchTeachersFragment extends Fragment {
                 dialog.show();
             }
         });
-
-        // Gear Types Filters
+    }
+    // Set the Dialog with the Gear type's checkbox's
+    private void carGearFilterDialog(final View root){
         Button btnGearTypesFilter = root.findViewById(R.id.btnGearTypesFilter);
         listGears = getResources().getStringArray(R.array.transmission_type);
         checkedGears = new boolean[listGears.length];
@@ -231,7 +246,8 @@ public class SearchTeachersFragment extends Fragment {
                             items.add(listGears[usersGears.get(i)]);
                         }
                         newGears.addAll(items);
-                        setNotificationInList(root);
+                        FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
+                                newCarBrands,  newGears,  newPrices,  adapter);
                     }
                 });
                 mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -244,8 +260,9 @@ public class SearchTeachersFragment extends Fragment {
                 dialog.show();
             }
         });
-
-        // Price Filters
+    }
+    // Set the Dialog with the prices checkbox's
+    private void priceFilterDialog(final View root){
         Button btnPriceFilter = root.findViewById(R.id.btnPriceFilter);
         listPriceRange = getResources().getStringArray(R.array.price_range);
         checkedPriceRange = new boolean[listPriceRange.length];
@@ -277,7 +294,8 @@ public class SearchTeachersFragment extends Fragment {
                             items.add(listPriceRange[usersPriceRange.get(i)]);
                         }
                         newPrices.addAll(items);
-                        setNotificationInList(root);
+                        FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
+                                newCarBrands,  newGears,  newPrices,  adapter);
                     }
                 });
                 mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -290,226 +308,5 @@ public class SearchTeachersFragment extends Fragment {
                 dialog.show();
             }
         });
-
-        return root;
-    }
-
-    // taking care of all the filter options - 16 options
-    private void setNotificationInList(final View root) {
-        // 0 0 0 0
-        if (newLocations.isEmpty() && newCarBrands.isEmpty() && newGears.isEmpty() && newPrices.isEmpty()) {
-            teachers.clear();
-            teachers.addAll(allTeachers);
-            adapter.notifyDataSetChanged();
-        }
-        // 0 0 0 1
-        else if (newLocations.isEmpty() && newCarBrands.isEmpty() && newGears.isEmpty() && !newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                for (String price : newPrices) {
-                    String[] parts = price.split("\\–");
-                    int lower = Integer.parseInt(parts[0]);
-                    int upper = Integer.parseInt(parts[1]);
-                    if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
-                        teachers.add(teacher);
-                    }
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 0 0 1 0
-        else if (newLocations.isEmpty() && newCarBrands.isEmpty() && !newGears.isEmpty() && newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newGears.contains(teacher.getTransmission())) {
-                    teachers.add(teacher);
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 0 0 1 1
-        else if (newLocations.isEmpty() && newCarBrands.isEmpty() && !newGears.isEmpty() && !newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newGears.contains(teacher.getTransmission())) {
-                    for (String price : newPrices) {
-                        String[] parts = price.split("\\–");
-                        int lower = Integer.parseInt(parts[0]);
-                        int upper = Integer.parseInt(parts[1]);
-                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
-                            teachers.add(teacher);
-                        }
-                    }
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 0 1 0 0
-        else if (newLocations.isEmpty() && !newCarBrands.isEmpty() && newGears.isEmpty() && newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newCarBrands.contains(teacher.getCarType())) {
-                    teachers.add(teacher);
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 0 1 0 1
-        else if (newLocations.isEmpty() && !newCarBrands.isEmpty() && newGears.isEmpty() && !newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newCarBrands.contains(teacher.getCarType())) {
-                    for (String price : newPrices) {
-                        String[] parts = price.split("\\–");
-                        int lower = Integer.parseInt(parts[0]);
-                        int upper = Integer.parseInt(parts[1]);
-                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
-                            teachers.add(teacher);
-                        }
-                    }
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 0 1 1 0
-        else if (newLocations.isEmpty() && !newCarBrands.isEmpty() && !newGears.isEmpty() && newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newCarBrands.contains(teacher.getCarType()) && newGears.contains(teacher.getTransmission())) {
-                    teachers.add(teacher);
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 0 1 1 1
-        else if (newLocations.isEmpty() && !newCarBrands.isEmpty() && !newGears.isEmpty() && !newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newCarBrands.contains(teacher.getCarType()) && newGears.contains(teacher.getTransmission())) {
-                    for (String price : newPrices) {
-                        String[] parts = price.split("\\–");
-                        int lower = Integer.parseInt(parts[0]);
-                        int upper = Integer.parseInt(parts[1]);
-                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
-                            teachers.add(teacher);
-                        }
-                    }
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 1 0 0 0
-        else if (!newLocations.isEmpty() && newCarBrands.isEmpty() && newGears.isEmpty() && newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newLocations.contains(teacher.getCity())) {
-                    teachers.add(teacher);
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 1 0 0 1
-        else if (!newLocations.isEmpty() && newCarBrands.isEmpty() && newGears.isEmpty() && !newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newLocations.contains(teacher.getCity())) {
-                    for (String price : newPrices) {
-                        String[] parts = price.split("\\–");
-                        int lower = Integer.parseInt(parts[0]);
-                        int upper = Integer.parseInt(parts[1]);
-                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
-                            teachers.add(teacher);
-                        }
-                    }
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 1 0 1 0
-        else if (!newLocations.isEmpty() && newCarBrands.isEmpty() && !newGears.isEmpty() && newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newLocations.contains(teacher.getCity()) && newGears.contains(teacher.getTransmission())) {
-                    teachers.add(teacher);
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 1 0 1 1
-        else if (!newLocations.isEmpty() && newCarBrands.isEmpty() && !newGears.isEmpty() && !newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newLocations.contains(teacher.getCity()) && newGears.contains(teacher.getTransmission())) {
-                    for (String price : newPrices) {
-                        String[] parts = price.split("\\–");
-                        int lower = Integer.parseInt(parts[0]);
-                        int upper = Integer.parseInt(parts[1]);
-                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
-                            teachers.add(teacher);
-                        }
-                    }
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 1 1 0 0
-        else if (!newLocations.isEmpty() && !newCarBrands.isEmpty() && newGears.isEmpty() && newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newLocations.contains(teacher.getCity()) && newCarBrands.contains(teacher.getCarType())) {
-                    teachers.add(teacher);
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 1 1 0 1
-        else if (!newLocations.isEmpty() && !newCarBrands.isEmpty() && newGears.isEmpty() && !newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newLocations.contains(teacher.getCity()) && newCarBrands.contains(teacher.getCarType())) {
-                    for (String price : newPrices) {
-                        String[] parts = price.split("\\–");
-                        int lower = Integer.parseInt(parts[0]);
-                        int upper = Integer.parseInt(parts[1]);
-                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
-                            teachers.add(teacher);
-                        }
-                    }
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 1 1 1 0
-        else if (!newLocations.isEmpty() && !newCarBrands.isEmpty() && !newGears.isEmpty() && newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newLocations.contains(teacher.getCity()) && newCarBrands.contains(teacher.getCarType())
-                        && newGears.contains(teacher.getTransmission())) {
-                    teachers.add(teacher);
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-        // 1 1 1 1
-        else if (!newLocations.isEmpty() && !newCarBrands.isEmpty() && !newGears.isEmpty() && !newPrices.isEmpty()) {
-            teachers.clear();
-            for (TeacherObj teacher : allTeachers) {
-                if (newLocations.contains(teacher.getCity()) && newCarBrands.contains(teacher.getCarType())
-                        && newGears.contains(teacher.getTransmission())) {
-                    for (String price : newPrices) {
-                        String[] parts = price.split("\\–");
-                        int lower = Integer.parseInt(parts[0]);
-                        int upper = Integer.parseInt(parts[1]);
-                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
-                            teachers.add(teacher);
-                        }
-                    }
-                }
-            }
-            adapter.notifyDataSetChanged();
-
-        } else {
-            Toast.makeText(root.getContext(), "Something went wrong...", Toast.LENGTH_SHORT).show();
-        }
     }
 }
