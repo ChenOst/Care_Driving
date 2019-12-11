@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class SearchTeachersFragment extends Fragment {
 
     private static ArrayList<TeacherObj> teachers = new ArrayList<>();
-    private static ArrayList<TeacherObj> newTeachers = new ArrayList<>();
+    private static ArrayList<TeacherObj> allTeachers = new ArrayList<>();
     private static ArrayList<String> newLocations = new ArrayList<>();
     private static ArrayList<String> newCarBrands = new ArrayList<>();
     private static ArrayList<String> newGears = new ArrayList<>();
@@ -53,7 +53,7 @@ public class SearchTeachersFragment extends Fragment {
     private boolean[] checkedPriceRange;
     private ArrayList<Integer> usersPriceRange = new ArrayList<>();
 
-    public static SearchTeachersFragment newInstance(){
+    public static SearchTeachersFragment newInstance() {
         return new SearchTeachersFragment();
     }
 
@@ -61,10 +61,47 @@ public class SearchTeachersFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         final View root = inflater.inflate(R.layout.fragment_search_teachers, container, false);
-        teachers.clear();
         recyclerView = root.findViewById(R.id.recyclerviewTeachers);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        setNotificationInList(recyclerView, root);
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                teachers.clear();
+                if (teachers.isEmpty()) {
+                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
+                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
+                            String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
+                            String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
+                            String age = dataSnapshotl.child("info").child("age").getValue().toString();
+                            String city = dataSnapshotl.child("info").child("city").getValue().toString();
+                            String email = dataSnapshotl.child("info").child("email").getValue().toString();
+                            String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
+                            String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
+                            String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
+                            String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
+                            String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
+                            String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
+
+                            TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
+                            teachers.add(teacher);
+
+                        }
+                    }
+                    allTeachers.addAll(teachers);
+                    adapter = new RecyclerViewAdapter(getActivity(), teachers);
+                    recyclerView.setAdapter(adapter);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(root.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         // Locations Filters
         Button btnLocationsFilter = root.findViewById(R.id.btnLocationsFilter);
@@ -78,13 +115,12 @@ public class SearchTeachersFragment extends Fragment {
                 mBuilder.setMultiChoiceItems(listLocations, checkedLocations, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int position, boolean isChecked) {
-                        if (isChecked){
-                            if(!usersLocations.contains(position)){
+                        if (isChecked) {
+                            if (!usersLocations.contains(position)) {
                                 usersLocations.add(position);
                             }
-                        }
-                        else if(usersLocations.contains(position)){
-                            usersLocations.remove((Object)position);
+                        } else if (usersLocations.contains(position)) {
+                            usersLocations.remove((Object) position);
                         }
                     }
                 });
@@ -95,11 +131,11 @@ public class SearchTeachersFragment extends Fragment {
                         newLocations.clear();
                         ArrayList<String> items = new ArrayList<>();
                         items.clear();
-                        for(int i =0; i< usersLocations.size(); i++){
+                        for (int i = 0; i < usersLocations.size(); i++) {
                             items.add(listLocations[usersLocations.get(i)]);
                         }
                         newLocations.addAll(items);
-                        setNotificationInList(recyclerView, root);
+                        setNotificationInList(root);
                     }
                 });
                 mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -125,13 +161,12 @@ public class SearchTeachersFragment extends Fragment {
                 mBuilder.setMultiChoiceItems(listCarBrands, checkedCarBrands, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int position, boolean isChecked) {
-                        if (isChecked){
-                            if(!usersCarBrands.contains(position)){
+                        if (isChecked) {
+                            if (!usersCarBrands.contains(position)) {
                                 usersCarBrands.add(position);
                             }
-                        }
-                        else if(usersCarBrands.contains(position)){
-                            usersCarBrands.remove((Object)position);
+                        } else if (usersCarBrands.contains(position)) {
+                            usersCarBrands.remove((Object) position);
                         }
                     }
                 });
@@ -142,11 +177,11 @@ public class SearchTeachersFragment extends Fragment {
                         newCarBrands.clear();
                         ArrayList<String> items = new ArrayList<>();
                         items.clear();
-                        for(int i =0; i< usersCarBrands.size(); i++){
+                        for (int i = 0; i < usersCarBrands.size(); i++) {
                             items.add(listCarBrands[usersCarBrands.get(i)]);
                         }
                         newCarBrands.addAll(items);
-                        setNotificationInList(recyclerView, root);
+                        setNotificationInList(root);
                     }
                 });
                 mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -172,13 +207,12 @@ public class SearchTeachersFragment extends Fragment {
                 mBuilder.setMultiChoiceItems(listGears, checkedGears, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int position, boolean isChecked) {
-                        if (isChecked){
-                            if(!usersGears.contains(position)){
+                        if (isChecked) {
+                            if (!usersGears.contains(position)) {
                                 usersGears.add(position);
                             }
-                        }
-                        else if(usersGears.contains(position)){
-                            usersGears.remove((Object)position);
+                        } else if (usersGears.contains(position)) {
+                            usersGears.remove((Object) position);
                         }
                     }
                 });
@@ -189,11 +223,11 @@ public class SearchTeachersFragment extends Fragment {
                         newGears.clear();
                         ArrayList<String> items = new ArrayList<>();
                         items.clear();
-                        for(int i =0; i< usersGears.size(); i++){
+                        for (int i = 0; i < usersGears.size(); i++) {
                             items.add(listGears[usersGears.get(i)]);
                         }
                         newGears.addAll(items);
-                        setNotificationInList(recyclerView, root);
+                        setNotificationInList(root);
                     }
                 });
                 mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -219,13 +253,12 @@ public class SearchTeachersFragment extends Fragment {
                 mBuilder.setMultiChoiceItems(listPriceRange, checkedPriceRange, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int position, boolean isChecked) {
-                        if (isChecked){
-                            if(!usersPriceRange.contains(position)){
+                        if (isChecked) {
+                            if (!usersPriceRange.contains(position)) {
                                 usersPriceRange.add(position);
                             }
-                        }
-                        else if(usersPriceRange.contains(position)){
-                            usersPriceRange.remove((Object)position);
+                        } else if (usersPriceRange.contains(position)) {
+                            usersPriceRange.remove((Object) position);
                         }
                     }
                 });
@@ -236,11 +269,11 @@ public class SearchTeachersFragment extends Fragment {
                         newPrices.clear();
                         ArrayList<String> items = new ArrayList<>();
                         items.clear();
-                        for(int i =0; i< usersPriceRange.size(); i++){
+                        for (int i = 0; i < usersPriceRange.size(); i++) {
                             items.add(listPriceRange[usersPriceRange.get(i)]);
                         }
                         newPrices.addAll(items);
-                        setNotificationInList(recyclerView, root);
+                        setNotificationInList(root);
                     }
                 });
                 mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -257,564 +290,222 @@ public class SearchTeachersFragment extends Fragment {
         return root;
     }
 
-    private void setNotificationInList(final RecyclerView recyclerView, final View root){
-        // Get all teachers information from the Firebase - 16 options
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Start
-                if (teachers.isEmpty()){
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                            String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                            String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                            String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                            String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                            String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                            String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                            String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                            String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                            String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                            String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                            TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
+    // taking care of all the filter options - 16 options
+    private void setNotificationInList(final View root) {
+        // 0 0 0 0
+        if (newLocations.isEmpty() && newCarBrands.isEmpty() && newGears.isEmpty() && newPrices.isEmpty()) {
+            teachers.clear();
+            teachers.addAll(allTeachers);
+            adapter.notifyDataSetChanged();
+        }
+        // 0 0 0 1
+        else if (newLocations.isEmpty() && newCarBrands.isEmpty() && newGears.isEmpty() && !newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                for (String price : newPrices) {
+                    String[] parts = price.split("\\–");
+                    int lower = Integer.parseInt(parts[0]);
+                    int upper = Integer.parseInt(parts[1]);
+                    if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
+                        teachers.add(teacher);
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        // 0 0 1 0
+        else if (newLocations.isEmpty() && newCarBrands.isEmpty() && !newGears.isEmpty() && newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newGears.contains(teacher.getTransmission())) {
+                    teachers.add(teacher);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        // 0 0 1 1
+        else if (newLocations.isEmpty() && newCarBrands.isEmpty() && !newGears.isEmpty() && !newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newGears.contains(teacher.getTransmission())) {
+                    for (String price : newPrices) {
+                        String[] parts = price.split("\\–");
+                        int lower = Integer.parseInt(parts[0]);
+                        int upper = Integer.parseInt(parts[1]);
+                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
                             teachers.add(teacher);
-
                         }
                     }
-                    adapter = new RecyclerViewAdapter(getActivity(), teachers);
-                    recyclerView.setAdapter(adapter);
-                }
-
-                // 0 0 0 0
-                if (newLocations.isEmpty() && newCarBrands.isEmpty() && newGears.isEmpty() && newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                            String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                            String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                            String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                            String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                            String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                            String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                            String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                            String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                            String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                            String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                            TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                            newTeachers.add(teacher);
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 0 0 0 1
-                else if (newLocations.isEmpty() && newCarBrands.isEmpty() && newGears.isEmpty() && !newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            for( String price : newPrices){
-                                String[] parts = price.split("\\–");
-                                int lower = Integer.parseInt(parts[0]);
-                                int upper = Integer.parseInt(parts[1]);
-                                if(lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
-                                        && upper>=Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())) {
-
-                                    String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                    String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                    String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                    String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                    String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                    String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                    String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                    String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                    String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                    String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                    String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                    TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                    newTeachers.add(teacher);
-                                }
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-
-                }
-                // 0 0 1 0
-                else if (newLocations.isEmpty() && newCarBrands.isEmpty() && !newGears.isEmpty() && newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if(newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())) {
-
-                                String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                newTeachers.add(teacher);
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 0 0 1 1
-                else if (newLocations.isEmpty() && newCarBrands.isEmpty() && !newGears.isEmpty() && !newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if(newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())){
-                                for( String price : newPrices) {
-                                    String[] parts = price.split("\\–");
-                                    int lower = Integer.parseInt(parts[0]);
-                                    int upper = Integer.parseInt(parts[1]);
-                                    if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
-                                            && upper >= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())) {
-
-                                        String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                        String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                        String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                        String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                        String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                        String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                        String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                        String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                        String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                        String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                        String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                        TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                        newTeachers.add(teacher);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 0 1 0 0
-                else if (newLocations.isEmpty() && !newCarBrands.isEmpty() && newGears.isEmpty() && newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if(newCarBrands.contains(dataSnapshotl.child("info").child("carType").getValue().toString())) {
-
-                                String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                newTeachers.add(teacher);
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 0 1 0 1
-                else if (newLocations.isEmpty() && !newCarBrands.isEmpty() && newGears.isEmpty() && !newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if(newCarBrands.contains(dataSnapshotl.child("info").child("carType").getValue().toString())){
-                                for( String price : newPrices) {
-                                    String[] parts = price.split("\\–");
-                                    int lower = Integer.parseInt(parts[0]);
-                                    int upper = Integer.parseInt(parts[1]);
-                                    if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
-                                            && upper >= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())) {
-
-                                        String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                        String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                        String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                        String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                        String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                        String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                        String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                        String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                        String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                        String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                        String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                        TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                        newTeachers.add(teacher);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 0 1 1 0
-                else if (newLocations.isEmpty() && !newCarBrands.isEmpty() && !newGears.isEmpty() && newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if(newCarBrands.contains(dataSnapshotl.child("info").child("carType").getValue().toString())
-                                    && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())) {
-
-                                String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                newTeachers.add(teacher);
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 0 1 1 1
-                else if (newLocations.isEmpty() && !newCarBrands.isEmpty() && !newGears.isEmpty() && !newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if(newCarBrands.contains(dataSnapshotl.child("info").child("carType").getValue().toString())
-                                    && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())){
-
-                                for( String price : newPrices) {
-                                    String[] parts = price.split("\\–");
-                                    int lower = Integer.parseInt(parts[0]);
-                                    int upper = Integer.parseInt(parts[1]);
-                                    if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
-                                            && upper >= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())) {
-
-                                        String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                        String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                        String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                        String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                        String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                        String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                        String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                        String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                        String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                        String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                        String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                        TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                        newTeachers.add(teacher);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 1 0 0 0
-                else if (!newLocations.isEmpty() && newCarBrands.isEmpty() && newGears.isEmpty() && newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if(newLocations.contains(dataSnapshotl.child("info").child("city").getValue().toString())) {
-
-                                String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                newTeachers.add(teacher);
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 1 0 0 1
-                else if (!newLocations.isEmpty() && newCarBrands.isEmpty() && newGears.isEmpty() && !newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if(newLocations.contains(dataSnapshotl.child("info").child("city").getValue().toString())){
-
-                                for( String price : newPrices) {
-                                    String[] parts = price.split("\\–");
-                                    int lower = Integer.parseInt(parts[0]);
-                                    int upper = Integer.parseInt(parts[1]);
-                                    if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
-                                            && upper >= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())) {
-
-                                        String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                        String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                        String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                        String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                        String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                        String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                        String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                        String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                        String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                        String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                        String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                        TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                        newTeachers.add(teacher);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 1 0 1 0
-                else if (!newLocations.isEmpty() && newCarBrands.isEmpty() && !newGears.isEmpty() && newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if(newLocations.contains(dataSnapshotl.child("info").child("city").getValue().toString())
-                                    && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())) {
-
-                                String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                newTeachers.add(teacher);
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 1 0 1 1
-                else if (!newLocations.isEmpty() && newCarBrands.isEmpty() && !newGears.isEmpty() && !newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if(newLocations.contains(dataSnapshotl.child("info").child("city").getValue().toString())
-                                    && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())){
-
-                                for( String price : newPrices) {
-                                    String[] parts = price.split("\\–");
-                                    int lower = Integer.parseInt(parts[0]);
-                                    int upper = Integer.parseInt(parts[1]);
-                                    if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
-                                            && upper >= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())) {
-
-                                        String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                        String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                        String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                        String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                        String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                        String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                        String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                        String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                        String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                        String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                        String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                        TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                        newTeachers.add(teacher);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 1 1 0 0
-                else if (!newLocations.isEmpty() && !newCarBrands.isEmpty() && newGears.isEmpty() && newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if(newLocations.contains(dataSnapshotl.child("info").child("city").getValue().toString())
-                                    && newCarBrands.contains(dataSnapshotl.child("info").child("carType").getValue().toString())) {
-
-                                String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                newTeachers.add(teacher);
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 1 1 0 1
-                else if (!newLocations.isEmpty() && !newCarBrands.isEmpty() && newGears.isEmpty() && !newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if (newLocations.contains(dataSnapshotl.child("info").child("city").getValue().toString())
-                                    && newCarBrands.contains(dataSnapshotl.child("info").child("carType").getValue().toString())) {
-
-                                for (String price : newPrices) {
-                                    String[] parts = price.split("\\–");
-                                    int lower = Integer.parseInt(parts[0]);
-                                    int upper = Integer.parseInt(parts[1]);
-                                    if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
-                                            && upper >= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())) {
-
-                                        String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                        String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                        String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                        String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                        String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                        String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                        String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                        String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                        String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                        String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                        String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                        TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                        newTeachers.add(teacher);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                // 1 1 1 0
-                else if (!newLocations.isEmpty() && !newCarBrands.isEmpty() && !newGears.isEmpty() && newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if(newLocations.contains(dataSnapshotl.child("info").child("city").getValue().toString())
-                                    && newCarBrands.contains(dataSnapshotl.child("info").child("carType").getValue().toString())
-                                    && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())) {
-
-                                String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                newTeachers.add(teacher);
-                            }
-                        }
-                    }
-                    teachers.addAll(newTeachers);
-                    adapter.notifyDataSetChanged();
-                }
-                // 1 1 1 1
-                else if (!newLocations.isEmpty() && !newCarBrands.isEmpty() && !newGears.isEmpty() && !newPrices.isEmpty()) {
-                    teachers.clear();
-                    newTeachers.clear();
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            if (newLocations.contains(dataSnapshotl.child("info").child("city").getValue().toString())
-                                    && newCarBrands.contains(dataSnapshotl.child("info").child("carType").getValue().toString())
-                                    && newGears.contains(dataSnapshotl.child("info").child("transmission").getValue().toString())) {
-
-                                for (String price : newPrices) {
-                                    String[] parts = price.split("\\–");
-                                    int lower = Integer.parseInt(parts[0]);
-                                    int upper = Integer.parseInt(parts[1]);
-                                    if (lower <= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())
-                                            && upper >= Integer.parseInt(dataSnapshotl.child("info").child("lessonPrice").getValue().toString())) {
-
-                                        String firstName = dataSnapshotl.child("info").child("firstName").getValue().toString();
-                                        String lastName = dataSnapshotl.child("info").child("lastName").getValue().toString();
-                                        String age = dataSnapshotl.child("info").child("age").getValue().toString();
-                                        String city = dataSnapshotl.child("info").child("city").getValue().toString();
-                                        String email = dataSnapshotl.child("info").child("email").getValue().toString();
-                                        String phone = dataSnapshotl.child("info").child("phoneNumber").getValue().toString();
-                                        String carType = dataSnapshotl.child("info").child("carType").getValue().toString();
-                                        String carYear = dataSnapshotl.child("info").child("carYear").getValue().toString();
-                                        String experience = dataSnapshotl.child("info").child("experience").getValue().toString();
-                                        String transmission = dataSnapshotl.child("info").child("transmission").getValue().toString();
-                                        String lessonPrice = dataSnapshotl.child("info").child("lessonPrice").getValue().toString();
-
-                                        TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                                        newTeachers.add(teacher);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                else {
-                    Toast.makeText(root.getContext(), "Something went wrong...", Toast.LENGTH_SHORT).show();
                 }
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(root.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            adapter.notifyDataSetChanged();
+        }
+        // 0 1 0 0
+        else if (newLocations.isEmpty() && !newCarBrands.isEmpty() && newGears.isEmpty() && newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newCarBrands.contains(teacher.getCarType())) {
+                    teachers.add(teacher);
+                }
             }
-        });
+            adapter.notifyDataSetChanged();
+        }
+        // 0 1 0 1
+        else if (newLocations.isEmpty() && !newCarBrands.isEmpty() && newGears.isEmpty() && !newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newCarBrands.contains(teacher.getCarType())) {
+                    for (String price : newPrices) {
+                        String[] parts = price.split("\\–");
+                        int lower = Integer.parseInt(parts[0]);
+                        int upper = Integer.parseInt(parts[1]);
+                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
+                            teachers.add(teacher);
+                        }
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        // 0 1 1 0
+        else if (newLocations.isEmpty() && !newCarBrands.isEmpty() && !newGears.isEmpty() && newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newCarBrands.contains(teacher.getCarType()) && newGears.contains(teacher.getTransmission())) {
+                    teachers.add(teacher);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        // 0 1 1 1
+        else if (newLocations.isEmpty() && !newCarBrands.isEmpty() && !newGears.isEmpty() && !newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newCarBrands.contains(teacher.getCarType()) && newGears.contains(teacher.getTransmission())) {
+                    for (String price : newPrices) {
+                        String[] parts = price.split("\\–");
+                        int lower = Integer.parseInt(parts[0]);
+                        int upper = Integer.parseInt(parts[1]);
+                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
+                            teachers.add(teacher);
+                        }
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        // 1 0 0 0
+        else if (!newLocations.isEmpty() && newCarBrands.isEmpty() && newGears.isEmpty() && newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newLocations.contains(teacher.getCity())) {
+                    teachers.add(teacher);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        // 1 0 0 1
+        else if (!newLocations.isEmpty() && newCarBrands.isEmpty() && newGears.isEmpty() && !newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newLocations.contains(teacher.getCity())) {
+                    for (String price : newPrices) {
+                        String[] parts = price.split("\\–");
+                        int lower = Integer.parseInt(parts[0]);
+                        int upper = Integer.parseInt(parts[1]);
+                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
+                            teachers.add(teacher);
+                        }
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        // 1 0 1 0
+        else if (!newLocations.isEmpty() && newCarBrands.isEmpty() && !newGears.isEmpty() && newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newLocations.contains(teacher.getCity()) && newGears.contains(teacher.getTransmission())) {
+                    teachers.add(teacher);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        // 1 0 1 1
+        else if (!newLocations.isEmpty() && newCarBrands.isEmpty() && !newGears.isEmpty() && !newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newLocations.contains(teacher.getCity()) && newGears.contains(teacher.getTransmission())) {
+                    for (String price : newPrices) {
+                        String[] parts = price.split("\\–");
+                        int lower = Integer.parseInt(parts[0]);
+                        int upper = Integer.parseInt(parts[1]);
+                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
+                            teachers.add(teacher);
+                        }
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        // 1 1 0 0
+        else if (!newLocations.isEmpty() && !newCarBrands.isEmpty() && newGears.isEmpty() && newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newLocations.contains(teacher.getCity()) && newCarBrands.contains(teacher.getCarType())) {
+                    teachers.add(teacher);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        // 1 1 0 1
+        else if (!newLocations.isEmpty() && !newCarBrands.isEmpty() && newGears.isEmpty() && !newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newLocations.contains(teacher.getCity()) && newCarBrands.contains(teacher.getCarType())) {
+                    for (String price : newPrices) {
+                        String[] parts = price.split("\\–");
+                        int lower = Integer.parseInt(parts[0]);
+                        int upper = Integer.parseInt(parts[1]);
+                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
+                            teachers.add(teacher);
+                        }
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        // 1 1 1 0
+        else if (!newLocations.isEmpty() && !newCarBrands.isEmpty() && !newGears.isEmpty() && newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newLocations.contains(teacher.getCity()) && newCarBrands.contains(teacher.getCarType())
+                        && newGears.contains(teacher.getTransmission())) {
+                    teachers.add(teacher);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+        // 1 1 1 1
+        else if (!newLocations.isEmpty() && !newCarBrands.isEmpty() && !newGears.isEmpty() && !newPrices.isEmpty()) {
+            teachers.clear();
+            for (TeacherObj teacher : allTeachers) {
+                if (newLocations.contains(teacher.getCity()) && newCarBrands.contains(teacher.getCarType())
+                        && newGears.contains(teacher.getTransmission())) {
+                    for (String price : newPrices) {
+                        String[] parts = price.split("\\–");
+                        int lower = Integer.parseInt(parts[0]);
+                        int upper = Integer.parseInt(parts[1]);
+                        if (lower <= Integer.parseInt(teacher.getLessonPrice()) && upper >= Integer.parseInt(teacher.getLessonPrice())) {
+                            teachers.add(teacher);
+                        }
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged();
+
+        } else {
+            Toast.makeText(root.getContext(), "Something went wrong...", Toast.LENGTH_SHORT).show();
+        }
     }
 }
