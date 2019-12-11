@@ -2,13 +2,17 @@ package com.example.caredriving;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toolbar;
 
+import com.example.caredriving.firebase.model.FirebaseDBUser;
 import com.example.caredriving.firebase.model.dataObject.StudentObj;
 import com.example.caredriving.firebase.model.dataObject.TeacherObj;
 import com.example.caredriving.firebase.model.dataObject.UserObj;
@@ -20,8 +24,8 @@ import java.util.ArrayList;
 public class PersonalAreaActivity extends AppCompatActivity implements View.OnClickListener {
 
     UserObj user;
-    String userType;
-    String userUid;
+//    String userType;
+//    String userUid;
 
     EditText fnameEditText;
     EditText lnameEditText;
@@ -72,8 +76,6 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
 
         //take the user from login activity and put it in "user" variable
         user = (UserObj) getIntent().getSerializableExtra("UserObj");
-        userType = getIntent().getStringExtra("type");
-        userUid = getIntent().getStringExtra("Uid");
 
 
         userViews = new ArrayList<View>();
@@ -142,8 +144,17 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
         //Fill hint details in all fields according the "user" and "type" from intent
         fillHintDetails();
 
+
         editBtn.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("UserObj", user);
+        startActivityForResult(intent, 0);
+        return true;
     }
 
     @Override
@@ -162,12 +173,12 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
         for(View view: userViews){
             view.setEnabled(false);
         }
-        if(userType.equals("teacher")){
+        if(user instanceof TeacherObj){
             for(View view: teacherViews){
                 view.setEnabled(false);
             }
         }
-        if(userType.equals("student")){
+        if(user instanceof StudentObj){
             for(View view: studentViews){
                 view.setEnabled(false);
             }
@@ -180,12 +191,12 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
                 view.setEnabled(true);
             }
         }
-        if(userType.equals("teacher")){
+        if(user instanceof TeacherObj){
             for(View view: teacherViews){
                 view.setEnabled(true);
             }
         }
-        if(userType.equals("student")){
+        if(user instanceof StudentObj){
             for(View view: studentViews){
                 view.setEnabled(true);
             }
@@ -202,12 +213,12 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
         phoneNumberEditText.setHint(user.getPhoneNumber());
 
         // TeacherObj hint details
-        if(userType.equals("teacher")){
+        if(user instanceof TeacherObj){
             setStudentViewsGone();
             fillHintTeacherViews();
         }
         // StudentObj hint details
-        if(userType.equals("student")){
+        if(user instanceof StudentObj){
             setTeacherViewsGone();
             fillHintStudentViews();
         }
@@ -253,11 +264,11 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
 
 
         // TeacherObj text details
-        if(userType.equals("teacher")){
+        if(user instanceof TeacherObj){
             fillTextTeacherViews();
         }
         // StudentObj text details
-        if(userType.equals("student")){
+        if(user instanceof StudentObj){
             fillTextStudentViews();
         }
     }
@@ -285,8 +296,9 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void saveButtonClicked(){
-        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("users").child(userUid).child("info");
-        if(userType.equals("teacher")){
+        FirebaseDBUser fb_user = new FirebaseDBUser();
+        DatabaseReference userReference = fb_user.getUserRefFromDB().child("info");
+        if(user instanceof TeacherObj){
             TeacherObj teacher = (TeacherObj) user;
             userReference.child("firstName").setValue(fnameEditText.getText().toString());
             userReference.child("lastName").setValue(lnameEditText.getText().toString());
@@ -310,7 +322,7 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
             teacher.setTransmission(teacher_transmissionEditText.getText().toString());
             user = teacher;
         }
-        if(userType.equals("student")){
+        if(user instanceof StudentObj){
             StudentObj student = (StudentObj) user;
             userReference.child("firstName").setValue(fnameEditText.getText().toString());
             userReference.child("lastName").setValue(lnameEditText.getText().toString());
@@ -342,8 +354,6 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
         if(savePressed){
             Intent intent = new Intent(PersonalAreaActivity.this, MainActivity.class);
             intent.putExtra("UserObj", user);
-            intent.putExtra("type", userType);
-            intent.putExtra("Uid", userUid);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
@@ -351,8 +361,6 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
             Intent intent = new Intent();
             Bundle data = new Bundle();
             data.putSerializable("UserObj", user);
-            data.putString("type", userType);
-            data.putString("Uid", userUid);
             intent.putExtras(data);
             setResult(RESULT_OK, intent);
             finish();

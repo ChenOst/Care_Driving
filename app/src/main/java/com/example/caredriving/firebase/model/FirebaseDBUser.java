@@ -16,13 +16,13 @@ public class FirebaseDBUser extends FirebaseBaseModel{
         myUid = myAuto.getUid();
     }
 
-    public DatabaseReference getUserRefFromDB(){
-        return myref.child("users").child(myUid);
-    }
-
     public UserObj readUserFromDB(DataSnapshot dataSnapshot){
         UserObj user = (TeacherObj) dataSnapshot.child("info").getValue(TeacherObj.class);
         return user;
+    }
+
+    public DatabaseReference getUserRefFromDB(){
+        return myref.child("users").child(myUid);
     }
 
     public String getMyUid(){return myUid;}

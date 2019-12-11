@@ -12,18 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.caredriving.firebase.model.FirebaseDBEntity;
-import com.example.caredriving.firebase.model.FirebaseDBUser;
-import com.example.caredriving.firebase.model.dataObject.StudentObj;
-import com.example.caredriving.firebase.model.dataObject.TeacherObj;
 import com.example.caredriving.firebase.model.dataObject.UserObj;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -95,7 +88,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if(task.isSuccessful()){
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
-//                            findUser();
                         } else {
                             Toast.makeText(LoginActivity.this,
                                     "Login failed", Toast.LENGTH_SHORT).show();
@@ -104,62 +96,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     }
                 });
-    }
-
-    private void findUser(){
-        final FirebaseDBUser fb_user = new FirebaseDBUser();
-        fb_user.getUserRefFromDB().addListenerForSingleValueEvent(new ValueEventListener(){
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Find type of FirebaseUser(TeacherObj/StudentObj)
-                String usertype = dataSnapshot.child("type").getValue().toString();
-                // Create local instance of UserObj(TeacherObj/StudentObj)
-                user = dataSnapshot.getValue(FirebaseDBEntity.class).getUserObj();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("UserObj", user);
-                intent.putExtra("type", usertype);
-                intent.putExtra("Uid", fb_user.getMyUid());
-                startActivity(intent);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private TeacherObj fillDataForTeacherUser(DataSnapshot dataSnapshot){
-        String firstName = dataSnapshot.child("info").child("firstName").getValue().toString();
-        String lastName = dataSnapshot.child("info").child("lastName").getValue().toString();
-        String age = dataSnapshot.child("info").child("age").getValue().toString();
-        String city = dataSnapshot.child("info").child("city").getValue().toString();
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        String phoneNumber = dataSnapshot.child("info").child("phoneNumber").getValue().toString();
-//        String phoneNumber = "052-******";
-        String lessonPrice = dataSnapshot.child("info").child("lessonPrice").getValue().toString();
-        String experience = dataSnapshot.child("info").child("experience").getValue().toString();
-        String carType = dataSnapshot.child("info").child("carType").getValue().toString();
-        String carYear = dataSnapshot.child("info").child("carYear").getValue().toString();
-        String transmission = dataSnapshot.child("info").child("transmission").getValue().toString();
-        return new TeacherObj(firstName, lastName, age, city, email, phoneNumber,
-                carType, carYear, experience, transmission, lessonPrice);
-    }
-
-    private StudentObj fillDataForStudentUser(DataSnapshot dataSnapshot){
-        String firstName = dataSnapshot.child("info").child("firstName").getValue().toString();
-        String lastName = dataSnapshot.child("info").child("lastName").getValue().toString();
-        String age = dataSnapshot.child("info").child("age").getValue().toString();
-        String city = dataSnapshot.child("info").child("city").getValue().toString();
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        String phoneNumber = dataSnapshot.child("info").child("phoneNumber").getValue().toString();
-//        String phoneNumber = "052-******";
-        String greenForm = dataSnapshot.child("info").child("greenForm").getValue().toString();
-        String transmission = dataSnapshot.child("info").child("transmission").getValue().toString();
-        String theory = dataSnapshot.child("info").child("theory").getValue().toString();
-        String teacherId = dataSnapshot.child("info").child("teacherId").getValue().toString();
-        return new StudentObj(firstName, lastName, age, city, email, phoneNumber, greenForm,
-                transmission, theory, teacherId);
     }
 }

@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements
         fb_user = new FirebaseDBUser();
         findUser();
 
-        navigationView.setOnClickListener(this);
         imgButton.setOnClickListener(this);
 
 
@@ -209,7 +208,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void headerImageButtonPressed(){
-
+        //What happen when click on image view in navigation bar
+        Intent intent = new Intent(MainActivity.this, PersonalAreaActivity.class);
+        intent.putExtra("UserObj", user);
+        startActivity(intent);
     }
 
     private void displayHeaderDetailsToUser(){
