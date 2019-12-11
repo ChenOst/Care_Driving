@@ -114,25 +114,6 @@ public class MainActivity extends AppCompatActivity implements
         findUser();
 
         imgButton.setOnClickListener(this);
-
-
-        ///////////////////////////////////// Header part ////////////////////////////////////////////
-
-
-//        //Display name, email in header of navigation bar
-//        displayHeaderDetailsToUser();
-//
-//        //What happen when click on image view in navigation bar
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, PersonalAreaActivity.class);
-//                intent.putExtra("UserObj", user);
-////                intent.putExtra("type", userType);
-////                intent.putExtra("Uid", uid);
-//                startActivity(intent);
-//            }
-//        });
-
     }
 
     @Override
