@@ -48,17 +48,36 @@
                     android:layout_toRightOf="@+id/tvDetailsTeachersFirstName" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvDetailsTeachersExperience"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/teachers_experience"
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:layout_below="@+id/layoutName"
+                android:id="@+id/layoutTeachersExperience"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="16dp"
+                android:layout_below="@+id/layoutName">
+
+                <TextView
+                    android:id="@+id/tvTxtTeachersExperience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/experience_prompt"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:layout_margin="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvDetailsTeachersExperience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/teachers_experience"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:layout_margin="4dp"
+                    android:layout_toEndOf="@+id/tvTxtTeachersExperience"
+                    android:layout_toRightOf="@+id/tvTxtTeachersExperience" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tvDetailsTeachersLoction"
@@ -68,7 +87,7 @@
                 android:text="@string/location"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"
-                android:layout_below="@+id/tvDetailsTeachersExperience"
+                android:layout_below="@+id/layoutTeachersExperience"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"/>
 
@@ -132,6 +151,18 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/layoutCarInfo"
                 android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgNewShekek"
+                android:text="@string/new_shekel"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_toEndOf="@+id/tvDetailsLessonPrice"
+                android:layout_toRightOf="@+id/tvDetailsLessonPrice"
+                android:layout_alignTop="@+id/tvDetailsLessonPrice"
+                android:layout_alignBottom="@+id/tvDetailsLessonPrice"/>
 
             <TextView
                 android:id="@+id/tvDetailsTeachersPhone"

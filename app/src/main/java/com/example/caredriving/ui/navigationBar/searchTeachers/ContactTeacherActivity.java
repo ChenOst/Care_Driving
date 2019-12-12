@@ -36,7 +36,7 @@ public class ContactTeacherActivity extends AppCompatActivity {
         Log.d(TAG, "ContactTeacherActivity: started.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_teacher);
-        getSupportActionBar().setTitle("Contact TeacherObj");
+        getSupportActionBar().setTitle("Contact Teacher");
 
         tvTeachersFirstName = findViewById(R.id.tvDetailsTeachersFirstName);
         tvTeachersLastName = findViewById(R.id.tvDetailsTeachersLastName);

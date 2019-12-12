@@ -90,7 +90,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     intent.putExtra("TeachersCarType", teachers.get(position).getCarType());
                     intent.putExtra("TeachersCarYear", teachers.get(position).getCarYear());
                     intent.putExtra("TeachersGearType", teachers.get(position).getTransmission());
-                    intent.putExtra("TeachersLessonPrice", teachers.get(position).getTransmission());
+                    intent.putExtra("TeachersLessonPrice", teachers.get(position).getLessonPrice());
                     intent.putExtra("TeachersPhoneNumber", teachers.get(position).getPhoneNumber());
                     itemView.getContext().startActivity(intent);
                 }
