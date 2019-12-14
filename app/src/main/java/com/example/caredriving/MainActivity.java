@@ -41,6 +41,7 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private AppBarConfiguration mAppBarConfiguration;
     private NavigationView navigationView;
+    private DrawerLayout drawer;
     private ImageButton imgButton;
     private View header;
     private TextView nameHeader;
@@ -90,31 +92,12 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_search_teachers, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send, R.id.imageButton)
-                .setDrawerLayout(drawer)
-                .build();
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-
-
-        header = navigationView.getHeaderView(0);
-        nameHeader = header.findViewById(R.id.nameHeader);
-        emailHeader = header.findViewById(R.id.emailHeader);
-        imgButton = header.findViewById(R.id.imageButton);
-
+        drawer = findViewById(R.id.drawer_layout);
 
         fb_user = new FirebaseDBUser();
         findUser();
 
-        imgButton.setOnClickListener(this);
     }
 
     @Override
@@ -178,7 +161,14 @@ public class MainActivity extends AppCompatActivity implements
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Create local instance of UserObj(TeacherObj/StudentObj) from Entity object(HashMap, String)
                 FirebaseDBEntity entity = dataSnapshot.getValue(FirebaseDBEntity.class);
+                assert entity != null;
                 user = entity.getUserObj();
+                if (user instanceof TeacherObj){
+                    setTeachersNavigationView();
+                }
+                else if (user instanceof StudentObj){
+                    setStudentsNavigationView();
+                }
                 displayHeaderDetailsToUser();
             }
 
@@ -198,10 +188,41 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void displayHeaderDetailsToUser(){
-            String hello = "Welcome, "+user.getFirstName()+" !";
-            nameHeader.setText(hello);
-            emailHeader.setText(user.getEmail());
+        String hello = "Welcome, "+user.getFirstName()+" !";
+        nameHeader.setText(hello);
+        emailHeader.setText(user.getEmail());
+    }
+
+    // Add to the NavigationView restrictions according to the Teacher object
+    private void setTeachersNavigationView(){
+        navigationView.getMenu().findItem(R.id.nav_search_teachers).setVisible(false);
+        setNavigationView();
+    }
+
+    // Add to the NavigationView restrictions according to the Student object
+    private void setStudentsNavigationView(){
+       setNavigationView();
+    }
+
+    // Set the navigation view
+    private void setNavigationView(){
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_search_teachers, R.id.nav_slideshow,
+                R.id.nav_tools, R.id.nav_share, R.id.nav_send, R.id.imageButton)
+                .setDrawerLayout(drawer)
+                .build();
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+
+
+        header = navigationView.getHeaderView(0);
+        nameHeader = header.findViewById(R.id.nameHeader);
+        emailHeader = header.findViewById(R.id.emailHeader);
+        imgButton = header.findViewById(R.id.imageButton);
+        imgButton.setOnClickListener(this);
     }
 }
-
-
