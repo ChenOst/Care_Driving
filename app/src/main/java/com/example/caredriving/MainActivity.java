@@ -14,6 +14,7 @@ import com.example.caredriving.firebase.model.dataObject.UserObj;
 import com.example.caredriving.ui.navigationBar.searchTeachers.SearchTeachersFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -187,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
     }
+
 
     private void headerImageButtonPressed(){
         //What happen when click on image view in navigation bar

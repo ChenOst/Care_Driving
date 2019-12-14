@@ -22,7 +22,7 @@ public class FirebaseDBUser extends FirebaseBaseModel{
             myref.child("users").child(myUid).child("info").setValue((TeacherObj) user);
             myref.child("users").child(myUid).child("type").setValue("teacher");
         }
-        if(user instanceof StudentObj) {
+        else if(user instanceof StudentObj) {
             myref.child("users").child(myUid).child("info").setValue((StudentObj) user);
             myref.child("users").child(myUid).child("type").setValue("student");
         }

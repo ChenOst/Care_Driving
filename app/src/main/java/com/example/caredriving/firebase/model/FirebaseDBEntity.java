@@ -12,14 +12,17 @@ public class FirebaseDBEntity implements Serializable {
     String type;
 
     public UserObj getUserObj(){
+
         try {
             if (type.equals("teacher"))
                 return new TeacherObj(user);
-            if (type.equals("student"))
+            else if (type.equals("student"))
                 return new StudentObj(user);
         } catch (Exception e){
             return null;
         }
+
+
         return null;
     }
 
