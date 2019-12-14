@@ -51,6 +51,9 @@
     <string name="title_car_brand_filter">Choose Car Brand/s:</string>
     <string name="title_gear_filter">Choose Gear/s:</string>
     <string name="title_price_filter">Choose Price Range:</string>
+    <string name="filter">Filter</string>
+    <string name="cancel">Cancel</string>
+
 
     <string-array name="yes_no">
         <item>No</item>

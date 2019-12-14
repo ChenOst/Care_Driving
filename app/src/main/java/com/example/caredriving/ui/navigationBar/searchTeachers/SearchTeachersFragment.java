@@ -139,22 +139,22 @@ public class SearchTeachersFragment extends Fragment {
                         }
                     }
                 });
+                // Cannot close the alert dialog after it's getting already opened
                 mBuilder.setCancelable(false);
-                mBuilder.setPositiveButton("Filter", new DialogInterface.OnClickListener() {
+                // Filter the Recyclerview
+                mBuilder.setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         newLocations.clear();
-                        ArrayList<String> items = new ArrayList<>();
-                        items.clear();
                         for (int i = 0; i < usersLocations.size(); i++) {
-                            items.add(listLocations[usersLocations.get(i)]);
+                            newLocations.add(listLocations[usersLocations.get(i)]);
                         }
-                        newLocations.addAll(items);
                         FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
                                 newCarBrands,  newGears,  newPrices,  adapter);
                     }
                 });
-                mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                // Close the Dialog without doing nothing
+                mBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -187,22 +187,22 @@ public class SearchTeachersFragment extends Fragment {
                         }
                     }
                 });
+                // Cannot close the alert dialog after it's getting already opened
                 mBuilder.setCancelable(false);
-                mBuilder.setPositiveButton("Filter", new DialogInterface.OnClickListener() {
+                // Filter the Recyclerview
+                mBuilder.setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         newCarBrands.clear();
-                        ArrayList<String> items = new ArrayList<>();
-                        items.clear();
                         for (int i = 0; i < usersCarBrands.size(); i++) {
-                            items.add(listCarBrands[usersCarBrands.get(i)]);
+                            newCarBrands.add(listCarBrands[usersCarBrands.get(i)]);
                         }
-                        newCarBrands.addAll(items);
                         FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
                                 newCarBrands,  newGears,  newPrices,  adapter);
                     }
                 });
-                mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                // Close the Dialog without doing nothing
+                mBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -235,22 +235,22 @@ public class SearchTeachersFragment extends Fragment {
                         }
                     }
                 });
+                // Cannot close the alert dialog after it's getting already opened
                 mBuilder.setCancelable(false);
-                mBuilder.setPositiveButton("Filter", new DialogInterface.OnClickListener() {
+                // Filter the Recyclerview
+                mBuilder.setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         newGears.clear();
-                        ArrayList<String> items = new ArrayList<>();
-                        items.clear();
                         for (int i = 0; i < usersGears.size(); i++) {
-                            items.add(listGears[usersGears.get(i)]);
+                            newGears.add(listGears[usersGears.get(i)]);
                         }
-                        newGears.addAll(items);
                         FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
                                 newCarBrands,  newGears,  newPrices,  adapter);
                     }
                 });
-                mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                // Close the Dialog without doing nothing
+                mBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -283,22 +283,22 @@ public class SearchTeachersFragment extends Fragment {
                         }
                     }
                 });
+                // Cannot close the alert dialog after it's getting already opened
                 mBuilder.setCancelable(false);
-                mBuilder.setPositiveButton("Filter", new DialogInterface.OnClickListener() {
+                // Filter the Recyclerview
+                mBuilder.setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         newPrices.clear();
-                        ArrayList<String> items = new ArrayList<>();
-                        items.clear();
                         for (int i = 0; i < usersPriceRange.size(); i++) {
-                            items.add(listPriceRange[usersPriceRange.get(i)]);
+                            newPrices.add(listPriceRange[usersPriceRange.get(i)]);
                         }
-                        newPrices.addAll(items);
                         FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
                                 newCarBrands,  newGears,  newPrices,  adapter);
                     }
                 });
-                mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                // Close the Dialog without doing nothing
+                mBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

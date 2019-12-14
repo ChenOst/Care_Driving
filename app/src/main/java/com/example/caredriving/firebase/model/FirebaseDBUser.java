@@ -19,6 +19,7 @@ public class FirebaseDBUser extends FirebaseBaseModel{
 
     public void writeUserToDB(UserObj user){
         if(user instanceof TeacherObj) {
+            myref.child("Search Teachers").child(user.getCity()).child(((TeacherObj) user).getTransmission()).child(myUid).setValue(user.getFirstName() + " " + user.getLastName());
             myref.child("users").child(myUid).child("info").setValue((TeacherObj) user);
             myref.child("users").child(myUid).child("type").setValue("teacher");
         }
