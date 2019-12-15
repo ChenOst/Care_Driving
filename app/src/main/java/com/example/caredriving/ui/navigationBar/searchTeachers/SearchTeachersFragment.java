@@ -63,9 +63,10 @@ public class SearchTeachersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        final View root = inflater.inflate(R.layout.fragment_search_teachers, container, false);
+        View root = inflater.inflate(R.layout.fragment_search_teachers, container, false);
         recyclerView = root.findViewById(R.id.recyclerviewTeachers);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        clearPreviousData();
         downloadInfoFromDatabase(root);
 
         // Cities Filters
@@ -77,6 +78,23 @@ public class SearchTeachersFragment extends Fragment {
         // Prices Filters
         priceFilterDialog(root);
         return root;
+    }
+
+    // Make sure there is no duplicate information
+    private void clearPreviousData(){
+        teachers.clear();
+        allTeachers.clear();
+        adapter = new RecyclerViewAdapter(getActivity(), teachers);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        usersLocations.clear();
+        newLocations.clear();
+        usersCarBrands.clear();
+        newCarBrands.clear();
+        usersGears.clear();
+        newGears.clear();
+        usersPriceRange.clear();
+        newPrices.clear();
     }
 
     // Download the teacher's information from the Database
@@ -107,8 +125,7 @@ public class SearchTeachersFragment extends Fragment {
                         }
                     }
                     allTeachers.addAll(teachers);
-                    adapter = new RecyclerViewAdapter(getActivity(), teachers);
-                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
             }
             @Override
@@ -125,7 +142,7 @@ public class SearchTeachersFragment extends Fragment {
         btnLocationsFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(root.getContext());
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(root.getContext());
                 mBuilder.setTitle(getString(R.string.title_location_filter));
                 mBuilder.setMultiChoiceItems(listLocations, checkedLocations, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
@@ -173,7 +190,7 @@ public class SearchTeachersFragment extends Fragment {
         btnCarBrandsFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(root.getContext());
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(root.getContext());
                 mBuilder.setTitle(getString(R.string.title_car_brand_filter));
                 mBuilder.setMultiChoiceItems(listCarBrands, checkedCarBrands, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
@@ -221,7 +238,7 @@ public class SearchTeachersFragment extends Fragment {
         btnGearTypesFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(root.getContext());
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(root.getContext());
                 mBuilder.setTitle(getString(R.string.title_gear_filter));
                 mBuilder.setMultiChoiceItems(listGears, checkedGears, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
@@ -269,7 +286,7 @@ public class SearchTeachersFragment extends Fragment {
         btnPriceFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(root.getContext());
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(root.getContext());
                 mBuilder.setTitle(getString(R.string.title_price_filter));
                 mBuilder.setMultiChoiceItems(listPriceRange, checkedPriceRange, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
