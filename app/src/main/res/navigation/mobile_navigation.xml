@@ -18,10 +18,10 @@
         tools:layout="@layout/fragment_search_teachers" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.caredriving.ui.navigationBar.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_requests"
+        android:name="com.example.caredriving.ui.navigationBar.requests.RequestsFragment"
+        android:label="@string/menu_requests"
+        tools:layout="@layout/fragment_requests" />
 
     <fragment
         android:id="@+id/nav_tools"
