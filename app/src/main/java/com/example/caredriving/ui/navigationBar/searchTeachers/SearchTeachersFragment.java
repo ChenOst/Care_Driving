@@ -108,6 +108,7 @@ public class SearchTeachersFragment extends Fragment {
                 if (teachers.isEmpty()) {
                     for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
                         if (dataSnapshotl.child("type").getValue().equals("teacher")) {
+                            String id = Objects.requireNonNull(dataSnapshotl.child("info").child("id").getValue()).toString();
                             String firstName = Objects.requireNonNull(dataSnapshotl.child("info").child("firstName").getValue()).toString();
                             String lastName = Objects.requireNonNull(dataSnapshotl.child("info").child("lastName").getValue()).toString();
                             String age = Objects.requireNonNull(dataSnapshotl.child("info").child("age").getValue()).toString();
@@ -120,7 +121,7 @@ public class SearchTeachersFragment extends Fragment {
                             String transmission = Objects.requireNonNull(dataSnapshotl.child("info").child("transmission").getValue()).toString();
                             String lessonPrice = Objects.requireNonNull(dataSnapshotl.child("info").child("lessonPrice").getValue()).toString();
 
-                            TeacherObj teacher = new TeacherObj(firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
+                            TeacherObj teacher = new TeacherObj(id, firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
                             teachers.add(teacher);
                         }
                     }
@@ -137,11 +138,14 @@ public class SearchTeachersFragment extends Fragment {
     // Set the Dialog with the Cities checkbox's
     private void locationFilterDialog(final View root){
         Button btnLocationsFilter = root.findViewById(R.id.btnLocationsFilter);
+        // find all string of locations
         listLocations = getResources().getStringArray(R.array.cities);
         checkedLocations = new boolean[listLocations.length];
+        // "Location" clicked
         btnLocationsFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Create dialog screen above this screen
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(root.getContext());
                 mBuilder.setTitle(getString(R.string.title_location_filter));
                 mBuilder.setMultiChoiceItems(listLocations, checkedLocations, new DialogInterface.OnMultiChoiceClickListener() {
@@ -158,7 +162,8 @@ public class SearchTeachersFragment extends Fragment {
                 });
                 // Cannot close the alert dialog after it's getting already opened
                 mBuilder.setCancelable(false);
-                // Filter the Recyclerview
+                // Filter button - the Recyclerview
+                // What happen after click "filter"
                 mBuilder.setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -166,6 +171,7 @@ public class SearchTeachersFragment extends Fragment {
                         for (int i = 0; i < usersLocations.size(); i++) {
                             newLocations.add(listLocations[usersLocations.get(i)]);
                         }
+                        // Do the filter
                         FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
                                 newCarBrands,  newGears,  newPrices,  adapter);
                     }

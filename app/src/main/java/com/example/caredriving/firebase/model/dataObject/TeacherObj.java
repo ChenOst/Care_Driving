@@ -3,6 +3,7 @@ package com.example.caredriving.firebase.model.dataObject;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TeacherObj extends UserObj {
@@ -13,21 +14,25 @@ public class TeacherObj extends UserObj {
     private String transmission; //גיר
     private String lessonPrice;
 
-//    private ArrayList<String> students;
+    private ArrayList<String> students;
+    private ArrayList<String> requests;
 
     public TeacherObj(){
         super();
-//        students = new ArrayList<>();
+        this.students = new ArrayList<>();
+        this.requests = new ArrayList<>();
     }
 
-    public TeacherObj(String firstName, String lastName, String age, String city, String email, String phoneNumber,
+    public TeacherObj(String id, String firstName, String lastName, String age, String city, String email, String phoneNumber,
                       String carType, String carYear, String experience, String transmission, String lessonPrice){
-        super(firstName, lastName, age, city, email, phoneNumber);
+        super(id, firstName, lastName, age, city, email, phoneNumber);
         this.carType = carType;
         this.carYear = carYear;
         this.experience = experience;
         this.transmission = transmission;
         this.lessonPrice = lessonPrice;
+        this.students = new ArrayList<>();
+        this.requests = new ArrayList<>();
     }
 
     public TeacherObj(HashMap<String, String> hashMapTeacher){
@@ -37,6 +42,8 @@ public class TeacherObj extends UserObj {
         this.experience = hashMapTeacher.get("experience");
         this.transmission = hashMapTeacher.get("transmission");
         this.lessonPrice = hashMapTeacher.get("lessonPrice");
+        this.students = new ArrayList<>();
+        this.requests = new ArrayList<>();
     }
 
     public void setCarBrand(String carBrand) {this.carType = carBrand;}

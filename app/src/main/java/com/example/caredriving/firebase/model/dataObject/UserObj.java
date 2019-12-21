@@ -15,19 +15,22 @@ public class UserObj implements Serializable {
     private String city;
     private String email;
     private String phoneNumber;
+    private String id;
 
     public UserObj(){}
 
-    public UserObj(String firstName, String lastName, String age, String city, String email, String phoneNumber){
+    public UserObj(String id, String firstName, String lastName, String age, String city, String email, String phoneNumber){
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.city = city;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.id = id;
     }
 
     public UserObj(HashMap<String, String> hashMapUser){
+        this.id       = hashMapUser.get("id");
         this.firstName = hashMapUser.get("firstName");
         this.lastName  = hashMapUser.get("lastName");
         this.age       = hashMapUser.get("age");
@@ -36,6 +39,7 @@ public class UserObj implements Serializable {
         this.phoneNumber = hashMapUser.get("phoneNumber");
     }
 
+    public void setId(String uid){this.id = uid;}
     public void setFirstName(String firstName) {this.firstName = firstName;}
     public void setLastName(String lastName) {this.lastName = lastName;}
     public void setAge(String age) {this.age = age;}
@@ -43,6 +47,7 @@ public class UserObj implements Serializable {
     public void setEmail(String email){this.email = email;}
     public void setPhoneNumber(String phoneNumber){this.phoneNumber = phoneNumber;}
 
+    public String getId() {return id;}
     public String getFirstName() {return firstName;}
     public String getLastName() {return lastName;}
     public String getAge() {return age;}

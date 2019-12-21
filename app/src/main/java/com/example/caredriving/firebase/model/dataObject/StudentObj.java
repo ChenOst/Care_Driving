@@ -3,6 +3,7 @@ package com.example.caredriving.firebase.model.dataObject;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StudentObj extends UserObj {
@@ -12,19 +13,21 @@ public class StudentObj extends UserObj {
     private String theory;
     private String teacherId;
 
-//    private ArrayList<LessonObj> lessons;
+    private ArrayList<LessonObj> lessons;
 
     public StudentObj(){
         super();
+        this.lessons = new ArrayList<>();
     }
 
-    public StudentObj(String firstName, String lastName, String age, String city, String email, String phoneNumber,
+    public StudentObj(String id, String firstName, String lastName, String age, String city, String email, String phoneNumber,
                       String greenForm, String transmission, String theory, String teacherId) {
-        super(firstName, lastName, age, city, email, phoneNumber);
+        super(id, firstName, lastName, age, city, email, phoneNumber);
         this.greenForm = greenForm;
         this.transmission = transmission;
         this.theory = theory;
         this.teacherId = teacherId;
+        this.lessons = new ArrayList<>();
     }
 
     public StudentObj(HashMap<String, String> hashMapStudent){
@@ -33,6 +36,7 @@ public class StudentObj extends UserObj {
         this.transmission = hashMapStudent.get("transmission");
         this.theory = hashMapStudent.get("theory");
         this.teacherId = hashMapStudent.get("teacherId");
+        this.lessons = new ArrayList<>();
     }
 
     public Intent getIntent(Context from, Class<?> to){

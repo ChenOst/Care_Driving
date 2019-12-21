@@ -11,12 +11,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.caredriving.R;
+import com.example.caredriving.firebase.model.FirebaseBaseModel;
+import com.example.caredriving.firebase.model.FirebaseDBEntity;
+import com.example.caredriving.firebase.model.FirebaseDBRequest;
+import com.example.caredriving.firebase.model.FirebaseDBUser;
+import com.example.caredriving.firebase.model.dataObject.StudentObj;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
-public class ContactTeacherActivity extends AppCompatActivity {
+public class ContactTeacherActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "ContactTeacherActivity";
     private TextView tvTeachersFirstName;
@@ -29,7 +39,12 @@ public class ContactTeacherActivity extends AppCompatActivity {
     private TextView tvLessonPrice;
     private TextView tvTeachersPhoneNumber;
     private ImageView imgPhone;
+    private Button btnConnectToTeacher;
     private static final int REQUEST_CALL = 1;
+
+    private FirebaseDBUser fb_user;
+    private StudentObj user;
+    private String teacherId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +63,25 @@ public class ContactTeacherActivity extends AppCompatActivity {
         tvLessonPrice = findViewById(R.id.tvDetailsLessonPrice);
         tvTeachersPhoneNumber = findViewById(R.id.tvDetailsTeachersPhone);
         imgPhone = findViewById(R.id.imgPhone);
+        btnConnectToTeacher = findViewById(R.id.tvDetailsConnectToTeacher);
+
+        //find user
+        fb_user = new FirebaseDBUser();
+        fb_user.getUserRefFromDB().addListenerForSingleValueEvent(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                FirebaseDBEntity entity = dataSnapshot.getValue(FirebaseDBEntity.class);
+                user = (StudentObj) entity.getUserObj();
+                boolean hasTeacher = checkIfHasTeacher();
+                btnConnectToTeacher.setEnabled(!hasTeacher);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         // Get the incoming intents
         getIncomingIntent();
@@ -59,6 +93,8 @@ public class ContactTeacherActivity extends AppCompatActivity {
                 makePhoneCall();
             }
         });
+
+        btnConnectToTeacher.setOnClickListener(this);
     }
 
 
@@ -69,6 +105,7 @@ public class ContactTeacherActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
             // Get the extras
+            teacherId = getIntent().getStringExtra("TeachersUid");
             String firstName = getIntent().getStringExtra("TeachersFirstName");
             String lastName = getIntent().getStringExtra("TeachersLastName");
             String experience = getIntent().getStringExtra("TeachersExperience");
@@ -122,5 +159,17 @@ public class ContactTeacherActivity extends AppCompatActivity {
                 Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == btnConnectToTeacher){
+            FirebaseDBRequest request = new FirebaseDBRequest(user.getId(), teacherId);
+            request.sendRequest();
+        }
+    }
+
+    private boolean checkIfHasTeacher(){
+        return !user.getTeacherId().equals("null");
     }
 }

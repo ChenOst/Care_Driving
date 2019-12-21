@@ -55,7 +55,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return teachers.size();
     }
 
-    // Holds the information in memory of each individual entry
+
+    //////////////////////////////////////////////////////////////
+    // Holds the information in memory of each individual entry //
+    //////////////////////////////////////////////////////////////
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvTeachersFirstName;
@@ -83,6 +86,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     Log.d(TAG, "onClickListener: called.");
                     int position = getAdapterPosition();
                     Intent intent = new Intent(itemView.getContext(), ContactTeacherActivity.class);
+                    intent.putExtra("TeachersUid", teachers.get(position).getId());
                     intent.putExtra("TeachersFirstName", teachers.get(position).getFirstName());
                     intent.putExtra("TeachersLastName", teachers.get(position).getLastName());
                     intent.putExtra("TeachersExperience", teachers.get(position).getExperience());
