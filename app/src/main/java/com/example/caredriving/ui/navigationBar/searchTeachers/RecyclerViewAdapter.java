@@ -71,12 +71,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
-            tvTeachersFirstName = itemView.findViewById(R.id.tvTeachersFirstName);
-            tvTeachersLastName = itemView.findViewById(R.id.tvTeachersLastName);
-            tvLocation = itemView.findViewById(R.id.tvLocation);
-            tvPrice = itemView.findViewById(R.id.tvPrice);
+            tvTeachersFirstName = itemView.findViewById(R.id.tvStudentFirstName);
+            tvTeachersLastName = itemView.findViewById(R.id.tvStudentLastName);
+            tvLocation = itemView.findViewById(R.id.tvCity);
+            tvPrice = itemView.findViewById(R.id.tvTheory);
             tvPhoneNumber = itemView.findViewById(R.id.tvPhoneNumber);
-            tvGearType = itemView.findViewById(R.id.tvGearType);
+            tvGearType = itemView.findViewById(R.id.tvGreenFormValue);
             layoutTeachersDetails = itemView.findViewById(R.id.layoutTeachersDetails);
 
             // Send to the next activity the relevant information

@@ -7,6 +7,8 @@ public class RequestObj {
     private String requestId;
     private String status;
 
+    public RequestObj(){}
+
     public RequestObj(String studentId, String teacherId){
         this.studentId = studentId;
         this.teacherId = teacherId;
@@ -30,4 +32,8 @@ public class RequestObj {
     public String getTeacherId(){ return teacherId;}
     public String getStatus() { return status;}
     public String getRequestId(){ return requestId;}
+    public void setStudentId(String studentId){this.studentId = studentId;}
+    public void setTeacherId(String teacherId){this.teacherId = teacherId;}
+    public void setRequestId(String requestId){this.requestId = requestId;}
+    public void setStatus(String status){this.status = status;}
 }

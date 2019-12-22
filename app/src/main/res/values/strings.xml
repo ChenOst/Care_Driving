@@ -32,7 +32,7 @@
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="location">Location</string>
-    <string name="phone">Phone</string>
+    <string name="phone">Phone:</string>
 
     <string name="teachers_experience">Experience</string>
     <string name="teachers_gear">Gear</string>
@@ -114,5 +114,9 @@
     </string-array>
 
     <string name="regex_prices">–</string>
+    <string name="green_form">green form:</string>
+    <string name="theory">theory:</string>
+    <string name="city">city:</string>
+    <string name="Colon">:</string>
 
 </resources>

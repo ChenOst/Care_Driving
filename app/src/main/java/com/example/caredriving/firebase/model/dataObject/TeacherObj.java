@@ -52,7 +52,14 @@ public class TeacherObj extends UserObj {
     public void setTransmission(String transmission) {this.transmission = transmission;}
     public void setLessonPrice(String price) {this.lessonPrice = price;}
 
-//    public void loadStudents(){}
+    public void loadStudents(ArrayList<String> studentsId){
+        this.students = studentsId;
+    }
+
+    public void loadRequests(ArrayList<String> requestsId){
+        this.requests = requestsId;
+    }
+
 //    public void addStudent(String studentId){}
 
     public Intent getIntent(Context from, Class<?> to) {
@@ -78,6 +85,10 @@ public class TeacherObj extends UserObj {
     public String getLessonPrice() {
         return lessonPrice;
     }
+
+    public ArrayList<String> getStudents(){ return students;}
+
+    public ArrayList<String> getRequests(){ return requests;}
 
     @Override
     public String toString(){

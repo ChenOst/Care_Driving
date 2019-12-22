@@ -9,4 +9,6 @@ public class FirebaseBaseModel {
     public FirebaseBaseModel(){
         myref = FirebaseDatabase.getInstance().getReference();
     }
+
+    public DatabaseReference getMyref(){return myref;}
 }

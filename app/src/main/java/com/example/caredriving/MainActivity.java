@@ -11,6 +11,7 @@ import com.example.caredriving.firebase.model.FirebaseDBUser;
 import com.example.caredriving.firebase.model.dataObject.StudentObj;
 import com.example.caredriving.firebase.model.dataObject.TeacherObj;
 import com.example.caredriving.firebase.model.dataObject.UserObj;
+import com.example.caredriving.ui.navigationBar.requests.RequestsFragment;
 import com.example.caredriving.ui.navigationBar.searchTeachers.SearchTeachersFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -120,6 +121,14 @@ public class MainActivity extends AppCompatActivity implements
 
         if (id == R.id.nav_search_teachers) {
             MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.containerId, SearchTeachersFragment.newInstance()).commit();
+        }
+
+        if (id == R.id.nav_requests){
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.containerId, RequestsFragment.newInstance()).commit();
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("UserObj", user);
+//            RequestsFragment fragobj = new RequestsFragment();
+//            fragobj.setArguments(bundle);
         }
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
