@@ -31,13 +31,13 @@
 
     <fragment
         android:id="@+id/nav_teacher"
-        android:name="com.example.caredriving.ui.navigationBar.Teacher.ShareFragment"
+        android:name="com.example.caredriving.ui.navigationBar.teacher.ShareFragment"
         android:label="@string/menu_teacher"
         tools:layout="@layout/fragment_teacher" />
 
     <fragment
         android:id="@+id/nav_students"
-        android:name="com.example.caredriving.ui.navigationBar.Students.SendFragment"
+        android:name="com.example.caredriving.ui.navigationBar.students.SendFragment"
         android:label="@string/menu_students"
         tools:layout="@layout/fragment_students" />
 </navigation>

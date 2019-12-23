@@ -2,8 +2,9 @@ package com.example.caredriving;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Entity;
+
 import android.content.Intent;
+
 import android.os.Bundle;
 
 import com.example.caredriving.firebase.model.FirebaseDBEntity;
@@ -15,11 +16,12 @@ import com.example.caredriving.ui.navigationBar.requests.RequestsFragment;
 import com.example.caredriving.ui.navigationBar.searchTeachers.SearchTeachersFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import android.util.Log;
+
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -29,7 +31,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -42,9 +43,9 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.util.Calendar;
+
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements
 
         fb_user = new FirebaseDBUser();
         findUser();
+
 
     }
 

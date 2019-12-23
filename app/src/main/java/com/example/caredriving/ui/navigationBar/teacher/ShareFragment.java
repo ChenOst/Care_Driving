@@ -1,4 +1,4 @@
-package com.example.caredriving.ui.navigationBar.Teacher;
+package com.example.caredriving.ui.navigationBar.teacher;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
