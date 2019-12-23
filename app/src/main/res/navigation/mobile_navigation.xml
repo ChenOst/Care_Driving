@@ -30,14 +30,14 @@
         tools:layout="@layout/fragment_tools" />
 
     <fragment
-        android:id="@+id/nav_share"
-        android:name="com.example.caredriving.ui.navigationBar.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
+        android:id="@+id/nav_teacher"
+        android:name="com.example.caredriving.ui.navigationBar.Teacher.ShareFragment"
+        android:label="@string/menu_teacher"
+        tools:layout="@layout/fragment_teacher" />
 
     <fragment
-        android:id="@+id/nav_send"
-        android:name="com.example.caredriving.ui.navigationBar.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+        android:id="@+id/nav_students"
+        android:name="com.example.caredriving.ui.navigationBar.Students.SendFragment"
+        android:label="@string/menu_students"
+        tools:layout="@layout/fragment_students" />
 </navigation>

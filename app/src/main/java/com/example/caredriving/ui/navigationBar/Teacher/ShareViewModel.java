@@ -1,16 +1,16 @@
-package com.example.caredriving.ui.navigationBar.send;
+package com.example.caredriving.ui.navigationBar.Teacher;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SendViewModel extends ViewModel {
+public class ShareViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SendViewModel() {
+    public ShareViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is send fragment");
+        mText.setValue("This is share fragment");
     }
 
     public LiveData<String> getText() {
