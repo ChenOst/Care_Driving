@@ -8,9 +8,9 @@ public class LessonObj {
     private String time;
     private String duration;
 
-//    private final String id;
-    private final String studentId;
-    private final String teacherId;
+    private  String lessonId;
+    private  String studentId;
+    private  String teacherId;
 
 
     public LessonObj(String studentId, String teacherId) {

@@ -12,8 +12,9 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 
 public class FirebaseDBUser extends FirebaseBaseModel{
-    FirebaseUser myAuto;
-    String myUid;
+    private FirebaseUser myAuto;
+    private String myUid;
+    private UserObj user;
 
     public FirebaseDBUser(){
         myAuto = FirebaseAuth.getInstance().getCurrentUser();
@@ -40,16 +41,18 @@ public class FirebaseDBUser extends FirebaseBaseModel{
     public UserObj readUserFromDB(DataSnapshot dataSnapshot){
         String type = dataSnapshot.child("users").child(myUid).child("type").getValue().toString();
         if(type.equals("teacher")) {
-            TeacherObj user;
+            TeacherObj teacherObj;
             user = (TeacherObj) dataSnapshot.child("users").child(myUid).child("info").getValue(TeacherObj.class);
-            user.loadStudents(prepareMyStudentsList(dataSnapshot));
-            user.loadRequests(prepareMyRequestsList(dataSnapshot));
-            return user;
+            teacherObj = (TeacherObj) user;
+            teacherObj.loadStudents(prepareMyStudentsList(dataSnapshot));
+            teacherObj.loadRequests(prepareMyRequestsList(dataSnapshot));
+            return teacherObj;
         }
         else if(type.equals("student")){
-            StudentObj user;
+            StudentObj studentObj;
             user = (StudentObj) dataSnapshot.child("users").child(myUid).child("info").getValue(StudentObj.class);
-            return user;
+            studentObj = (StudentObj) user;
+            return studentObj;
         }
         return null;
     }

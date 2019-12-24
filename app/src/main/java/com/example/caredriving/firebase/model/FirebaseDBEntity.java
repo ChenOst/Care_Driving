@@ -7,7 +7,7 @@ import com.example.caredriving.firebase.model.dataObject.UserObj;
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class FirebaseDBEntity implements Serializable {
+public class FirebaseDBEntity extends FirebaseBaseModel implements Serializable {
     HashMap<String, String> user;
     String type;
 

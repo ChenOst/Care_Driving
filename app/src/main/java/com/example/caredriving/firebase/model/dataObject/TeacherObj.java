@@ -16,11 +16,13 @@ public class TeacherObj extends UserObj {
 
     private ArrayList<String> students;
     private ArrayList<String> requests;
+    private ArrayList<String> lessons;
 
     public TeacherObj(){
         super();
         this.students = new ArrayList<>();
         this.requests = new ArrayList<>();
+        this.lessons =  new ArrayList<>();
     }
 
     public TeacherObj(String id, String firstName, String lastName, String age, String city, String email, String phoneNumber,
@@ -33,6 +35,7 @@ public class TeacherObj extends UserObj {
         this.lessonPrice = lessonPrice;
         this.students = new ArrayList<>();
         this.requests = new ArrayList<>();
+        this.lessons =  new ArrayList<>();
     }
 
     public TeacherObj(HashMap<String, String> hashMapTeacher){
@@ -44,6 +47,7 @@ public class TeacherObj extends UserObj {
         this.lessonPrice = hashMapTeacher.get("lessonPrice");
         this.students = new ArrayList<>();
         this.requests = new ArrayList<>();
+        this.lessons =  new ArrayList<>();
     }
 
     public void setCarBrand(String carBrand) {this.carType = carBrand;}
@@ -89,6 +93,8 @@ public class TeacherObj extends UserObj {
     public ArrayList<String> getStudents(){ return students;}
 
     public ArrayList<String> getRequests(){ return requests;}
+
+    public ArrayList<String> getLessons() { return lessons; }
 
     @Override
     public String toString(){
