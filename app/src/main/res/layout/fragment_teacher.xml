@@ -1,19 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/text_share"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="25dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/layoutAllTeacherInfo"
+            android:layout_margin="25dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutName"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/tvTeachersFirstName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/first_name"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="24sp"
+                    android:layout_margin="4dp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvTeachersLastName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/last_name"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_margin="4dp"
+                    android:layout_toEndOf="@+id/tvTeachersFirstName"
+                    android:layout_toRightOf="@+id/tvTeachersFirstName" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutTeachersExperience"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:layout_below="@+id/layoutName">
+
+                <TextView
+                    android:id="@+id/tvTxtTeachersExperience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/experience_prompt"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:layout_margin="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvTeachersExperience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/teachers_experience"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:layout_margin="4dp"
+                    android:layout_toEndOf="@+id/tvTxtTeachersExperience"
+                    android:layout_toRightOf="@+id/tvTxtTeachersExperience" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvTeachersLoction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/location"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_below="@+id/layoutTeachersExperience"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutCarInfo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:layout_below="@+id/tvTeachersLoction">
+
+                <TextView
+                    android:id="@+id/tvTeachersCar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/teachers_car"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginRight="4dp" />
+
+                <TextView
+                    android:id="@+id/tvTeachersCarYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/teachers_car_year"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_toEndOf="@+id/tvTeachersCar"
+                    android:layout_toRightOf="@+id/tvTeachersCar"/>
+
+                <TextView
+                    android:id="@+id/tvTeachersGear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/teachers_gear"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_toEndOf="@+id/tvTeachersCarYear"
+                    android:layout_toRightOf="@+id/tvTeachersCarYear"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvLessonPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/price"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/layoutCarInfo"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgNewShekek"
+                android:text="@string/new_shekel"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_toEndOf="@+id/tvLessonPrice"
+                android:layout_toRightOf="@+id/tvLessonPrice"
+                android:layout_alignTop="@+id/tvLessonPrice"
+                android:layout_alignBottom="@+id/tvLessonPrice"/>
+
+            <TextView
+                android:id="@+id/tvTeachersPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/phone"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/tvLessonPrice"
+                android:layout_marginTop="16dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgPhone"
+                android:layout_toEndOf="@+id/tvTeachersPhone"
+                android:layout_toRightOf="@+id/tvTeachersPhone"
+                android:layout_alignTop="@+id/tvTeachersPhone"
+                android:layout_alignBottom="@+id/tvTeachersPhone"
+                android:src="@drawable/ic_phone"/>
+
+        </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/txtNoTeacher"
+                android:text="@string/teacher_not_found"
+                android:textSize="40sp"
+                android:layout_centerVertical="true"/>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>
