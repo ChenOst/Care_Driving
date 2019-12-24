@@ -188,11 +188,35 @@
                 android:layout_alignBottom="@+id/tvDetailsTeachersPhone"
                 android:src="@drawable/ic_phone"/>
 
+            <TextView
+                android:id="@+id/tvDetailsTeachersEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/email"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/tvDetailsTeachersPhone"
+                android:layout_marginTop="16dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgEmail"
+                android:layout_toEndOf="@+id/tvDetailsTeachersEmail"
+                android:layout_toRightOf="@+id/tvDetailsTeachersEmail"
+                android:layout_alignTop="@+id/tvDetailsTeachersEmail"
+                android:layout_alignBottom="@+id/tvDetailsTeachersEmail"
+                android:src="@drawable/ic_email"/>
+
             <Button
                 android:id="@+id/tvDetailsConnectToTeacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvDetailsTeachersPhone"
+                android:layout_below="@+id/tvDetailsTeachersEmail"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"

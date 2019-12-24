@@ -39,6 +39,8 @@ public class ContactTeacherActivity extends AppCompatActivity implements View.On
     private TextView tvLessonPrice;
     private TextView tvTeachersPhoneNumber;
     private ImageView imgPhone;
+    private TextView tvTeachersEmail;
+    private ImageView imgEmail;
     private Button btnConnectToTeacher;
     private static final int REQUEST_CALL = 1;
 
@@ -63,12 +65,13 @@ public class ContactTeacherActivity extends AppCompatActivity implements View.On
         tvLessonPrice = findViewById(R.id.tvDetailsLessonPrice);
         tvTeachersPhoneNumber = findViewById(R.id.tvDetailsTeachersPhone);
         imgPhone = findViewById(R.id.imgPhone);
+        tvTeachersEmail = findViewById(R.id.tvDetailsTeachersEmail);
+        imgEmail = findViewById(R.id.imgEmail);
         btnConnectToTeacher = findViewById(R.id.tvDetailsConnectToTeacher);
 
         //find user
         fb_user = new FirebaseDBUser();
         fb_user.getUserRefFromDB().addListenerForSingleValueEvent(new ValueEventListener(){
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 FirebaseDBEntity entity = dataSnapshot.getValue(FirebaseDBEntity.class);
@@ -93,6 +96,12 @@ public class ContactTeacherActivity extends AppCompatActivity implements View.On
                 makePhoneCall();
             }
         });
+        imgEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendEmail();
+            }
+        });
 
         btnConnectToTeacher.setOnClickListener(this);
     }
@@ -115,6 +124,7 @@ public class ContactTeacherActivity extends AppCompatActivity implements View.On
             String gearType = getIntent().getStringExtra("TeachersGearType");
             String lessonPrice = getIntent().getStringExtra("TeachersLessonPrice");
             String phoneNumber = getIntent().getStringExtra("TeachersPhoneNumber");
+            String email = getIntent().getStringExtra("TeachersEmail");
             // Set the extras
             tvTeachersFirstName.setText(firstName);
             tvTeachersLastName.setText(lastName);
@@ -125,6 +135,7 @@ public class ContactTeacherActivity extends AppCompatActivity implements View.On
             tvGearType.setText(gearType);
             tvLessonPrice.setText(lessonPrice);
             tvTeachersPhoneNumber.setText(phoneNumber);
+            tvTeachersEmail.setText(email);
         }
     }
 
@@ -146,6 +157,19 @@ public class ContactTeacherActivity extends AppCompatActivity implements View.On
             Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(dial));
             startActivity(intent);
         }
+    }
+
+    // Send Email to teacher
+    private void sendEmail(){
+        String teachersEmail = tvTeachersEmail.getText().toString();
+        String[] receiver = new String[1];
+        receiver[0] = teachersEmail;
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, receiver);
+
+        // opening only email clients - force sending with email
+        intent.setType("message/rfc822");
+        startActivity(Intent.createChooser(intent, getString(R.string.open_email_clients)));
     }
 
     // Ask for permission to make the phone call
