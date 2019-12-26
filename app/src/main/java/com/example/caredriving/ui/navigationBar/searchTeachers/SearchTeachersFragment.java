@@ -30,9 +30,9 @@ import java.util.Objects;
 public class SearchTeachersFragment extends Fragment {
 
     private static ArrayList<TeacherObj> teachers = new ArrayList<>();
-    private static ArrayList<TeacherObj> allTeachers = new ArrayList<>();
     private RecyclerViewAdapter adapter;
     private static RecyclerView recyclerView;
+    private UserObj user;
 
     // Locations Filters
     private String[] listLocations;
@@ -82,10 +82,11 @@ public class SearchTeachersFragment extends Fragment {
         return root;
     }
 
-    // Make sure there is no duplicate information
+    /**
+     * Make sure that duplicates in the information no exist by cleaning all arrays
+     */
     private void clearPreviousData(){
         teachers.clear();
-        allTeachers.clear();
         adapter = new RecyclerViewAdapter(getActivity(), teachers);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -99,7 +100,10 @@ public class SearchTeachersFragment extends Fragment {
         newPrices.clear();
     }
 
-    // Download the teacher's information from the Database
+    /**
+     * Download the teacher's information from the Database
+     * @param root fragment view
+     */
     private void downloadInfoFromDatabase(final View root){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
         reference.addValueEventListener(new ValueEventListener() {
@@ -107,29 +111,14 @@ public class SearchTeachersFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 teachers.clear();
-                if (teachers.isEmpty()) {
-                    for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
-                        if (dataSnapshotl.child("type").getValue().equals("teacher")) {
-                            String id = Objects.requireNonNull(dataSnapshotl.child("info").child("id").getValue()).toString();
-                            String firstName = Objects.requireNonNull(dataSnapshotl.child("info").child("firstName").getValue()).toString();
-                            String lastName = Objects.requireNonNull(dataSnapshotl.child("info").child("lastName").getValue()).toString();
-                            String age = Objects.requireNonNull(dataSnapshotl.child("info").child("age").getValue()).toString();
-                            String city = Objects.requireNonNull(dataSnapshotl.child("info").child("city").getValue()).toString();
-                            String email = Objects.requireNonNull(dataSnapshotl.child("info").child("email").getValue()).toString();
-                            String phone = Objects.requireNonNull(dataSnapshotl.child("info").child("phoneNumber").getValue()).toString();
-                            String carType = Objects.requireNonNull(dataSnapshotl.child("info").child("carType").getValue()).toString();
-                            String carYear = Objects.requireNonNull(dataSnapshotl.child("info").child("carYear").getValue()).toString();
-                            String experience = Objects.requireNonNull(dataSnapshotl.child("info").child("experience").getValue()).toString();
-                            String transmission = Objects.requireNonNull(dataSnapshotl.child("info").child("transmission").getValue()).toString();
-                            String lessonPrice = Objects.requireNonNull(dataSnapshotl.child("info").child("lessonPrice").getValue()).toString();
-
-                            TeacherObj teacher = new TeacherObj(id, firstName, lastName, age, city, email, phone, carType, carYear, experience, transmission, lessonPrice);
-                            teachers.add(teacher);
-                        }
+                for (DataSnapshot dataSnapshotl : dataSnapshot.getChildren()) {
+                    FirebaseDBEntity entity = dataSnapshotl.getValue(FirebaseDBEntity.class);
+                    user = entity.getUserObj();
+                    if (user instanceof TeacherObj) {
+                        teachers.add((TeacherObj)user);
                     }
-                    allTeachers.addAll(teachers);
-                    adapter.notifyDataSetChanged();
                 }
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -137,7 +126,11 @@ public class SearchTeachersFragment extends Fragment {
             }
         });
     }
-    // Set the Dialog with the Cities checkbox's
+
+    /**
+     * Set the Dialog with the Cities checkbox's
+     * @param root fragment view
+     */
     private void locationFilterDialog(final View root){
         Button btnLocationsFilter = root.findViewById(R.id.btnLocationsFilter);
         // find all string of locations
@@ -174,7 +167,7 @@ public class SearchTeachersFragment extends Fragment {
                             newLocations.add(listLocations[usersLocations.get(i)]);
                         }
                         // Do the filter
-                        FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
+                        FilterTeachersList.setNotificationInList(root, teachers, newLocations,
                                 newCarBrands,  newGears,  newPrices,  adapter);
                     }
                 });
@@ -190,7 +183,11 @@ public class SearchTeachersFragment extends Fragment {
             }
         });
     }
-    // Set the Dialog with the Car brand's checkbox's
+
+    /**
+     * Set the Dialog with the Car brand's checkbox's
+     * @param root fragment view
+     */
     private void carTypeFilterDialog(final View root){
         Button btnCarBrandsFilter = root.findViewById(R.id.btnCarBrandsFilter);
         listCarBrands = getResources().getStringArray(R.array.car_brands);
@@ -222,7 +219,7 @@ public class SearchTeachersFragment extends Fragment {
                         for (int i = 0; i < usersCarBrands.size(); i++) {
                             newCarBrands.add(listCarBrands[usersCarBrands.get(i)]);
                         }
-                        FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
+                        FilterTeachersList.setNotificationInList(root, teachers, newLocations,
                                 newCarBrands,  newGears,  newPrices,  adapter);
                     }
                 });
@@ -238,7 +235,11 @@ public class SearchTeachersFragment extends Fragment {
             }
         });
     }
-    // Set the Dialog with the Gear type's checkbox's
+
+    /**
+     * Set the Dialog with the Gear type's checkbox's
+     * @param root fragment view
+     */
     private void carGearFilterDialog(final View root){
         Button btnGearTypesFilter = root.findViewById(R.id.btnGearTypesFilter);
         listGears = getResources().getStringArray(R.array.transmission_type);
@@ -270,7 +271,7 @@ public class SearchTeachersFragment extends Fragment {
                         for (int i = 0; i < usersGears.size(); i++) {
                             newGears.add(listGears[usersGears.get(i)]);
                         }
-                        FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
+                        FilterTeachersList.setNotificationInList(root, teachers, newLocations,
                                 newCarBrands,  newGears,  newPrices,  adapter);
                     }
                 });
@@ -286,7 +287,11 @@ public class SearchTeachersFragment extends Fragment {
             }
         });
     }
-    // Set the Dialog with the prices checkbox's
+
+    /**
+     * Set the Dialog with the prices checkbox's
+     * @param root fragment view
+     */
     private void priceFilterDialog(final View root){
         Button btnPriceFilter = root.findViewById(R.id.btnPriceFilter);
         listPriceRange = getResources().getStringArray(R.array.price_range);
@@ -318,7 +323,7 @@ public class SearchTeachersFragment extends Fragment {
                         for (int i = 0; i < usersPriceRange.size(); i++) {
                             newPrices.add(listPriceRange[usersPriceRange.get(i)]);
                         }
-                        FilterTeachersList.setNotificationInList(root, teachers,  allTeachers, newLocations,
+                        FilterTeachersList.setNotificationInList(root, teachers, newLocations,
                                 newCarBrands,  newGears,  newPrices,  adapter);
                     }
                 });
