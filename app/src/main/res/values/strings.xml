@@ -53,10 +53,24 @@
     <string name="title_price_filter">Choose Price Range:</string>
     <string name="filter">Filter</string>
     <string name="cancel">Cancel</string>
+    <string name="continue_">Continue</string>
+
+    <string name="set_date">Set date</string>
+    <string name="set_time">Set time</string>
+
+    <string name="create_lesson_question">Choose lesson duration:</string>
+    <string name="registration_title">Registration</string>
+    <string name="registration_cancel_question">Do you want to cancel this registration?</string>
+
+    <string name="create_new_lesson_title">Create new lesson</string>
 
     <string name="teacher_not_found">Not connected to any teacher, go to Search Teachers</string>
     <string name="open_email_clients">Choose an email client:</string>
 
+    <string-array name="lesson_duration">
+        <item>Single lesson (1 hour)</item>
+        <item>Double lesson (2 hours)</item>
+    </string-array>
 
     <string-array name="yes_no">
         <item>No</item>

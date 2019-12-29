@@ -170,9 +170,9 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
 
     private void submitCancelRegistration() {
         AlertDialog.Builder cancelRegistration = new AlertDialog.Builder(this);
-        cancelRegistration.setTitle("Registration");
+        cancelRegistration.setTitle(R.string.registration_title);
 
-        cancelRegistration.setMessage("Do you want to cancel this registration?");
+        cancelRegistration.setMessage(R.string.registration_cancel_question);
         cancelRegistration.setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
