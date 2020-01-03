@@ -8,13 +8,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import com.example.caredriving.firebase.model.FirebaseBaseModel;
 import com.example.caredriving.firebase.model.FirebaseDBEntity;
+import com.example.caredriving.firebase.model.FirebaseDBLesson;
 import com.example.caredriving.firebase.model.FirebaseDBUser;
+import com.example.caredriving.firebase.model.dataObject.LessonObj;
 import com.example.caredriving.firebase.model.dataObject.StudentObj;
 import com.example.caredriving.firebase.model.dataObject.TeacherObj;
 import com.example.caredriving.firebase.model.dataObject.UserObj;
+//import com.example.caredriving.firebase.model.dataObject.dialogs.ErrorDialog;
+import com.example.caredriving.firebase.model.dataObject.validation.Validation;
 import com.example.caredriving.ui.navigationBar.requests.RequestsFragment;
 import com.example.caredriving.ui.navigationBar.searchTeachers.SearchTeachersFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,6 +32,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
@@ -36,6 +43,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -81,8 +90,11 @@ public class MainActivity extends AppCompatActivity implements
     private int day, month, year, hour, minute;
     private int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
     private FloatingActionButton fab;
-    private String [] lesson = new String[3];
+    private String [] lessonInfo = new String[3];
+    private Validation validation = new Validation();
 
+    private DatabaseReference dbRef;
+//    private FirebaseDatabase my_ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +104,10 @@ public class MainActivity extends AppCompatActivity implements
 
         setSupportActionBar(toolbar);
 
-
         navigationView = findViewById(R.id.nav_view);
         drawer = findViewById(R.id.drawer_layout);
+
+        dbRef = FirebaseDatabase.getInstance().getReference();
 
         fb_user = new FirebaseDBUser();
         findUser();
@@ -162,7 +175,8 @@ public class MainActivity extends AppCompatActivity implements
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         duration+=1;
-                        continueCreateLesson();
+                        lessonInfo[0] = duration + "";
+                        continueCreateLessonChooseDate();
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -174,10 +188,8 @@ public class MainActivity extends AppCompatActivity implements
         createNewLessonDialog.create().show();
     }
 
-    private void continueCreateLesson() {
+    private void continueCreateLessonChooseDate() {
         Calendar calendar = Calendar.getInstance();
-
-        lesson[0] = duration + "";
 
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
@@ -190,14 +202,7 @@ public class MainActivity extends AppCompatActivity implements
         datePickerDialog.show();
     }
 
-    @Override
-    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-        yearFinal = i;
-        monthFinal = i1 + 1;
-        dayFinal = i2;
-
-        lesson[1] = dayFinal + "/" + monthFinal + "/" + yearFinal;
-
+    private void continueCreateLessonChooseTime(){
         Calendar calendar = Calendar.getInstance();
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
@@ -209,12 +214,61 @@ public class MainActivity extends AppCompatActivity implements
         timePickerDialog.show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        yearFinal = i;
+        monthFinal = i1 + 1;
+        dayFinal = i2;
+
+        lessonInfo[1] = dayFinal + "/" + monthFinal + "/" + yearFinal;
+
+//        System.out.println("CURRENT DATE ======== " +lessonInfo[1]);
+        validation.checkLessonDate(lessonInfo[1]);
+        if(validation.hasErrors()){
+            AlertDialog.Builder errorDialog = new AlertDialog.Builder(MainActivity.this);
+            errorDialog.setTitle("Information")
+                    .setMessage(validation.getErrors().get(0))
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            validation.clearErrors();
+                            continueCreateLessonChooseDate();
+                        }
+                    });
+            errorDialog.show();
+        } else {
+            continueCreateLessonChooseTime();
+        }
+    }
+
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         hourFinal = i;
         minuteFinal = i1;
 
-        lesson[2] = hourFinal + ":" + minuteFinal;
+        lessonInfo[2] = hourFinal + ":" + minuteFinal;
+//        System.out.println("CURRENT TIME ======== " + lessonInfo[2]);
+        validation.checkTime(lessonInfo[2]);
+        if(validation.hasErrors()) {
+            AlertDialog.Builder errorDialog = new AlertDialog.Builder(MainActivity.this);
+            errorDialog.setTitle("Information")
+                    .setMessage(validation.getErrors().get(0))
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            validation.clearErrors();
+                            continueCreateLessonChooseTime();
+                        }
+                    });
+            errorDialog.show();
+        } else {
+            StudentObj student = (StudentObj)user;
+            String studentId = student.getId();
+            String teacherId = student.getTeacherId();
+            new FirebaseDBLesson().addLessonToDB(studentId, teacherId, lessonInfo);
+
+        }
     }
 
     private void findUser() {

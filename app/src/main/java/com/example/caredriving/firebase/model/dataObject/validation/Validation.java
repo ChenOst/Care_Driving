@@ -1,8 +1,13 @@
 package com.example.caredriving.firebase.model.dataObject.validation;
 
+import android.os.Build;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Validation {
 
@@ -73,9 +78,47 @@ public class Validation {
         return errors.size() != 0;
     }
 
-    public void checkNumber(String number){
-        if(number.length() != 7){
+    public void checkNumber(String number) {
+        if (number.length() != 7) {
             errors.add("Number is incorrect");
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void checkLessonDate(String date) {
+        String[] currentDate = java.time.LocalDate.now().toString().split("-");
+        String[] checkDate = date.split("/");
+
+        if (Integer.parseInt(currentDate[0]) <= Integer.parseInt(checkDate[2])) {
+            if (Integer.parseInt(currentDate[1]) <= Integer.parseInt(checkDate[1])) {
+                if (Integer.parseInt(currentDate[2]) > Integer.parseInt(checkDate[0])) {
+                    errors.add("Date is incorrect");
+                }
+            } else {
+                errors.add("Date is incorrect");
+            }
+        } else {
+            errors.add("Date is incorrect");
+        }
+    }
+
+    public void checkTime(String time){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String [] fullCurrentTime = formatter.format(date).toString().split(" ");
+        String [] currentTime = fullCurrentTime[1].split(":");
+        String [] checkedTime = time.split(":");
+
+        if(Integer.parseInt(currentTime[0]) <= Integer.parseInt(checkedTime[0])){
+            if(Integer.parseInt(currentTime[1]) > Integer.parseInt(checkedTime[1])){
+                errors.add("Time is incorrect");
+            }
+        } else {
+            errors.add("Time is incorrect");
+        }
+    }
+
+    public void clearErrors(){
+        errors.clear();
     }
 }
