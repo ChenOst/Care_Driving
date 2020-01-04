@@ -13,13 +13,11 @@ public class StudentObj extends UserObj {
     private String theory;
     private String teacherId;
 
-    private ArrayList<String> lessons;
-    private ArrayList<String> requests;
+    private ArrayList<LessonObj> lessons;
 
     public StudentObj(){
         super();
         this.lessons = new ArrayList<>();
-        this.requests = new ArrayList<>();
     }
 
     public StudentObj(String id, String firstName, String lastName, String age, String city, String email, String phoneNumber,
@@ -30,7 +28,6 @@ public class StudentObj extends UserObj {
         this.theory = theory;
         this.teacherId = teacherId;
         this.lessons = new ArrayList<>();
-        this.requests = new ArrayList<>();
     }
 
     public StudentObj(HashMap<String, String> hashMapStudent){
@@ -40,7 +37,6 @@ public class StudentObj extends UserObj {
         this.theory = hashMapStudent.get("theory");
         this.teacherId = hashMapStudent.get("teacherId");
         this.lessons = new ArrayList<>();
-        this.requests = new ArrayList<>();
     }
 
     public Intent getIntent(Context from, Class<?> to){
@@ -79,11 +75,4 @@ public class StudentObj extends UserObj {
         return teacherId;
     }
 
-    public ArrayList<String> getLessons() {
-        return lessons;
-    }
-
-    public ArrayList<String> getRequesrts() {
-        return requests;
-    }
 }

@@ -20,6 +20,7 @@ import com.example.caredriving.firebase.model.FirebaseBaseModel;
 import com.example.caredriving.firebase.model.FirebaseDBEntity;
 import com.example.caredriving.firebase.model.FirebaseDBRequest;
 import com.example.caredriving.firebase.model.FirebaseDBUser;
+import com.example.caredriving.firebase.model.dataObject.RequestObj;
 import com.example.caredriving.firebase.model.dataObject.StudentObj;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -188,8 +189,10 @@ public class ContactTeacherActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View view) {
         if(view == btnConnectToTeacher){
-            FirebaseDBRequest request = new FirebaseDBRequest(user.getId(), teacherId);
-            request.sendRequest();
+//            FirebaseDBRequest request = new FirebaseDBRequest(user.getId(), teacherId);
+            RequestObj requestObj = new RequestObj(user.getId(), teacherId);
+            FirebaseDBRequest request = new FirebaseDBRequest();
+            request.writeRequestToDB(requestObj);
         }
     }
 

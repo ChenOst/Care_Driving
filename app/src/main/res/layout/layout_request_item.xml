@@ -134,7 +134,8 @@
         android:layout_marginEnd="13dp"
         android:layout_marginRight="13dp"
         android:background="@android:color/holo_green_light"
-        android:text="Accept" />
+        android:text="Accept"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btnReject"
@@ -147,5 +148,24 @@
         android:layout_marginEnd="13dp"
         android:layout_marginRight="13dp"
         android:background="@android:color/holo_red_dark"
-        android:text="Reject" />
+        android:text="Reject"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="88dp"
+        android:layout_height="36dp"
+        android:layout_alignBottom="@+id/btnReject"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginRight="37dp"
+        android:layout_marginBottom="21dp"
+        android:enabled="false"
+        android:text="Status"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="18sp"
+        android:visibility="gone" />
 </RelativeLayout>

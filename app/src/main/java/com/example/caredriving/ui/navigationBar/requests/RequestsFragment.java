@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.caredriving.MainActivity;
 import com.example.caredriving.R;
 import com.example.caredriving.firebase.model.FirebaseDBEntity;
 import com.example.caredriving.firebase.model.FirebaseDBUser;
@@ -33,10 +34,13 @@ public class RequestsFragment extends Fragment {
     private FirebaseDBUser fb_user;
     private TeacherObj user;
 
-    private static ArrayList<RequestObj> requests = new ArrayList<>();
-    private static ArrayList<StudentObj> students = new ArrayList<>();
+//    private static ArrayList<RequestObj> requests = new ArrayList<>();
+    private ArrayList<RequestObj> requests = new ArrayList<>();
+//    private static ArrayList<StudentObj> students = new ArrayList<>();
+    private ArrayList<StudentObj> students = new ArrayList<>();
     private RequestsViewAdapterModel requestsViewAdapterModel;
-    private static RecyclerView recyclerView;
+//    private static RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
     public static RequestsFragment newInstance() {
         return new RequestsFragment();
@@ -78,6 +82,12 @@ public class RequestsFragment extends Fragment {
         // Load all
 
         return root;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((MainActivity)getActivity()).clearBackStackInclusive("tag"); // tag (addToBackStack tag) should be the same which was used while transacting the F2 fragment
     }
 
     /**

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.caredriving.MainActivity;
 import com.example.caredriving.R;
 import com.example.caredriving.ui.navigationBar.searchTeachers.RecyclerViewAdapter;
 
@@ -19,8 +20,10 @@ public class HomeFragment extends Fragment {
 
 
     private static ArrayList<String> dates = new ArrayList<>();
+//    private ArrayList<String> dates = new ArrayList<>();
     private RecyclerViewAdapter adapter;
     private static RecyclerView recyclerView;
+//    private RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,5 +39,11 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         return root;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((MainActivity)getActivity()).clearBackStackInclusive("tag"); // tag (addToBackStack tag) should be the same which was used while transacting the F2 fragment
     }
 }

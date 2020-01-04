@@ -25,8 +25,10 @@ public class TeacherObj extends UserObj {
         this.lessons =  new ArrayList<>();
     }
 
-    public TeacherObj(String id, String firstName, String lastName, String age, String city, String email, String phoneNumber,
-                      String carType, String carYear, String experience, String transmission, String lessonPrice){
+    public TeacherObj(String id, String firstName, String lastName,
+                      String age, String city, String email, String phoneNumber,
+                      String carType, String carYear, String experience,
+                      String transmission, String lessonPrice){
         super(id, firstName, lastName, age, city, email, phoneNumber);
         this.carType = carType;
         this.carYear = carYear;
