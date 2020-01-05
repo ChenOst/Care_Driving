@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvStudentFirstName"
+        android:id="@+id/tvTeachersFirstName"
         android:text="@string/first_name"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -18,10 +18,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvStudentLastName"
+        android:id="@+id/tvTeachersLastName"
         android:text="@string/first_name"
-        android:layout_toEndOf="@+id/tvStudentFirstName"
-        android:layout_toRightOf="@+id/tvStudentFirstName"
+        android:layout_toEndOf="@+id/tvTeachersFirstName"
+        android:layout_toRightOf="@+id/tvTeachersFirstName"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
         android:textSize="18sp"
@@ -31,42 +31,42 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvCity"
+        android:id="@+id/tvLocation"
         android:text="@string/location"
-        android:layout_below="@+id/tvStudentFirstName"
+        android:layout_below="@+id/tvTeachersFirstName"
         android:textSize="14sp"
         android:textColor="@color/colorBlack"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvGreenFormValue"
+        android:id="@+id/tvGearType"
         android:text="@string/teachers_gear"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_below="@+id/tvStudentFirstName"
-        android:layout_toEndOf="@+id/tvColon"
-        android:layout_toRightOf="@+id/tvColon"
+        android:layout_below="@+id/tvTeachersFirstName"
+        android:layout_toEndOf="@+id/tvComma"
+        android:layout_toRightOf="@+id/tvComma"
         android:textSize="14sp"
         android:textColor="@color/colorBlack"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvColon"
+        android:id="@+id/tvComma"
         android:text="@string/comma"
-        android:layout_below="@+id/tvStudentFirstName"
-        android:layout_toEndOf="@+id/tvCity"
-        android:layout_toRightOf="@+id/tvCity"
+        android:layout_below="@+id/tvTeachersFirstName"
+        android:layout_toEndOf="@+id/tvLocation"
+        android:layout_toRightOf="@+id/tvLocation"
         android:textSize="14sp"
         android:textColor="@color/colorBlack"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvTheory"
+        android:id="@+id/tvPrice"
         android:text="@string/price"
-        android:layout_below="@+id/tvCity"
+        android:layout_below="@+id/tvLocation"
         android:textSize="14sp"
         android:textColor="@color/colorBlack"/>
 
@@ -75,9 +75,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvNewShekel"
         android:text="@string/new_shekel"
-        android:layout_below="@+id/tvCity"
-        android:layout_toEndOf="@+id/tvTheory"
-        android:layout_toRightOf="@+id/tvTheory"
+        android:layout_below="@+id/tvLocation"
+        android:layout_toEndOf="@+id/tvPrice"
+        android:layout_toRightOf="@+id/tvPrice"
         android:textSize="14sp"
         android:textColor="@color/colorBlack"/>
 
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvPhoneNumber"
         android:text="@string/phone"
-        android:layout_below="@+id/tvTheory"
+        android:layout_below="@+id/tvPrice"
         android:textSize="14sp"
         android:textColor="@color/colorBlack"/>
 
