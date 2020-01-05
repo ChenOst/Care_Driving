@@ -97,6 +97,8 @@ public class ContactTeacherActivity extends AppCompatActivity implements View.On
                 makePhoneCall();
             }
         });
+
+        //Send email to teacher by clicking the envelope image
         imgEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

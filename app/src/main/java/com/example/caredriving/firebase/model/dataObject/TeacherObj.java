@@ -66,8 +66,6 @@ public class TeacherObj extends UserObj {
         this.requests = requestsId;
     }
 
-//    public void addStudent(String studentId){}
-
     public Intent getIntent(Context from, Class<?> to) {
         return super.getIntent(from, to);
     }
@@ -97,6 +95,8 @@ public class TeacherObj extends UserObj {
     public ArrayList<String> getRequests(){ return requests;}
 
     public ArrayList<String> getLessons() { return lessons; }
+
+    //    public void addStudent(String studentId){}
 
     @Override
     public String toString(){

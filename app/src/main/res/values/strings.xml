@@ -64,7 +64,7 @@
 
     <string name="create_new_lesson_title">Create new lesson</string>
 
-    <string name="teacher_not_found">Not connected to any teacher, go to Search Teachers</string>
+    <string name="teacher_not_found">Not connected to any teacher</string>
     <string name="open_email_clients">Choose an email client:</string>
 
     <string-array name="lesson_duration">

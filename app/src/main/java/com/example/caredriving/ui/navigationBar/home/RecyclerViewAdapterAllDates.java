@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class RecyclerViewAdapterAllDates extends RecyclerView.Adapter<RecyclerViewAdapterAllDates.ViewHolder> {
 
     private ArrayList<String> dates = new ArrayList<>();
-    //private ArrayList<StudentObj> students = new ArrayList<>();
+    //private ArrayList<UserObj> contacts = new ArrayList<>();
     private Context context;
 
     public RecyclerViewAdapterAllDates(Context context, ArrayList<String> dates){

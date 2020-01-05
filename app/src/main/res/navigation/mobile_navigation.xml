@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/nav_teacher"
-        android:name="com.example.caredriving.ui.navigationBar.teacher.ShareFragment"
+        android:name="com.example.caredriving.ui.navigationBar.teacher.MyTeacherFragment"
         android:label="@string/menu_teacher"
         tools:layout="@layout/fragment_teacher" />
 

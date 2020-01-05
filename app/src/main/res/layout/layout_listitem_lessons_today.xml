@@ -9,72 +9,72 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvHour"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:padding="4dp"
         android:text="00:00" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/layoutStudentDetails"
+        android:id="@+id/layoutDetails"
         android:layout_toEndOf="@+id/tvHour"
         android:layout_toRightOf="@+id/tvHour"
         android:padding="4dp">
 
         <TextView
-            android:id="@+id/tvStudentFirstName"
+            android:id="@+id/tvFirstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="First name"
-            android:textSize="24sp"/>
+            android:textSize="20sp"/>
 
         <TextView
-            android:id="@+id/tvStudentLastName"
+            android:id="@+id/tvLastName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Last name"
-            android:textSize="24sp"
-            android:layout_toRightOf="@+id/tvStudentFirstName"
-            android:layout_toEndOf="@+id/tvStudentFirstName"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/tvFirstName"
+            android:layout_toEndOf="@+id/tvFirstName"
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvStudentStreet"
+            android:id="@+id/tvStreet"
             android:text="Street"
-            android:textSize="24sp"
-            android:layout_below="@+id/tvStudentFirstName"/>
+            android:textSize="20sp"
+            android:layout_below="@+id/tvFirstName"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvStudentCity"
             android:text="City"
-            android:textSize="24sp"
-            android:layout_toRightOf="@+id/tvStudentStreet"
-            android:layout_toEndOf="@+id/tvStudentStreet"
-            android:layout_below="@+id/tvStudentFirstName"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/tvStreet"
+            android:layout_toEndOf="@+id/tvStreet"
+            android:layout_below="@+id/tvFirstName"
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp" />
 
         <TextView
-            android:id="@+id/tvStudentsPhone"
+            android:id="@+id/tvPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/phone"
-            android:textSize="24sp"
-            android:layout_below="@+id/tvStudentStreet"/>
+            android:textSize="20sp"
+            android:layout_below="@+id/tvStreet"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imgPhone"
-            android:layout_toEndOf="@+id/tvStudentsPhone"
-            android:layout_toRightOf="@+id/tvStudentsPhone"
-            android:layout_alignTop="@+id/tvStudentsPhone"
-            android:layout_alignBottom="@+id/tvStudentsPhone"
+            android:layout_toEndOf="@+id/tvPhone"
+            android:layout_toRightOf="@+id/tvPhone"
+            android:layout_alignTop="@+id/tvPhone"
+            android:layout_alignBottom="@+id/tvPhone"
             android:src="@drawable/ic_phone"/>
 
     </RelativeLayout>

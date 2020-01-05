@@ -4,21 +4,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.caredriving.R;
-import com.example.caredriving.firebase.model.dataObject.StudentObj;
-
 import java.util.ArrayList;
 
 public class RecyclerViewAdapterLessonsToday extends RecyclerView.Adapter<RecyclerViewAdapterLessonsToday.ViewHolder> {
 
     private ArrayList<String> hours = new ArrayList<>();
     //private ArrayList<StudentObj> students = new ArrayList<>();
+    //private ArrayList<TeacherObj> teacher = new ArrayList<>();
     private Context context;
 
     public RecyclerViewAdapterLessonsToday(Context context, ArrayList<String> hours){
@@ -55,20 +51,20 @@ public class RecyclerViewAdapterLessonsToday extends RecyclerView.Adapter<Recycl
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvHour;
-        TextView tvStudentFirstName;
-        TextView tvStudentLastName;
-        TextView tvStudentStreet;
-        TextView tvStudentCity;
-        TextView tvStudentsPhone;
+        TextView tvFirstName;
+        TextView tvLastName;
+        TextView tvStreet;
+        TextView tvCity;
+        TextView tvPhone;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvHour = itemView.findViewById(R.id.tvHour);
-            tvStudentFirstName = itemView.findViewById(R.id.tvStudentFirstName);
-            tvStudentLastName  = itemView.findViewById(R.id.tvStudentLastName);
-            tvStudentStreet  = itemView.findViewById(R.id.tvStudentStreet);
-            tvStudentCity  = itemView.findViewById(R.id.tvStudentCity);
-            tvStudentsPhone  = itemView.findViewById(R.id.tvStudentsPhone);
+            tvFirstName = itemView.findViewById(R.id.tvFirstName);
+            tvLastName  = itemView.findViewById(R.id.tvLastName);
+            tvStreet  = itemView.findViewById(R.id.tvStreet);
+            tvCity  = itemView.findViewById(R.id.tvCity);
+            tvPhone  = itemView.findViewById(R.id.tvPhone);
         }
     }
 }

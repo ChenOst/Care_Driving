@@ -12,12 +12,13 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="25dp">
+            android:layout_margin="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/layoutAllTeacherInfo"
+            android:background="@color/colorBackgroundBlue"
             android:layout_margin="25dp">
 
             <RelativeLayout
@@ -192,12 +193,38 @@
                 android:layout_alignBottom="@+id/tvTeachersPhone"
                 android:src="@drawable/ic_phone"/>
 
+            <TextView
+                android:id="@+id/tvTeachersEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/email"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/tvTeachersPhone"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgEmail"
+                android:layout_toEndOf="@+id/tvTeachersEmail"
+                android:layout_toRightOf="@+id/tvTeachersEmail"
+                android:layout_alignTop="@+id/tvTeachersEmail"
+                android:layout_alignBottom="@+id/tvTeachersEmail"
+                android:src="@drawable/ic_email"/>
+
         </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/txtNoTeacher"
+                android:textColor="@color/colorBlack"
                 android:text="@string/teacher_not_found"
                 android:textSize="40sp"
                 android:layout_centerVertical="true"/>
