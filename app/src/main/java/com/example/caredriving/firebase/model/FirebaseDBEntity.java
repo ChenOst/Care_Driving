@@ -8,16 +8,15 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class FirebaseDBEntity extends FirebaseBaseModel implements Serializable {
-    HashMap<String, String> user;
+    HashMap<String, String> info;
     String type;
 
     public UserObj getUserObj(){
-
         try {
             if (type.equals("teacher"))
-                return new TeacherObj(user);
+                return new TeacherObj(info);
             else if (type.equals("student"))
-                return new StudentObj(user);
+                return new StudentObj(info);
         } catch (Exception e){
             return null;
         }
@@ -27,7 +26,7 @@ public class FirebaseDBEntity extends FirebaseBaseModel implements Serializable 
     }
 
     public void setType(String type){this.type = type;}
-    public void setInfo(HashMap<String, String> user){this.user = user;}
+    public void setInfo(HashMap<String, String> user){this.info = user;}
     public String getType(){return type;}
-    public HashMap<String, String> getInfo(){return user;}
+    public HashMap<String, String> getInfo(){return info;}
 }

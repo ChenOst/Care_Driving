@@ -5,6 +5,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.caredriving.R;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +39,7 @@ public class Validation {
 
         for (int i = 0; i < firstName.length(); i++) {
             if (firstName.charAt(i) >= '0' && firstName.charAt(i) <= '9') {
-                errors.add("Last name is incorrect");
+                errors.add("Last name is incorrect.");
                 break;
             }
         }
@@ -47,14 +49,15 @@ public class Validation {
 
         if (sAge.isEmpty()) {
             errors.add("Please enter your age");
+
         } else {
             try {
                 int age = Integer.parseInt(sAge);
                 if (age <= 1 || age >= 100) {
-                    errors.add("Age is incorrect");
+                    errors.add("Age is incorrect.");
                 }
             } catch (Exception e) {
-                errors.add("Age is incorrect");
+                errors.add("Age is incorrect.");
             }
         }
     }
@@ -63,10 +66,10 @@ public class Validation {
         try {
             int price = Integer.parseInt(sPrice);
             if (price <= 0) {
-                errors.add("Price is incorrect");
+                errors.add("Price is incorrect.");
             }
         } catch (Exception e) {
-            errors.add("Price is incorrect");
+            errors.add("Price is incorrect.");
         }
     }
 
@@ -80,7 +83,7 @@ public class Validation {
 
     public void checkNumber(String number) {
         if (number.length() != 7) {
-            errors.add("Number is incorrect");
+            errors.add("Number is incorrect.");
         }
     }
 
@@ -92,33 +95,51 @@ public class Validation {
         if (Integer.parseInt(currentDate[0]) <= Integer.parseInt(checkDate[2])) {
             if (Integer.parseInt(currentDate[1]) <= Integer.parseInt(checkDate[1])) {
                 if (Integer.parseInt(currentDate[2]) > Integer.parseInt(checkDate[0])) {
-                    errors.add("Date is incorrect");
+                    errors.add("Date is incorrect.\nUnable to create lesson in the past.");
                 }
             } else {
-                errors.add("Date is incorrect");
+                errors.add("Date is incorrect.\nUnable to create lesson in the past.");
             }
         } else {
-            errors.add("Date is incorrect");
+            errors.add("Date is incorrect.\nUnable to create lesson in the past.");
         }
     }
 
-    public void checkTime(String time){
+    public void checkTime(String date, String time) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date date = new Date();
-        String [] fullCurrentTime = formatter.format(date).toString().split(" ");
-        String [] currentTime = fullCurrentTime[1].split(":");
-        String [] checkedTime = time.split(":");
+        Date curDate = new Date();
+        String[] fullCurrentTime = formatter.format(curDate).toString().split(" ");
+        String[] currentTime = fullCurrentTime[1].split(":");
+        String[] checkedTime = time.split(":");
 
-        if(Integer.parseInt(currentTime[0]) <= Integer.parseInt(checkedTime[0])){
-            if(Integer.parseInt(currentTime[1]) > Integer.parseInt(checkedTime[1])){
-                errors.add("Time is incorrect");
-            }
+        date = convertToSameFormat(date);
+
+        if (Integer.parseInt(checkedTime[1]) != 0) {
+            errors.add("Time is incorrect\nLesson should start at beginning of hour.\nFor example 9:00 or 13:00.");
         } else {
-            errors.add("Time is incorrect");
+            if (date.equals(fullCurrentTime[0])) {
+                if (Integer.parseInt(currentTime[0]) >= Integer.parseInt(checkedTime[0])) {
+                    errors.add("Time is incorrect.\nUnable to create lesson in the past.");
+                }
+            }
         }
     }
 
-    public void clearErrors(){
+    //convert my lesson date to dd/MM/yyyy format
+    private String convertToSameFormat(String date1) {
+        String[] firstDateArr = date1.split("/");
+        String res = "";
+        for (int i = 0; i < firstDateArr.length - 1; i++) {
+            if (firstDateArr[i].length() == 1) {
+                firstDateArr[i] = "0" + firstDateArr[i];
+            }
+            res = res + firstDateArr[i] + "/";
+        }
+        res = res + firstDateArr[2];
+        return res;
+    }
+
+    public void clearErrors() {
         errors.clear();
     }
 }

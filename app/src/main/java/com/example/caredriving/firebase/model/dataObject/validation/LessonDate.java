@@ -13,6 +13,9 @@ public class LessonDate {
         this.minutes = Integer.parseInt(timeFields[1]);
     }
 
+    public String getFullDate(){
+        return year+"-"+month+"-"+day;
+    }
 
     public int getYear() {
         return year;

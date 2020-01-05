@@ -32,6 +32,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
@@ -42,6 +43,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -90,12 +92,12 @@ public class MainActivity extends AppCompatActivity implements
     private int duration = 0;
     private int day, month, year, hour, minute;
     private int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
+    boolean dateIsFree = true;
     private FloatingActionButton fab;
-    private String [] lessonInfo = new String[3];
+    private String[] lessonInfo = new String[3];
     private Validation validation = new Validation();
 
-    private DatabaseReference dbRef;
-//    private FirebaseDatabase my_ref;
+    private FirebaseDBLesson dbUserLessons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +110,7 @@ public class MainActivity extends AppCompatActivity implements
         navigationView = findViewById(R.id.nav_view);
         drawer = findViewById(R.id.drawer_layout);
 
-        dbRef = FirebaseDatabase.getInstance().getReference();
-
+        dbUserLessons = new FirebaseDBLesson();
         fb_user = new FirebaseDBUser();
         findUser();
     }
@@ -162,15 +163,15 @@ public class MainActivity extends AppCompatActivity implements
         getSupportFragmentManager().popBackStack(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
-    private void createNewLesson(){
+    private void createNewLesson() {
         AlertDialog.Builder createNewLessonDialog = new AlertDialog.Builder(MainActivity.this);
         duration = 0;
         createNewLessonDialog.setTitle(R.string.create_new_lesson_title);
-        String [] options = getResources().getStringArray(R.array.lesson_duration);
+        String[] options = getResources().getStringArray(R.array.lesson_duration);
         createNewLessonDialog.setSingleChoiceItems(options, duration, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                duration=i;
+                duration = i;
             }
         });
 
@@ -179,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements
                 .setPositiveButton(R.string.set_date, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        duration+=1;
+                        duration += 1;
                         lessonInfo[0] = duration + "";
                         continueCreateLessonChooseDate();
                     }
@@ -207,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements
         datePickerDialog.show();
     }
 
-    private void continueCreateLessonChooseTime(){
+    private void continueCreateLessonChooseTime() {
         Calendar calendar = Calendar.getInstance();
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
@@ -228,11 +229,10 @@ public class MainActivity extends AppCompatActivity implements
 
         lessonInfo[1] = dayFinal + "/" + monthFinal + "/" + yearFinal;
 
-//        System.out.println("CURRENT DATE ======== " +lessonInfo[1]);
         validation.checkLessonDate(lessonInfo[1]);
-        if(validation.hasErrors()){
+        if (validation.hasErrors()) {
             AlertDialog.Builder errorDialog = new AlertDialog.Builder(MainActivity.this);
-            errorDialog.setTitle("Information")
+            errorDialog.setTitle(R.string.error)
                     .setMessage(validation.getErrors().get(0))
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
@@ -253,13 +253,12 @@ public class MainActivity extends AppCompatActivity implements
         minuteFinal = i1;
 
         lessonInfo[2] = hourFinal + ":" + minuteFinal;
-//        System.out.println("CURRENT TIME ======== " + lessonInfo[2]);
-        validation.checkTime(lessonInfo[2]);
-        if(validation.hasErrors()) {
+        validation.checkTime(lessonInfo[1], lessonInfo[2]);
+        if (validation.hasErrors()) {
             AlertDialog.Builder errorDialog = new AlertDialog.Builder(MainActivity.this);
-            errorDialog.setTitle("Information")
+            errorDialog.setTitle(R.string.error)
                     .setMessage(validation.getErrors().get(0))
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             validation.clearErrors();
@@ -268,11 +267,63 @@ public class MainActivity extends AppCompatActivity implements
                     });
             errorDialog.show();
         } else {
-            StudentObj student = (StudentObj)user;
-            String studentId = student.getId();
-            String teacherId = student.getTeacherId();
-            new FirebaseDBLesson().addLessonToDB(studentId, teacherId, lessonInfo);
+            StudentObj student = (StudentObj) user;
 
+            final String studentId = student.getId();
+            final String teacherId = student.getTeacherId();
+
+            final LessonObj lessonObj = new LessonObj(studentId, teacherId);
+            lessonObj.setDate(lessonInfo[1], lessonInfo[2]);
+            lessonObj.setDuration(lessonInfo[0]);
+
+            dateIsFree = true;
+
+            dbUserLessons.getLessonsRefFromDB().child("check").setValue("check");
+            dbUserLessons.getLessonsRefFromDB().child("check").removeValue();
+
+            dbUserLessons.getLessonsRefFromDB().addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    if (!dataSnapshot.child("lessons").exists()) {
+//                        new FirebaseDBLesson().addLessonToDB(lessonObj);
+//                        Toast.makeText(getApplicationContext(), "Lesson was created...", Toast.LENGTH_SHORT).show();
+//                    } else {}
+                    for (DataSnapshot ds : dataSnapshot.child("students").child(studentId).child(lessonObj.getDate().getFullDate()).getChildren()) {
+                        String key = ds.getKey();
+
+                        dateIsFree = lessonObj.isLessonActualForTeacher(key);
+                        if (!dateIsFree) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_lesson_created) + "\n" + getString(R.string.error_student_is_busy), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+
+                    String year = lessonObj.getDate().getYear() + "";
+                    String month = lessonObj.getDate().getMonth() + "";
+                    String day = lessonObj.getDate().getDay() + "";
+
+                    for (DataSnapshot ds : dataSnapshot.child("teachers").child(teacherId).getChildren()) {
+                        if (ds.child(year).child(month).child(day).exists()) {
+                            String key = ds.getKey();
+                            dateIsFree = lessonObj.isLessonActualForTeacher(key);
+                        }
+
+                        if (!dateIsFree) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_lesson_created) + "\n" + getString(R.string.error_teacher_is_busy), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+
+                    if (dateIsFree) {
+                        new FirebaseDBLesson().addLessonToDB(lessonObj);
+                        Toast.makeText(getApplicationContext(), R.string.lesson_created_successfully, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
         }
     }
 
@@ -330,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @SuppressLint("RestrictedApi")
-    private void createNewLessonButton(){
+    private void createNewLessonButton() {
         fab = findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(this);

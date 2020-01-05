@@ -1,34 +1,42 @@
 package com.example.caredriving.firebase.model;
 
 import com.example.caredriving.firebase.model.dataObject.LessonObj;
-
-import java.util.Map;
+import com.google.firebase.database.DatabaseReference;
 
 public class FirebaseDBLesson extends FirebaseBaseModel{
     private LessonObj lessonObj;
 
-
-
-    public void addLessonToDB(String studentId, String teacherId, String [] lessonInfo){
-
-        LessonObj lessonObj = new LessonObj(studentId, teacherId);
-        lessonObj.setDuration(lessonInfo[0]);
-        lessonObj.setDate(lessonInfo[1], lessonInfo[2]);
+    public void addLessonToDB(LessonObj lessonObj){
+        this.lessonObj = lessonObj;
 
         String lessonId = myref.push().getKey();
+        int lessonHour = lessonObj.getDate().getHour();
+        String lessonHours = lessonHour + "-" + (lessonHour+Integer.parseInt(lessonObj.getDuration()));
 
+        //add to lessons tree
         myref.child("lessons").child(lessonId).setValue(lessonObj);
 
-        myref.child("lessonsPerUser").child("students").child(studentId).setValue(lessonId);
-        myref.child("lessonsPerUser").child("teachers").child(teacherId)
+        //add to lessons per user tree student side
+        myref.child("lessonsPerUser")
+                .child("students")
+                .child(lessonObj.getStudentId())
+                .child(lessonObj.getDate().getFullDate())
+                .child(lessonHours).setValue(lessonId);
+
+        //add to lessons per user tree teacher side
+        myref.child("lessonsPerUser").child("teachers").child(lessonObj.getTeacherId())
                 .child(lessonObj.getDate().getYear()+"")
                 .child(lessonObj.getDate().getMonth()+"")
-                .child((lessonObj.getDate().getDay())+"")
+                .child(lessonObj.getDate().getDay()+"")
+                .child(lessonHours)
                 .setValue(lessonId);
-
     }
 
     public void readLessonFromDB(String lessonId){
 
+    }
+
+    public DatabaseReference getLessonsRefFromDB(){
+        return myref.child("lessonsPerUser");
     }
 }

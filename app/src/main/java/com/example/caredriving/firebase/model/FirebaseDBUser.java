@@ -46,14 +46,12 @@ public class FirebaseDBUser extends FirebaseBaseModel{
             teacherObj = (TeacherObj) user;
             teacherObj.loadStudents(prepareMyStudentsList(dataSnapshot));
             teacherObj.loadRequests(prepareMyRequestsList(dataSnapshot));
-            System.out.println("TEACHERID FROM DATABASE " + teacherObj.getId());
             return teacherObj;
         }
         else if(type.equals("student")){
             StudentObj studentObj;
             user = (StudentObj) dataSnapshot.child("users").child(myUid).child("info").getValue(StudentObj.class);
             studentObj = (StudentObj) user;
-            System.out.println("STUDENTID FROM DATABASE " + studentObj.getId());
             return studentObj;
         }
         return null;
