@@ -21,4 +21,8 @@ public class FirebaseDBRequest extends FirebaseBaseModel{
         request = dataSnapshot.child("Requests").child(request.getRequestId()).getValue(RequestObj.class);
         return request;
     }
+
+    public void deleteRequestFromDB(){
+        myref.child("Requests").child(request.getRequestId()).removeValue();
+    }
 }

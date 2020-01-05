@@ -113,6 +113,7 @@ public class RequestsFragment extends Fragment {
     private void loadStudentsObj(DataSnapshot dataSnapshot, ArrayList<RequestObj> requestsObj){
         for(RequestObj request : requestsObj){
             String studentId = request.getStudentId();
+            String teacherId = request.getTeacherId();
             for(DataSnapshot user : dataSnapshot.child("users").getChildren()){
                 // Prefer to use Entity instead FirebaseDBUser
                 FirebaseDBEntity entity = user.getValue(FirebaseDBEntity.class);

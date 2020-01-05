@@ -25,6 +25,7 @@ import com.example.caredriving.firebase.model.dataObject.TeacherObj;
 import com.example.caredriving.ui.navigationBar.searchTeachers.RecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class RequestsViewAdapterModel extends RecyclerView.Adapter<RequestsViewA
         private StudentObj student;
         private RequestObj request;
         private FirebaseDBRequest fb_request;
-        private FirebaseDBUser fb_user;
+        private FirebaseDBUser fb_teacher;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,7 +104,7 @@ public class RequestsViewAdapterModel extends RecyclerView.Adapter<RequestsViewA
             btnAccept.setOnClickListener(this);
             btnReject.setOnClickListener(this);
 
-            fb_user = new FirebaseDBUser();
+            fb_teacher = new FirebaseDBUser();
             readCurrentRequestFromDB();
         }
 
@@ -113,20 +114,29 @@ public class RequestsViewAdapterModel extends RecyclerView.Adapter<RequestsViewA
 
         @Override
         public void onClick(View view) {
-            String teacherId = fb_user.getMyUid();
+            String teacherId = fb_teacher.getMyUid();
             String studentId = student.getId();
             fb_request = new FirebaseDBRequest(studentId, teacherId);
             if (view == btnAccept){
+                //Accept the request and update the request status on DB
                 request.acceptRequest();
                 fb_request.writeRequestToDB(request);
 
+                //Update teacher id on chosen student
+                student.setTeacherId(teacherId);
+                FirebaseDatabase.getInstance().getReference().child("users").child(studentId).child("info").child("teacherId").setValue(teacherId);
+
+                //Display appropriate TextView status
                 displayStatus();
                 System.out.println("Send accept (status 1) to student "+ studentId);
             }
             else if (view == btnReject){
+                //Reject the request and update the request status on DB and delete it
                 request.rejectRequest();
                 fb_request.writeRequestToDB(request);
+                fb_request.deleteRequestFromDB();
 
+                //Display appropriate TextView status
                 displayStatus();
                 System.out.println("Send reject (status -1) to student "+ studentId);
             }
