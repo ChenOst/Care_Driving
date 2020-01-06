@@ -328,14 +328,15 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void findUser() {
-        fb_user.getUserRefFromDB().addListenerForSingleValueEvent(new ValueEventListener() {
+        fb_user.getMyref().addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Create local instance of UserObj(TeacherObj/StudentObj) from Entity object(HashMap, String)
-                FirebaseDBEntity entity = dataSnapshot.getValue(FirebaseDBEntity.class);
-                assert entity != null;
-                user = entity.getUserObj();
+//                FirebaseDBEntity entity = dataSnapshot.getValue(FirebaseDBEntity.class);
+//                assert entity != null;
+//                user = entity.getUserObj();
+                user = fb_user.readUserFromDB(dataSnapshot);
                 if (user instanceof TeacherObj) {
                     setTeachersNavigationView();
                 } else if (user instanceof StudentObj) {

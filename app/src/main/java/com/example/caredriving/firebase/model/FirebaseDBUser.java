@@ -58,12 +58,21 @@ public class FirebaseDBUser extends FirebaseBaseModel{
     }
 
     /**
-     *
+     * Prepare list of requests for current teacher -
+     * find all students that have this teacher in their teacherId field
      * @param dataSnapshot
      * @return
      */
     private ArrayList<String> prepareMyStudentsList(DataSnapshot dataSnapshot){
-        return new ArrayList<>();
+        ArrayList<String> students = new ArrayList<>();
+        for (DataSnapshot fb_entity : dataSnapshot.child("users").getChildren()){
+            FirebaseDBEntity entity = fb_entity.getValue(FirebaseDBEntity.class);
+            UserObj user = entity.getUserObj();
+            if(user instanceof StudentObj && this.user.getId().equals(((StudentObj)user).getTeacherId()))
+                students.add(user.getId());
+        }
+        System.out.println("My students = " + students);
+        return students;
     }
 
     /**
