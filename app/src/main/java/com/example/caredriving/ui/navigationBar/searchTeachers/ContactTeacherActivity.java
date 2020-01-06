@@ -162,6 +162,19 @@ public class ContactTeacherActivity extends AppCompatActivity implements View.On
         }
     }
 
+    // Ask for permission to make the phone call
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CALL){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                makePhoneCall();
+            }
+            else{
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     // Send Email to teacher
     private void sendEmail(){
         String teachersEmail = tvTeachersEmail.getText().toString();
@@ -175,18 +188,7 @@ public class ContactTeacherActivity extends AppCompatActivity implements View.On
         startActivity(Intent.createChooser(intent, getString(R.string.open_email_clients)));
     }
 
-    // Ask for permission to make the phone call
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CALL){
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                makePhoneCall();
-            }
-            else{
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+
 
     @Override
     public void onClick(View view) {

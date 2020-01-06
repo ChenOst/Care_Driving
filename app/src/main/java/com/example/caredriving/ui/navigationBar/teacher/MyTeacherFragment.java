@@ -92,14 +92,12 @@ public class MyTeacherFragment extends Fragment {
             }
         });
 
-
         imgEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendEmail();
             }
         });
-
 
         return root;
     }

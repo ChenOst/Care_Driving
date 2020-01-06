@@ -63,7 +63,7 @@ public class FirebaseDBUser extends FirebaseBaseModel{
      * @param dataSnapshot
      * @return
      */
-    private ArrayList<String> prepareMyStudentsList(DataSnapshot dataSnapshot){
+    public ArrayList<String> prepareMyStudentsList(DataSnapshot dataSnapshot){
         ArrayList<String> students = new ArrayList<>();
         for (DataSnapshot fb_entity : dataSnapshot.child("users").getChildren()){
             FirebaseDBEntity entity = fb_entity.getValue(FirebaseDBEntity.class);
