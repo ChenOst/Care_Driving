@@ -24,8 +24,6 @@ import java.util.ArrayList;
 public class PersonalAreaActivity extends AppCompatActivity implements View.OnClickListener {
 
     UserObj user;
-//    String userType;
-//    String userUid;
 
     EditText fnameEditText;
     EditText lnameEditText;
@@ -300,16 +298,9 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
         DatabaseReference userReference = fb_user.getUserRefFromDB().child("info");
         if(user instanceof TeacherObj){
             TeacherObj teacher = (TeacherObj) user;
-            userReference.child("firstName").setValue(fnameEditText.getText().toString());
-            userReference.child("lastName").setValue(lnameEditText.getText().toString());
-            userReference.child("age").setValue(ageEditText.getText().toString());
-            userReference.child("city").setValue(cityEditText.getText().toString());
-            userReference.child("phoneNumber").setValue(phoneNumberEditText.getText().toString());
-            userReference.child("carType").setValue(carTypeEditText.getText().toString());
-            userReference.child("carYear").setValue(carYearEditText.getText().toString());
-            userReference.child("experience").setValue(experienceEditText.getText().toString());
-            userReference.child("lessonPrice").setValue(lessonPriceEditText.getText().toString());
-            userReference.child("transmission").setValue(teacher_transmissionEditText.getText().toString());
+            // Remove old information about this teacher from DB
+            removeOldInformationAboutThisTeacher();
+            // Update new information in this teacherObj
             teacher.setFirstName(fnameEditText.getText().toString());
             teacher.setLastName(lnameEditText.getText().toString());
             teacher.setAge(ageEditText.getText().toString());
@@ -320,19 +311,12 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
             teacher.setExperience(experienceEditText.getText().toString());
             teacher.setLessonPrice(lessonPriceEditText.getText().toString());
             teacher.setTransmission(teacher_transmissionEditText.getText().toString());
+            // Update new information about this teacher on DB
+            fb_user.writeUserToDB(teacher);
             user = teacher;
         }
         if(user instanceof StudentObj){
             StudentObj student = (StudentObj) user;
-            userReference.child("firstName").setValue(fnameEditText.getText().toString());
-            userReference.child("lastName").setValue(lnameEditText.getText().toString());
-            userReference.child("age").setValue(ageEditText.getText().toString());
-            userReference.child("city").setValue(cityEditText.getText().toString());
-            userReference.child("phoneNumber").setValue(phoneNumberEditText.getText().toString());
-            userReference.child("greenForm").setValue(greenFormEditText.getText().toString());
-            userReference.child("transmission").setValue(student_transmissionEditText.getText().toString());
-            userReference.child("theory").setValue(theoryEditText.getText().toString());
-            userReference.child("teacherId").setValue(teacherIdEditText.getText().toString());
             student.setFirstName(fnameEditText.getText().toString());
             student.setLastName(lnameEditText.getText().toString());
             student.setAge(ageEditText.getText().toString());
@@ -342,6 +326,7 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
             student.setTransmission(student_transmissionEditText.getText().toString());
             student.setTheory(theoryEditText.getText().toString());
             student.setTeacherId(teacherIdEditText.getText().toString());
+            fb_user.writeUserToDB(student);
             user = student;
         }
         setTextViewsNotEditable();
@@ -365,5 +350,12 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
             setResult(RESULT_OK, intent);
             finish();
         }
+    }
+
+    public void removeOldInformationAboutThisTeacher(){
+        FirebaseDatabase.getInstance().getReference().child("Search Teachers").child("Location").child(user.getCity()).child(user.getId()).removeValue();
+        FirebaseDatabase.getInstance().getReference().child("Search Teachers").child("Transmission").child(((TeacherObj) user).getTransmission()).child(user.getId()).removeValue();
+        FirebaseDatabase.getInstance().getReference().child("Search Teachers").child("Car Type").child(((TeacherObj) user).getCarType()).child(user.getId()).removeValue();
+        FirebaseDatabase.getInstance().getReference().child("Search Teachers").child("Price").child(((TeacherObj) user).getLessonPrice()).child(user.getId()).removeValue();
     }
 }
