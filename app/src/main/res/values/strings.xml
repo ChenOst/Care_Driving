@@ -58,9 +58,14 @@
     <string name="information">Information</string>
     <string name="students">students</string>
     <string name="teachers">teachers</string>
+    <string name="lesson_create">Create</string>
 
     <string name="error">Error</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="ok">Ok</string>
+    <string name="error_choose_teacher">You have not chosen a teacher.</string>
+    <string name="error_go_teacher_search">Do you want find a teacher?</string>
     <string name="error_time">Time is incorrect.</string>
     <string name="error_date">Date is incorrect.</string>
     <string name="error_past_date">Unable to create a lesson in the past.</string>
@@ -96,6 +101,8 @@
         <item>Single lesson (1 hour)</item>
         <item>Double lesson (2 hours)</item>
     </string-array>
+
+
 
     <string-array name="yes_no">
         <item>No</item>

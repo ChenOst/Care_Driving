@@ -20,6 +20,12 @@ public class LessonObj implements Serializable {
         this.teacherId = teacherId;
     }
 
+    public String getLessonTime() {
+        int start = date.getHour();
+        int end = start + Integer.parseInt(duration);
+        return start + "-" + end;
+    }
+
 
     public void setDate(String date, String time) {
         this.date = new LessonDate(date, time);
@@ -82,7 +88,7 @@ public class LessonObj implements Serializable {
             return false;
         } else if (lessonEnd > myStart && myStart > lessonStart) {
             return false;
-        } else if (myStart < lessonStart && lessonStart < myEnd){
+        } else if (myStart < lessonStart && lessonStart < myEnd) {
             return false;
         }
         return true;

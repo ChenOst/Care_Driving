@@ -87,8 +87,7 @@ public class MainActivity extends AppCompatActivity implements
     public UserObj user;
     public FirebaseDBUser fb_user;
 
-    private TabHost tabHost;
-
+    private StudentObj student;
     private int duration = 0;
     private int day, month, year, hour, minute;
     private int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
@@ -133,6 +132,12 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
+        if (id == R.id.nav_home) {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.containerId, MainActivity.newInstance()).commit();
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            startActivity(intent);
+        }
+
         if (id == R.id.nav_search_teachers) {
             MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.containerId, SearchTeachersFragment.newInstance()).commit();
         }
@@ -164,34 +169,56 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void createNewLesson() {
-        AlertDialog.Builder createNewLessonDialog = new AlertDialog.Builder(MainActivity.this);
-        duration = 0;
-        createNewLessonDialog.setTitle(R.string.create_new_lesson_title);
-        String[] options = getResources().getStringArray(R.array.lesson_duration);
-        createNewLessonDialog.setSingleChoiceItems(options, duration, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                duration = i;
-            }
-        });
+
+        student = (StudentObj) user;
+        String teacherId = student.getTeacherId();
+
+        if (teacherId.equals("null") || teacherId == null) {
+            AlertDialog.Builder errorDialog = new AlertDialog.Builder(MainActivity.this);
+            errorDialog.setTitle(R.string.information)
+                    .setMessage(getString(R.string.error_choose_teacher) + "\n" + getString(R.string.error_go_teacher_search))
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.containerId, SearchTeachersFragment.newInstance()).commit();
+                        }
+                    })
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+            errorDialog.create().show();
+        } else {
+            AlertDialog.Builder createNewLessonDialog = new AlertDialog.Builder(MainActivity.this);
+            duration = 0;
+            createNewLessonDialog.setTitle(R.string.create_new_lesson_title);
+            String[] options = getResources().getStringArray(R.array.lesson_duration);
+            createNewLessonDialog.setSingleChoiceItems(options, duration, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    duration = i;
+                }
+            });
 
 //        createNewLessonDialog.setCancelable(false)
-        createNewLessonDialog
-                .setPositiveButton(R.string.set_date, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        duration += 1;
-                        lessonInfo[0] = duration + "";
-                        continueCreateLessonChooseDate();
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-        createNewLessonDialog.create().show();
+            createNewLessonDialog
+                    .setPositiveButton(R.string.set_date, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            duration += 1;
+                            lessonInfo[0] = duration + "";
+                            continueCreateLessonChooseDate();
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+            createNewLessonDialog.create().show();
+        }
     }
 
     private void continueCreateLessonChooseDate() {
@@ -204,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements
         DatePickerDialog datePickerDialog = new
                 DatePickerDialog(MainActivity.this, MainActivity.this, year, month, day);
         datePickerDialog.setTitle(R.string.set_date);
-        datePickerDialog.setButton(DatePickerDialog.BUTTON_POSITIVE, "Set time", datePickerDialog);
+        datePickerDialog.setButton(DatePickerDialog.BUTTON_POSITIVE, getString(R.string.set_time), datePickerDialog);
         datePickerDialog.show();
     }
 
@@ -216,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements
         TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this, MainActivity.this,
                 hour, minute, true);
         timePickerDialog.setTitle(R.string.set_time);
-        timePickerDialog.setButton(timePickerDialog.BUTTON_POSITIVE, "Create", timePickerDialog);
+        timePickerDialog.setButton(timePickerDialog.BUTTON_POSITIVE, getString(R.string.lesson_create), timePickerDialog);
         timePickerDialog.show();
     }
 
@@ -232,9 +259,9 @@ public class MainActivity extends AppCompatActivity implements
         validation.checkLessonDate(lessonInfo[1]);
         if (validation.hasErrors()) {
             AlertDialog.Builder errorDialog = new AlertDialog.Builder(MainActivity.this);
-            errorDialog.setTitle(R.string.error)
+            errorDialog.setTitle(getString(R.string.error))
                     .setMessage(validation.getErrors().get(0))
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             validation.clearErrors();
@@ -256,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements
         validation.checkTime(lessonInfo[1], lessonInfo[2]);
         if (validation.hasErrors()) {
             AlertDialog.Builder errorDialog = new AlertDialog.Builder(MainActivity.this);
-            errorDialog.setTitle(R.string.error)
+            errorDialog.setTitle(getString(R.string.error))
                     .setMessage(validation.getErrors().get(0))
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
@@ -267,8 +294,6 @@ public class MainActivity extends AppCompatActivity implements
                     });
             errorDialog.show();
         } else {
-            StudentObj student = (StudentObj) user;
-
             final String studentId = student.getId();
             final String teacherId = student.getTeacherId();
 
@@ -284,37 +309,39 @@ public class MainActivity extends AppCompatActivity implements
             dbUserLessons.getLessonsRefFromDB().addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    if (!dataSnapshot.child("lessons").exists()) {
-//                        new FirebaseDBLesson().addLessonToDB(lessonObj);
-//                        Toast.makeText(getApplicationContext(), "Lesson was created...", Toast.LENGTH_SHORT).show();
-//                    } else {}
-                    for (DataSnapshot ds : dataSnapshot.child("students").child(studentId).child(lessonObj.getDate().getFullDate()).getChildren()) {
-                        String key = ds.getKey();
-
-                        dateIsFree = lessonObj.isLessonActualForTeacher(key);
-                        if (!dateIsFree) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.error_lesson_created) + "\n" + getString(R.string.error_student_is_busy), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
-
                     String year = lessonObj.getDate().getYear() + "";
                     String month = lessonObj.getDate().getMonth() + "";
                     String day = lessonObj.getDate().getDay() + "";
+                    String time = lessonObj.getLessonTime();
+
+                    for (DataSnapshot ds : dataSnapshot.child("students").child(studentId).getChildren()) {
+                        if (ds.child(month).child(day).exists()) {
+                            for (DataSnapshot ds1 : ds.child(month).child(day).getChildren()) {
+                                String key = ds1.getKey();
+                                dateIsFree = lessonObj.isLessonActualForTeacher(key);
+                                if (!dateIsFree) {
+                                    Toast.makeText(getApplicationContext(), getString(R.string.error_lesson_created) + "\n" + getString(R.string.error_student_is_busy), Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
+                        }
+                    }
 
                     for (DataSnapshot ds : dataSnapshot.child("teachers").child(teacherId).getChildren()) {
-                        if (ds.child(year).child(month).child(day).exists()) {
-                            String key = ds.getKey();
-                            dateIsFree = lessonObj.isLessonActualForTeacher(key);
-                        }
-
-                        if (!dateIsFree) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.error_lesson_created) + "\n" + getString(R.string.error_teacher_is_busy), Toast.LENGTH_SHORT).show();
-                            return;
+                        if (ds.child(month).child(day).exists()) {
+                            for (DataSnapshot ds1 : ds.child(month).child(day).getChildren()) {
+                                String key = ds1.getKey();
+                                dateIsFree = lessonObj.isLessonActualForTeacher(key);
+                                if (!dateIsFree) {
+                                    Toast.makeText(getApplicationContext(), getString(R.string.error_lesson_created) + "\n" + getString(R.string.error_teacher_is_busy), Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
                         }
                     }
 
                     if (dateIsFree) {
+                        System.out.println("CREATE LESSON");
                         new FirebaseDBLesson().addLessonToDB(lessonObj);
                         Toast.makeText(getApplicationContext(), R.string.lesson_created_successfully, Toast.LENGTH_SHORT).show();
                     }
