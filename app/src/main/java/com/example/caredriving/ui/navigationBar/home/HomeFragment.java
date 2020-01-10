@@ -25,8 +25,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class HomeFragment extends Fragment {
 
@@ -72,6 +76,11 @@ public class HomeFragment extends Fragment {
     }
     private void downloadLessonsId(final View root, final String userType){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("lessonsPerUser").child(userType).child(userUid);
+        final String currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+        final String currentDay = currentDate.substring(0,2);
+        final String currentMonth = currentDate.substring(3,5);
+        final String currentYear = currentDate.substring(6, 10);
+        final int today = Integer.parseInt(currentDay) + Integer.parseInt(currentMonth) + Integer.parseInt(currentYear);
         reference.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -82,22 +91,28 @@ public class HomeFragment extends Fragment {
                     for (DataSnapshot dataSnapshotlchild : dataSnapshotl.getChildren()) {
                         String month = "";
                         month =  month + dataSnapshotlchild.getKey();
+                        if (month.length()==1){
+                            month = "0" + month;
+                        }
                         for (DataSnapshot dataSnapshotlgrandsaon :dataSnapshotlchild.getChildren()) {
                             String day = "";
                             day = day + dataSnapshotlgrandsaon.getKey();
-                            for (DataSnapshot data :dataSnapshotlgrandsaon.getChildren()) {
-                                String date = day + "." + month + "." + year;
-                                Calendar calendar = Calendar.getInstance();
-                                String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-
-                                if (!dates.contains(date)){
-                                    dates.add(date);
-                                }
-                                lessonsId.add(data.getValue().toString());
+                            if (day.length()==1){
+                                day = "0" + day;
                             }
-                            ArrayList<String> testsSentOrig = new ArrayList<String>(lessonsId);
-                            Check.add(testsSentOrig);
-                            lessonsId.clear();
+                            int validDate = Integer.parseInt(day) + Integer.parseInt(month) + Integer.parseInt(year);
+                            if (validDate >= today) {
+                                for (DataSnapshot data :dataSnapshotlgrandsaon.getChildren()) {
+                                    String date = day + "/" + month + "/" + year;
+                                    if (!dates.contains(date)) {
+                                        dates.add(date);
+                                    }
+                                    lessonsId.add(data.getValue().toString());
+                                }
+                                ArrayList<String> testsSentOrig = new ArrayList<String>(lessonsId);
+                                Check.add(testsSentOrig);
+                                lessonsId.clear();
+                            }
                         }
                     }
                 }
