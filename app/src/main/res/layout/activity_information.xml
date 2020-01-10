@@ -39,12 +39,31 @@
                     android:layout_margin="10dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvInformationFirstName"
-                        android:layout_width="match_parent"
+
+                    <LinearLayout
+                        android:id="@+id/firstNameInfoLabel"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="4dp"
-                        android:text="First name" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvInformationFirstName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="4dp"
+                            android:text="First name" />
+
+                        <TextView
+                            android:id="@+id/tvInformationFirstNameError"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible"
+                            android:padding="4dp"
+                            android:textColor="#F00000"
+                            android:text="*" />
+
+                    </LinearLayout>
+
 
                     <EditText
                         android:id="@+id/etInformationFirstName"
@@ -62,12 +81,29 @@
                     android:layout_margin="10dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvInformationLastName"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:id="@+id/lastNameInfoLabel"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="4dp"
-                        android:text="Last name" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvInformationLastName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="4dp"
+                            android:text="Last name" />
+
+                        <TextView
+                            android:id="@+id/tvInformationLastNameError"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible"
+                            android:padding="4dp"
+                            android:textColor="#F00000"
+                            android:text="*" />
+
+                    </LinearLayout>
 
                     <EditText
                         android:id="@+id/etInformationLastName"
@@ -85,12 +121,29 @@
                     android:layout_margin="10dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvInformationAge"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:id="@+id/ageInfoLabel"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="4dp"
-                        android:text="Age" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvInformationAge"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="4dp"
+                            android:text="Age" />
+
+                        <TextView
+                            android:id="@+id/tvInformationAgeError"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible"
+                            android:padding="4dp"
+                            android:textColor="#F00000"
+                            android:text="*" />
+
+                    </LinearLayout>
 
                     <EditText
                         android:id="@+id/etInformationAge"
@@ -115,8 +168,6 @@
                         android:paddingLeft="4dp"
                         android:text="City" />
 
-
-
                     <Spinner
                         android:id="@+id/spnInformationCity"
                         android:layout_width="match_parent"
@@ -132,12 +183,31 @@
                     android:layout_margin="10dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvInformationNumber"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:id="@+id/numberInfoLabel"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="4dp"
-                        android:text="Phone number" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvInformationNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="4dp"
+                            android:text="Phone number" />
+
+                        <TextView
+                            android:id="@+id/tvInformationNumberError"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible"
+                            android:padding="4dp"
+                            android:textColor="#F00000"
+                            android:text="*" />
+
+                    </LinearLayout>
+
+
 
 
                     <LinearLayout
@@ -192,37 +262,36 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/layoutFillInfo"
-                android:paddingTop="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:id="@+id/btnInformationNext"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="NEXT" />
-
-                    <Button
-                        android:id="@+id/btnInformationCancelInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="CANCEL" />
-                </LinearLayout>
-
-            </RelativeLayout>
-
-
         </RelativeLayout>
     </ScrollView>
 
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="10dp">
 
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnInformationNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:text="@string/next" />
+
+            <Button
+                android:id="@+id/btnInformationCancelInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:text="@string/cancel" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

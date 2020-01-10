@@ -14,7 +14,7 @@ public class LessonDate {
     }
 
     public String getFullDate(){
-        return year+"-"+month+"-"+day;
+        return day+"/"+month+"/"+year;
     }
 
     public int getYear() {

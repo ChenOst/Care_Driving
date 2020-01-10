@@ -2,6 +2,7 @@ package com.example.caredriving;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 
 import android.content.Context;
@@ -23,7 +24,6 @@ import com.example.caredriving.firebase.model.dataObject.UserObj;
 import com.example.caredriving.firebase.model.dataObject.validation.Validation;
 import com.example.caredriving.ui.navigationBar.requests.RequestsFragment;
 import com.example.caredriving.ui.navigationBar.searchTeachers.SearchTeachersFragment;
-import com.example.caredriving.ui.navigationBar.teacher.MyTeacherFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -37,7 +37,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -97,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements
     private FloatingActionButton fab;
     private String[] lessonInfo = new String[3];
     private Validation validation = new Validation();
+    private FragmentTransaction fragmentManager;
 
     private FirebaseDBLesson dbUserLessons;
 
@@ -110,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements
 
         navigationView = findViewById(R.id.nav_view);
         drawer = findViewById(R.id.drawer_layout);
+
+        fragmentManager = getFragmentManager().beginTransaction();
+        fragmentManager.addToBackStack(null);
 
         dbUserLessons = new FirebaseDBLesson();
         fb_user = new FirebaseDBUser();
@@ -134,11 +137,7 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.containerId, MainActivity.newInstance()).commit();
-//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//            startActivity(intent);
-        }
+        if (id == R.id.nav_home) {}
 
         if (id == R.id.nav_search_teachers) {
             MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.containerId, SearchTeachersFragment.newInstance()).commit();
@@ -166,9 +165,9 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-//    public void clearBackStackInclusive(String tag) {
-//        getSupportFragmentManager().popBackStack(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//    }
+    public void clearBackStackInclusive(String tag) {
+        getSupportFragmentManager().popBackStack(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
 
     private void createNewLesson() {
 
@@ -182,13 +181,13 @@ public class MainActivity extends AppCompatActivity implements
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-//                            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.containerId, SearchTeachersFragment.newInstance()).commit();
+                            navigationView.setCheckedItem(R.id.nav_search_teachers);
+                            navigationView.getMenu().performIdentifierAction(R.id.nav_search_teachers, 1);
                         }
                     })
                     .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
+                        public void onClick(DialogInterface dialogInterface, int i) {}
                     });
             errorDialog.create().show();
         } else {
@@ -320,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements
                         if (ds.child(month).child(day).exists()) {
                             for (DataSnapshot ds1 : ds.child(month).child(day).getChildren()) {
                                 String key = ds1.getKey();
-                                dateIsFree = lessonObj.isLessonActualForTeacher(key);
+                                dateIsFree = lessonObj.isAvailableTime(key);
                                 if (!dateIsFree) {
                                     Toast.makeText(getApplicationContext(), getString(R.string.error_lesson_created) + "\n" + getString(R.string.error_student_is_busy), Toast.LENGTH_SHORT).show();
                                     return;
@@ -333,7 +332,7 @@ public class MainActivity extends AppCompatActivity implements
                         if (ds.child(month).child(day).exists()) {
                             for (DataSnapshot ds1 : ds.child(month).child(day).getChildren()) {
                                 String key = ds1.getKey();
-                                dateIsFree = lessonObj.isLessonActualForTeacher(key);
+                                dateIsFree = lessonObj.isAvailableTime(key);
                                 if (!dateIsFree) {
                                     Toast.makeText(getApplicationContext(), getString(R.string.error_lesson_created) + "\n" + getString(R.string.error_teacher_is_busy), Toast.LENGTH_SHORT).show();
                                     return;
@@ -343,17 +342,12 @@ public class MainActivity extends AppCompatActivity implements
                     }
 
                     if (dateIsFree) {
-                        System.out.println("CREATE LESSON");
                         new FirebaseDBLesson().addLessonToDB(lessonObj);
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
                         Toast.makeText(getApplicationContext(), R.string.lesson_created_successfully, Toast.LENGTH_SHORT).show();
                     }
                 }
-
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
             });
         }
     }
@@ -407,7 +401,7 @@ public class MainActivity extends AppCompatActivity implements
     // Add to the NavigationView restrictions according to the Student object
     private void setStudentsNavigationView() {
         createNewLessonButton();
-        navigationView.getMenu().findItem(R.id.nav_requests).setVisible(false);
+
         navigationView.getMenu().findItem(R.id.nav_students).setVisible(false);
         setNavigationView();
     }

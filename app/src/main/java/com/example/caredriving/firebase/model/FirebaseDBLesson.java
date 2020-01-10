@@ -17,12 +17,6 @@ public class FirebaseDBLesson extends FirebaseBaseModel{
         myref.child("lessons").child(lessonId).setValue(lessonObj);
 
         //add to lessons per user tree student side
-//        myref.child("lessonsPerUser")
-//                .child("students")
-//                .child(lessonObj.getStudentId())
-//                .child(lessonObj.getDate().getFullDate())
-//                .child(lessonHours).setValue(lessonId);
-
         myref.child("lessonsPerUser").child("students").child(lessonObj.getStudentId())
                 .child(lessonObj.getDate().getYear()+"")
                 .child(lessonObj.getDate().getMonth()+"")

@@ -23,7 +23,11 @@ public class LessonObj implements Serializable {
     public String getLessonTime() {
         int start = date.getHour();
         int end = start + Integer.parseInt(duration);
-        return start + "-" + end;
+        return start + ":00 - " + end + ":00";
+    }
+
+    public String getLessonDate(){
+        return date.getFullDate();
     }
 
 
@@ -55,34 +59,13 @@ public class LessonObj implements Serializable {
         return duration;
     }
 
-    public boolean isLessonActualForStudent(String fullDateFromDB) {
-        String[] lessonInfo = fullDateFromDB.split("t");
-
-        String lessonDate = lessonInfo[0];
-        String lessonTime = lessonInfo[1];
-
-        String myDate = date.getFullDate();
-
-        if (lessonDate.equals(myDate)) {
-            return isAvailableTime(lessonTime);
-        }
-
-        return true;
-    }
-
-    public boolean isLessonActualForTeacher(String timeInfo) {
-        return isAvailableTime(timeInfo);
-    }
-
-    private boolean isAvailableTime(String timeInfo) {
+    public boolean isAvailableTime(String timeInfo) {
         String[] time = timeInfo.split("-");
         int lessonStart = Integer.parseInt(time[0]);
         int lessonEnd = Integer.parseInt(time[1]);
 
         int myStart = date.getHour();
         int myEnd = date.getHour() + Integer.parseInt(duration);
-
-//        System.out.println("TIME TO CHECK: " + myStart+"-"+myEnd +" <---> "+ timeInfo);
 
         if (myStart == lessonStart) {
             return false;
