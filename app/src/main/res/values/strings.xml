@@ -52,7 +52,27 @@
     <string name="title_gear_filter">Choose Gear/s:</string>
     <string name="title_price_filter">Choose Price Range:</string>
     <string name="filter">Filter</string>
+
+    <string name="next">Next</string>
+    <string name="save">Save</string>
+    <string name="previous">Previous</string>
     <string name="cancel">Cancel</string>
+
+    <string name="registration_first_name">First name</string>
+    <string name="registration_last_name">Last name</string>
+    <string name="registration_city">City</string>
+    <string name="registration_age">Age</string>
+    <string name="registration_phone_number">Phone number</string>
+
+    <string name="registration_transmission">Transmission</string>
+    <string name="registration_theory">Theory</string>
+    <string name="registration_green_form">Green form</string>
+
+    <string name="registration_lesson_price">Lesson price</string>
+    <string name="registration_car_type">Car type</string>
+    <string name="registration_car_year">Car year</string>
+    <string name="registration_experience">Experience</string>
+
     <string name="continue_">Continue</string>
 
     <string name="information">Information</string>
@@ -84,10 +104,6 @@
     <string name="error_student_is_busy">You already have lesson at this time.</string>
     <string name="lesson_created_successfully">Lesson created successfully.</string>
 
-
-    <string name="next">Next</string>
-    <string name="save">Save</string>
-    <string name="previous">Previous</string>
     <string name="set_date">Set date</string>
     <string name="set_time">Set time</string>
     <string name="create_lesson_question">Choose lesson duration:</string>

@@ -51,7 +51,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="4dp"
-                            android:text="First name" />
+                            android:text="@string/registration_first_name" />
 
                         <TextView
                             android:id="@+id/tvInformationFirstNameError"
@@ -92,7 +92,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="4dp"
-                            android:text="Last name" />
+                            android:text="@string/registration_last_name" />
 
                         <TextView
                             android:id="@+id/tvInformationLastNameError"
@@ -132,7 +132,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="4dp"
-                            android:text="Age" />
+                            android:text="@string/registration_age" />
 
                         <TextView
                             android:id="@+id/tvInformationAgeError"
@@ -166,7 +166,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="4dp"
-                        android:text="City" />
+                        android:text="@string/registration_city" />
 
                     <Spinner
                         android:id="@+id/spnInformationCity"
@@ -194,7 +194,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="4dp"
-                            android:text="Phone number" />
+                            android:text="@string/registration_phone_number" />
 
                         <TextView
                             android:id="@+id/tvInformationNumberError"
@@ -206,9 +206,6 @@
                             android:text="*" />
 
                     </LinearLayout>
-
-
-
 
                     <LinearLayout
                         android:layout_height="wrap_content"
