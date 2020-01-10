@@ -134,11 +134,11 @@ public class HomeFragment extends Fragment {
 
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ((MainActivity)getActivity()).clearBackStackInclusive("tag"); // tag (addToBackStack tag) should be the same which was used while transacting the F2 fragment
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        ((MainActivity)getActivity()).clearBackStackInclusive("tag"); // tag (addToBackStack tag) should be the same which was used while transacting the F2 fragment
+//    }
 
 
 }

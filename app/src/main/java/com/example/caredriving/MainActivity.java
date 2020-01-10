@@ -23,6 +23,7 @@ import com.example.caredriving.firebase.model.dataObject.UserObj;
 import com.example.caredriving.firebase.model.dataObject.validation.Validation;
 import com.example.caredriving.ui.navigationBar.requests.RequestsFragment;
 import com.example.caredriving.ui.navigationBar.searchTeachers.SearchTeachersFragment;
+import com.example.caredriving.ui.navigationBar.teacher.MyTeacherFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -36,6 +37,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -164,9 +166,9 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    public void clearBackStackInclusive(String tag) {
-        getSupportFragmentManager().popBackStack(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-    }
+//    public void clearBackStackInclusive(String tag) {
+//        getSupportFragmentManager().popBackStack(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//    }
 
     private void createNewLesson() {
 

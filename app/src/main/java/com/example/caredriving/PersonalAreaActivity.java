@@ -48,11 +48,11 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
     EditText greenFormEditText;
     EditText student_transmissionEditText;
     EditText theoryEditText;
-    EditText teacherIdEditText;
+//    EditText teacherIdEditText;
     LinearLayout greenFormLayout;
     LinearLayout student_transmissionLayout;
     LinearLayout theoryLayout;
-    LinearLayout teacherIdLayout;
+//    LinearLayout teacherIdLayout;
 
     ArrayList<View> userViews;
     ArrayList<View> teacherViews;
@@ -97,7 +97,7 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
         greenFormEditText = findViewById(R.id.fillgreenForm);
         student_transmissionEditText = findViewById(R.id.fillstudent_transmission);
         theoryEditText = findViewById(R.id.filltheory);
-        teacherIdEditText = findViewById(R.id.fillteacherId);
+//        teacherIdEditText = findViewById(R.id.fillteacherId);
         userViews.add(fnameEditText);
         userViews.add(lnameEditText);
         userViews.add(ageEditText);
@@ -112,7 +112,7 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
         studentViews.add(greenFormEditText);
         studentViews.add(student_transmissionEditText);
         studentViews.add(theoryEditText);
-        studentViews.add(teacherIdEditText);
+//        studentViews.add(teacherIdEditText);
 
 
         carTypeLayout = findViewById(R.id.carType);
@@ -123,7 +123,7 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
         greenFormLayout = findViewById(R.id.greenForm);
         student_transmissionLayout = findViewById(R.id.student_transmission);
         theoryLayout = findViewById(R.id.theory);
-        teacherIdLayout = findViewById(R.id.teacherId);
+//        teacherIdLayout = findViewById(R.id.teacherId);
         teacherLayouts.add(carTypeLayout);
         teacherLayouts.add(carYearLayout);
         teacherLayouts.add(experienceLayout);
@@ -132,7 +132,7 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
         studentLayouts.add(greenFormLayout);
         studentLayouts.add(student_transmissionLayout);
         studentLayouts.add(theoryLayout);
-        studentLayouts.add(teacherIdLayout);
+//        studentLayouts.add(teacherIdLayout);
 
 
         editBtn = findViewById(R.id.editButton);
@@ -248,7 +248,7 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
         greenFormEditText.setHint(student.getGreenForm());
         student_transmissionEditText.setHint(student.getTransmission());
         theoryEditText.setHint(student.getTheory());
-        teacherIdEditText.setHint(student.getTeacherId());
+//        teacherIdEditText.setHint(student.getTeacherId());
     }
 
     private void fillTextDetails(){
@@ -285,7 +285,7 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
         greenFormEditText.setText(student.getGreenForm());
         student_transmissionEditText.setText(student.getTransmission());
         theoryEditText.setText(student.getTheory());
-        teacherIdEditText.setText(student.getTeacherId());
+//        teacherIdEditText.setText(student.getTeacherId());
     }
 
     private void editButtonClicked(){
@@ -325,7 +325,7 @@ public class PersonalAreaActivity extends AppCompatActivity implements View.OnCl
             student.setGreenForm(greenFormEditText.getText().toString());
             student.setTransmission(student_transmissionEditText.getText().toString());
             student.setTheory(theoryEditText.getText().toString());
-            student.setTeacherId(teacherIdEditText.getText().toString());
+//            student.setTeacherId(teacherIdEditText.getText().toString());
             fb_user.writeUserToDB(student);
             user = student;
         }
