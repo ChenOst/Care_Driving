@@ -343,6 +343,8 @@ public class MainActivity extends AppCompatActivity implements
                     if (dateIsFree) {
                         System.out.println("CREATE LESSON");
                         new FirebaseDBLesson().addLessonToDB(lessonObj);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
                         Toast.makeText(getApplicationContext(), R.string.lesson_created_successfully, Toast.LENGTH_SHORT).show();
                     }
                 }
