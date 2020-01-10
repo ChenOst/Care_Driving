@@ -24,12 +24,6 @@
         tools:layout="@layout/fragment_requests" />
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.example.caredriving.ui.navigationBar.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
-
-    <fragment
         android:id="@+id/nav_teacher"
         android:name="com.example.caredriving.ui.navigationBar.teacher.MyTeacherFragment"
         android:label="@string/menu_teacher"

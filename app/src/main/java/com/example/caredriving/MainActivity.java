@@ -403,7 +403,7 @@ public class MainActivity extends AppCompatActivity implements
     // Add to the NavigationView restrictions according to the Student object
     private void setStudentsNavigationView() {
         createNewLessonButton();
-
+        navigationView.getMenu().findItem(R.id.nav_requests).setVisible(false);
         navigationView.getMenu().findItem(R.id.nav_students).setVisible(false);
         setNavigationView();
     }
@@ -421,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_search_teachers, R.id.nav_requests,
-                R.id.nav_tools, R.id.nav_students, R.id.nav_teacher, R.id.imageButton)
+                R.id.nav_students, R.id.nav_teacher, R.id.imageButton)
                 .setDrawerLayout(drawer)
                 .build();
 

@@ -40,42 +40,12 @@
             android:layout_marginLeft="4dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvStreet"
-            android:text="Street"
-            android:textSize="20sp"
-            android:layout_below="@+id/tvFirstName"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvStudentCity"
-            android:text="City"
-            android:textSize="20sp"
-            android:layout_toRightOf="@+id/tvStreet"
-            android:layout_toEndOf="@+id/tvStreet"
-            android:layout_below="@+id/tvFirstName"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp" />
-
-        <TextView
             android:id="@+id/tvPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/phone"
             android:textSize="20sp"
-            android:layout_below="@+id/tvStreet"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imgPhone"
-            android:layout_toEndOf="@+id/tvPhone"
-            android:layout_toRightOf="@+id/tvPhone"
-            android:layout_alignTop="@+id/tvPhone"
-            android:layout_alignBottom="@+id/tvPhone"
-            android:src="@drawable/ic_phone"/>
+            android:layout_below="@+id/tvFirstName"/>
 
     </RelativeLayout>
 
