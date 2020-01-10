@@ -76,11 +76,8 @@ public class HomeFragment extends Fragment {
     }
     private void downloadLessonsId(final View root, final String userType){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("lessonsPerUser").child(userType).child(userUid);
-        final String currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
-        final String currentDay = currentDate.substring(0,2);
-        final String currentMonth = currentDate.substring(3,5);
-        final String currentYear = currentDate.substring(6, 10);
-        final int today = Integer.parseInt(currentDay) + Integer.parseInt(currentMonth) + Integer.parseInt(currentYear);
+        final Date currentDay = new Date();
+        final Calendar calendar = Calendar.getInstance();
         reference.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -100,8 +97,9 @@ public class HomeFragment extends Fragment {
                             if (day.length()==1){
                                 day = "0" + day;
                             }
-                            int validDate = Integer.parseInt(day) + Integer.parseInt(month) + Integer.parseInt(year);
-                            if (validDate >= today) {
+                            calendar.set(Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day));
+                            Date validDate = calendar.getTime();
+                            if (currentDay.equals(validDate) || currentDay.before(validDate)) {
                                 for (DataSnapshot data :dataSnapshotlgrandsaon.getChildren()) {
                                     String date = day + "/" + month + "/" + year;
                                     if (!dates.contains(date)) {
