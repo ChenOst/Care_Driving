@@ -197,6 +197,7 @@ public class ContactTeacherActivity extends AppCompatActivity implements View.On
             RequestObj requestObj = new RequestObj(user.getId(), teacherId);
             FirebaseDBRequest request = new FirebaseDBRequest();
             request.writeRequestToDB(requestObj);
+            Toast.makeText(this, "Request successfully sent", Toast.LENGTH_SHORT).show();
         }
     }
 
