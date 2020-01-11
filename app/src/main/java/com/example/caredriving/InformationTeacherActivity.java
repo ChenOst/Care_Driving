@@ -91,6 +91,7 @@ public class InformationTeacherActivity extends AppCompatActivity implements Vie
         }
 
         teacher.setLessonPrice(price);
+        teacher.setId(fb_user.getMyUid());
 
         fb_user.writeUserToDB(teacher);
 

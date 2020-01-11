@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import com.example.caredriving.firebase.model.FirebaseBaseModel;
 import com.example.caredriving.firebase.model.FirebaseDBUser;
 import com.example.caredriving.firebase.model.dataObject.StudentObj;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -67,6 +68,7 @@ public class InformationStudentActivity extends AppCompatActivity implements Vie
     private void saveUserInformation() {
 
         student.setTeacherId("null");
+        student.setId(fb_user.getMyUid());
 
         // write to DB
         fb_user.writeUserToDB(student);
