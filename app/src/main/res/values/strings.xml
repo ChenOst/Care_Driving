@@ -113,7 +113,7 @@
     <string name="create_new_lesson_title">Create new lesson</string>
 
     <string name="teacher_not_found">You still have not chosen a teacher.</string>
-    <string name="students_not_found">Not connected to any Student</string>
+    <string name="students_not_found">You still have not any students.</string>
     <string name="open_email_clients">Choose an email client:</string>
 
     <string-array name="lesson_duration">

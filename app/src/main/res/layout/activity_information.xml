@@ -10,7 +10,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/layoutSVregistration">
 
         <RelativeLayout
@@ -59,6 +59,7 @@
                             android:layout_height="wrap_content"
                             android:visibility="invisible"
                             android:padding="4dp"
+                            android:textSize="16sp"
                             android:textColor="#F00000"
                             android:text="*" />
 
@@ -100,6 +101,7 @@
                             android:layout_height="wrap_content"
                             android:visibility="invisible"
                             android:padding="4dp"
+                            android:textSize="16sp"
                             android:textColor="#F00000"
                             android:text="*" />
 
@@ -140,6 +142,7 @@
                             android:layout_height="wrap_content"
                             android:visibility="invisible"
                             android:padding="4dp"
+                            android:textSize="16sp"
                             android:textColor="#F00000"
                             android:text="*" />
 
@@ -203,6 +206,7 @@
                             android:visibility="invisible"
                             android:padding="4dp"
                             android:textColor="#F00000"
+                            android:textSize="16sp"
                             android:text="*" />
 
                     </LinearLayout>
@@ -259,36 +263,39 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/layoutFillInfo"
+                android:paddingTop="10dp">
+
+                <LinearLayout
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btnInformationNext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"
+                        android:text="@string/next" />
+
+                    <Button
+                        android:id="@+id/btnInformationCancelInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"
+                        android:text="@string/cancel" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
         </RelativeLayout>
+
     </ScrollView>
 
-    <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:paddingTop="10dp">
-
-        <LinearLayout
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btnInformationNext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:text="@string/next" />
-
-            <Button
-                android:id="@+id/btnInformationCancelInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:text="@string/cancel" />
-        </LinearLayout>
-
-    </RelativeLayout>
 
 </RelativeLayout>

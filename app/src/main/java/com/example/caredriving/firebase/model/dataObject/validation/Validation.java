@@ -1,5 +1,7 @@
 package com.example.caredriving.firebase.model.dataObject.validation;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Build;
 import android.widget.Toast;
 
@@ -10,23 +12,34 @@ import com.example.caredriving.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Validation {
 
-    ArrayList<String> errors;
+    private ArrayList<String> errors;
+    private HashSet<Integer> infoErrors;
 
     public Validation() {
         errors = new ArrayList<>();
+        infoErrors = new HashSet<>();
+    }
+
+    public HashSet<Integer> getRegistrationErrors() {
+        return infoErrors;
     }
 
     public void checkFirstName(String firstName) {
         if (firstName.length() == 0) {
             errors.add("Please enter your name");
+            infoErrors.add(R.id.tvInformationFirstNameError);
         }
 
         for (int i = 0; i < firstName.length(); i++) {
             if (firstName.charAt(i) >= '0' && firstName.charAt(i) <= '9') {
                 errors.add("Name is incorrect");
+                infoErrors.add(R.id.tvInformationFirstNameError);
                 break;
             }
         }
@@ -35,11 +48,13 @@ public class Validation {
     public void checkLastName(String firstName) {
         if (firstName.length() == 0) {
             errors.add("Please enter your last name");
+            infoErrors.add(R.id.tvInformationLastNameError);
         }
 
         for (int i = 0; i < firstName.length(); i++) {
             if (firstName.charAt(i) >= '0' && firstName.charAt(i) <= '9') {
                 errors.add("Last name is incorrect.");
+                infoErrors.add(R.id.tvInformationLastNameError);
                 break;
             }
         }
@@ -49,15 +64,17 @@ public class Validation {
 
         if (sAge.isEmpty()) {
             errors.add("Please enter your age");
-
+            infoErrors.add(R.id.tvInformationAgeError);
         } else {
             try {
                 int age = Integer.parseInt(sAge);
                 if (age <= 1 || age >= 100) {
                     errors.add("Age is incorrect.");
+                    infoErrors.add(R.id.tvInformationAgeError);
                 }
             } catch (Exception e) {
                 errors.add("Age is incorrect.");
+                infoErrors.add(R.id.tvInformationAgeError);
             }
         }
     }
@@ -67,9 +84,11 @@ public class Validation {
             int price = Integer.parseInt(sPrice);
             if (price <= 0) {
                 errors.add("Price is incorrect.");
+//                infoErrors.add(R.id.tvError5);
             }
         } catch (Exception e) {
             errors.add("Price is incorrect.");
+//            infoErrors.add(R.id.tvError5);
         }
     }
 
@@ -84,6 +103,7 @@ public class Validation {
     public void checkNumber(String number) {
         if (number.length() != 7) {
             errors.add("Number is incorrect.");
+            infoErrors.add(R.id.tvInformationNumberError);
         }
     }
 
@@ -141,5 +161,6 @@ public class Validation {
 
     public void clearErrors() {
         errors.clear();
+        infoErrors.clear();
     }
 }

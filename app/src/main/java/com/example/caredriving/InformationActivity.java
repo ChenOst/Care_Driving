@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.caredriving.firebase.model.dataObject.StudentObj;
@@ -21,6 +22,9 @@ import com.example.caredriving.firebase.model.dataObject.UserObj;
 import com.example.caredriving.firebase.model.dataObject.validation.Validation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+
+import java.util.HashMap;
+import java.util.HashSet;
 
 
 public class InformationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -45,9 +49,12 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
 
     private DatabaseReference myRef;
     private FirebaseAuth firebaseAuth;
-//    private String currentId;
+    //    private String currentId;
     private String cityFromSpinner;
     private String fullNumber;
+
+    private TextView tvError;
+    private Validation validation;
 
 
     @Override
@@ -67,6 +74,8 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
 
         startIntent = getIntent();
         email = getIntent().getStringExtra("Email");
+
+        validation = new Validation();
 
         if (startIntent.hasExtra("UserObj")) {
             String type = startIntent.getStringExtra("Type");
@@ -118,7 +127,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     }
 
     //if we back to previous activity we already have the information
-    private void setCreatedFields(){
+    private void setCreatedFields() {
         firstName.setText(user.getFirstName());
         lastName.setText(user.getLastName());
         age.setText(user.getAge());
@@ -133,7 +142,8 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void continueRegistration() {
-        Validation validation = new Validation();
+        clearErrorsFields(validation.getRegistrationErrors());
+        validation.clearErrors();
         validation.checkFirstName(firstName.getText().toString().trim());
         validation.checkLastName(lastName.getText().toString().trim());
         validation.checkAge(age.getText().toString().trim());
@@ -142,6 +152,7 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         if (validation.hasErrors()) {
             for (String error : validation.getErrors()) {
                 Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+                showErrorsFields(validation.getRegistrationErrors());
             }
             return;
         }
@@ -168,13 +179,27 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
         startActivity(intent);
     }
 
+    private void showErrorsFields(HashSet<Integer> registrationErrors) {
+        for (int id : registrationErrors) {
+            tvError = (TextView) findViewById(id);
+            tvError.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void clearErrorsFields(HashSet<Integer> registrationErrors) {
+        for (int id : registrationErrors) {
+            tvError = (TextView) findViewById(id);
+            tvError.setVisibility(View.INVISIBLE);
+        }
+    }
+
     private void submitCancelRegistration() {
         AlertDialog.Builder cancelRegistration = new AlertDialog.Builder(this);
         cancelRegistration.setTitle(R.string.registration_title);
 
         cancelRegistration.setMessage(R.string.registration_cancel_question);
         cancelRegistration.setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         firebaseAuth.getCurrentUser().delete();
@@ -182,11 +207,11 @@ public class InformationActivity extends AppCompatActivity implements View.OnCli
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 //                        dialogInterface.cancel();
-                        Toast.makeText(InformationActivity.this, "Continue", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InformationActivity.this, getString(R.string.continue_), Toast.LENGTH_SHORT).show();
                     }
                 });
         cancelRegistration.create().show();
