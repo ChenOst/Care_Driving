@@ -45,6 +45,9 @@ public class RecyclerViewAdapterLessonsToday extends RecyclerView.Adapter<Recycl
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapterLessonsToday.ViewHolder holder, int position) {
+        holder.tvFirstName.setVisibility(View.INVISIBLE);
+        holder.tvPhone.setVisibility(View.INVISIBLE);
+        holder.tvLastName.setVisibility(View.INVISIBLE);
         downloadInfoFromDatabase(holder, position);
     }
 
@@ -103,10 +106,12 @@ public class RecyclerViewAdapterLessonsToday extends RecyclerView.Adapter<Recycl
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 FirebaseDBEntity entity = dataSnapshot.getValue(FirebaseDBEntity.class);
                 UserObj user = entity.getUserObj();
+                holder.tvFirstName.setVisibility(View.VISIBLE);
+                holder.tvPhone.setVisibility(View.VISIBLE);
+                holder.tvLastName.setVisibility(View.VISIBLE);
                 holder.tvFirstName.setText( user.getFirstName());
                 holder.tvLastName.setText( user.getLastName());
                 holder.tvPhone.setText( user.getPhoneNumber());
-
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
