@@ -401,7 +401,7 @@ public class MainActivity extends AppCompatActivity implements
     // Add to the NavigationView restrictions according to the Student object
     private void setStudentsNavigationView() {
         createNewLessonButton();
-
+        navigationView.getMenu().findItem(R.id.nav_requests).setVisible(false);
         navigationView.getMenu().findItem(R.id.nav_students).setVisible(false);
         setNavigationView();
     }
