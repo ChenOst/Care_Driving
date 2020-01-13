@@ -113,11 +113,11 @@ public class Validation {
         String[] checkDate = date.split("/");
 
         if (Integer.parseInt(currentDate[0]) <= Integer.parseInt(checkDate[2])) {
-            if (Integer.parseInt(currentDate[1]) <= Integer.parseInt(checkDate[1])) {
+            if (Integer.parseInt(checkDate[1]) == Integer.parseInt(currentDate[1])) {
                 if (Integer.parseInt(currentDate[2]) > Integer.parseInt(checkDate[0])) {
                     errors.add("Date is incorrect.\nUnable to create lesson in the past.");
                 }
-            } else {
+            } else if (Integer.parseInt(checkDate[1]) < Integer.parseInt(currentDate[1])) {
                 errors.add("Date is incorrect.\nUnable to create lesson in the past.");
             }
         } else {
